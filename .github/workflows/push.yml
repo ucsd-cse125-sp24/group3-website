@@ -1,0 +1,25 @@
+name: Push
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy-docs:
+    name: Copy Files to Remote Web Server
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy to server 
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SITE_HOST }}
+          username: ${{ secrets.SITE_USER }}
+          key: ${{ secrets.SITE_KEY }}
+          port: ${{ secrets.SITE_PORT }}
+          source: ./*
+          target: /var/www/html/class/cse125/www/cse125/2024/cse125g3/arcana/
+          rm: true
+          strip_components: 1
