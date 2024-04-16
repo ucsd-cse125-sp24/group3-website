@@ -1,1 +1,5 @@
 /* TODO: nice css for report pages */
+
+.group-report-imgs img {
+   max-height: 500px;
+}

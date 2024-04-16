@@ -10,11 +10,28 @@
     <h1> Edward's Week 2 Individual Report </h1>
 
     <h2>What were your concrete goals for the week?</h2>
+      My concrete goals for the week were to
+      <ol>
+        <li>Learn boost::asio</li>
+        <li>Set up a basic TCP echo client/server using boost::asio</li>
+        <li>Focus on getting initial setup where client and server can send packets to each other</li>
+        <li>Get packets sent across the network on the lab computers</li>
+      </ol>
     <h2>What goals were you able to accomplish?</h2>
+      <p>I was able to accomplish all of the aforementioned concrete goals except testing to ensure packets can get sent across different lab machines. In theory it should work (Tyler and I might need to mess around with the ports), but no assumptions will be made until it is tested.</p>
+      <p>More specifically, I helped get an initial implementation of the Client & Server communicating using a custom-defined Session class. This Session class is now used on both the Client and Server side, and has helper functions to simplify the process of sending and receiving our packets across the network. I worked on the Client side functionality whereas Tyler handled Server side.</p>
     <h2>If the week went differently than you had planned, what were the reasons?</h2>
+      <p>I think everything went according to how I envisioned it to go. Tyler and I were able to lay out some concrete goals, then follow through with them.</p>
     <h2>What are your specific goals for the next week?</h2>
+    <ol>
+      <li>Make sure current Client and Server implementations work across lab machines</li>
+      <li>Handle connection drops and reconnects at a Session level (e.g. something along the lines of don’t create a new session, but instead reassign the new socket to an old, disconnected Session)</li>
+      <li>Potentially get the logic for client/server communication within a Lobby to work (e.g. join a lobby, get packets from the server about everyone else in the lobby, once the lobby is full don’t accept any new client connections). However this isn’t directly needed for integration with the other branches, so it is less important.</li>
+    </ol>
     <h2>What did you learn this week, if anything (and did you expect to learn it?)</h2>
+      <p>I learned a lot of Boost Asio functionality and C++ general knowledge (like how to use lambdas in C++). I expected to learn all this as it is a necessity if we are to get a correct Server and Client implementation.</p>
     <h2>What is your individual morale (which might be different from the overall group morale)?</h2>
+      <p>My individual morale is high! I’m pretty happy with what I’ve done so far. I hope most of my group shares this same morale.</p>
 </body>
 
 </html>
