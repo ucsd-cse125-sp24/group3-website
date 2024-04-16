@@ -10,11 +10,61 @@
     <h1> Gil's Week 2 Individual Report </h1>
 
     <h2>What were your concrete goals for the week?</h2>
+      My concrete goals for the week were to:
+      <ul>
+        <li>Create an initial implementation skeleton for the <code>GameState</code> class (which holds all “abstract” game state data) that allows for object movement when <code>update()</code> is called</li>
+        <li>Brainstorm a minimalistic design for the <code>GameState</code> class</li>
+        <li>Settle on a “design philosophy” (how to make <code>GameState</code> extendable for new object types, e.g. when to use inheritance vs. when to use “interfaces” for new functionality)</li>
+        <li>Implement a simple prototype of the <code>GameState</code> that can hold a list of all objects in the game instance and move forward in time via calls to <code>update()</code> (which updates all objects' movement for now)</li>
+      </ul>
     <h2>What goals were you able to accomplish?</h2>
+      <ul>
+        <li>I was able to create an initial implementation skeleton for the <code>GameState</code> class by making a simple “debugger” that allows the user to see the <code>GameState</code> instance information, create / delete / modify objects, and step forward by some number of time steps. Though a debugger may be helpful to us during development, the main goal was to get a sense of how the <code>GameState</code> class would be used by the server, and to see whether the minimal API we started with was sufficient for this initial prototype.</li>
+        <li>(1-a) I worked with Ted and we were able to come up with an initial minimalistic design for the <code>GameState</code> class. Our goal was to keep things simple so that we could get an initial prototype up and running.</li>
+        <li>(1-b) I'm still feeling a bit “muddy” regarding how the <code>GameState</code> should be expanded for a more general implementation, but I hope that as we progress further in an incremental approach, this will become more clear.</li>
+        <li>(1-c) As mentioned above, the simple <code>GameState</code> prototype took the form of a simple debugger (fondly nicknamed “gsdb” for “<code>GameState</code> Debugger”) to see how our initial minimalistic design for the <code>GameState</code> class would hold up with how the server may end up using it. My hope going forward is that the debugger may live up to its name (we may use it for testing), but more importantly, that it helps Ted and I expand the <code>GameState</code> in a way that extends well and avoids extensive redesigns.</li>
+      </ul>
     <h2>If the week went differently than you had planned, what were the reasons?</h2>
+      <ul>
+        <li>I had hoped that after looking at the problem posed by the <code>GameState</code>, things would fall into place and I would have a general idea both of how to start with designing it and how to continue it in the future when more complex behavior would need to be added. This lack of clarity (a “fog of war” in design?) is troubling to me, which is why I wanted to create the simplest possible design to quickly see how its implementation would turn out and hopefully clarify certain things.</li>
+        <li>This issue makes me believe that an incremental approach would be most applicable here, taking small steps towards making the <code>GameState</code> more complex and hopefully catching when a redesign / rewrite is needed early to avoid having to move everything around into a different structure.</li>
+      </ul>
     <h2>What are your specific goals for the next week?</h2>
+      My specific goals for the next week are as follows:
+      <ul>
+        <li>
+          Gameplay (highest priority)
+          <ul>
+            <li>Work with Ted to merge the current <code>GameState</code> implementation with his object collision code</li>
+            <li>Extend the <code>GameState</code> implementation with an event queue to allow for client input (the idea is that client events would be received by the networking code and piped into the <code>GameState</code> instance on the server, which would then clear the queue and handle all events within it when <code>update()</code> gets called. Assuming that the number of client events that will arrive every time step is fairly low since the time step is short, this may be a fine approach; otherwise, a more complex design involving an additional thread acting as a “client event listener” may be pertinent, and could handle client events from the networking code as they arrive and update the next timestep's state accordingly)</li>
+            <li>
+              Coordinate with the Graphics and Networking teams to begin integration of the <code>GameState</code> on the server and on the client.
+              <ul>
+                <li>Graphics - see what APIs would be helpful to add / modify on the <code>GameState</code> class for the client to easily render its local copy of the <code>GameState</code></li>
+                <li>Server - see what APIs would be helpful to add / modify to send the <code>GameState</code> instance to the client and to pipe incoming client events to the <code>GameState</code> instance on the server</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>
+          Web (lower priority - if time allows; prioritize the Gameplay goals to approach the initial Graphics Client-Server goal)
+          <ul>
+            <li>Contribute to the current website design (adding / modifying CSS)</li>
+          </ul>
+        </li>
+        <li>
+          Music (lowest priority - this may be a goal that's too early to realize, as the game is still brewing its image / feel)
+          <ul>
+            <li>Based on the general idea of the game and initial art sketches, come up with some musical ideas for different points in the game: main menu theme, 3 players winning, DM winning, or 3 stages of escaping the maze (green / yellow / red, depending on how much time is left)</li>
+          </ul>
+        </li>
+      </ul>
+
     <h2>What did you learn this week, if anything (and did you expect to learn it?)</h2>
+      <p>I learned about the ECS design approach to see if it's applicable for our project (initially we thought we might use ECS to handle our game state, though due to lack of familiarity with ECS, the initial infrastructure it requires, and the expectation that our game won't require a very high object count, we have decided to use OOP).</p>
+      <p>I reviewed / learned new things in C++ (mostly syntax / programming model things as I'm still thinking in Java to some extent).</p>
     <h2>What is your individual morale (which might be different from the overall group morale)?</h2>
+      <p>I'm excited but also somewhat daunted; in the past (like in the Nachos projects in CSE 120), I liked to approach problems by extensively documenting the requirements and then creating a more-or-less full picture of the design before implementation (a very Big Design Up Front approach); this worked well when the requirements were already there and it gave me the sense of clarity regarding the design / software architecture that I'm missing currently. Hence, I'm trying to cautiously move forward with the design incrementally, hoping that I'll get that sense of clarity at some more advanced point.</p>
 </body>
 
 </html>

@@ -10,11 +10,46 @@
     <h1> Tyler's Week 2 Individual Report </h1>
 
     <h2>What were your concrete goals for the week?</h2>
+      My concrete goals for the week were to
+      <ol>
+        <li>Get boost::asio included in our CMake</li>
+        <li>Learn boost::asio</li>
+        <li>Start brainstorming / implementing structs to represent our packet data</li>
+        <li>Set up a basic TCP echo client/server using boost::asio</li>
+        <li>Get packets sent across the network on the lab computers</li>
+      </ol>
     <h2>What goals were you able to accomplish?</h2>
+      <p>
+        Working with Edward, we were able to accomplish all of the above goals except number 5. For number 5, we were only able to get it working across localhost within one lab computer. However, on Sunday we realized that we were not using a port that was allowed through the firewall, and at the time of writing we haven’t been able to test it in the lab again, so we think it should work because we were able to successfully send packets across other networks.
+      </p>
+      <p>
+      In addition, I was also able to implement the following features:
+      <ol>
+        <li>Helper functions to create/serialize packets using boost::serialize. I ended up using boost::serialize because we already were getting it for free since we included boost for asio, and it simplified a lot of the logic of packet structure. Also, we likely were going to want it anyways to be able to serialize the GameState class and send it across the network.</li>
+        <li>A Lobby Discovery/Broadcast feature for clients/servers so that we don’t have to manually figure out the IPs of the machines we are working on. In theory this works, but we have to verify it works on the lab network, and we probably will have this disabled until we have a UI and can implement user interactivity through it.</li>
+        <li>A more advanced Client/Server class structure that allows for “Sessions” to be stored that represent one Client <-> Server connection. This session is used on both the client and server side, and has helper functions to simplify the process of sending and receiving our packets across the network. I worked more on the server side of things, and Edward worked more on the Client side of things.</li>
+        <li>A Config file that we can use to configure network settings and other options for the program.</li>
+      </ol>
+      </p>
+      <p>
+        Unrelated to networking, I also helped with setting up the github repository and CI for our website, since as a group we decided we wanted to move away from wordpress and make our own custom website.
+      </p>
     <h2>If the week went differently than you had planned, what were the reasons?</h2>
+      <p>
+        The week went differently than I planned because as I worked on the goals we initially set, I ended up following ideas that interested me as I found them. I think this ended up working out because we implemented what we planned and more, and also because the extra things we did we would have ended up wanting anyways, and we didn’t realize doing them in that particular way made sense until we had done some initial work.
+      </p>
     <h2>What are your specific goals for the next week?</h2>
+      My specific goals for next week are to test that the current code works on the lab computers’ network, do some finishing touches on the networking code, and to finish the integration between the gameplay systems branch and the graphics branch so that we have a unified code system. If the graphics code isn’t ready, then we at least want to merge with the game systems branch. The finishing touches for the networking code include:
+      <ol>
+        <li>merging in the Unit Testing / Linting branch that Anthony worked on, and making sure our code passes lint and has some unit tests for the smaller helper functions.</li>
+        <li>Handle connection drops and reconnects at a Session level (e.g. something along the lines of don’t create a new session, but instead reassign the new socket to an old, disconnected Session)</li>
+        <li>Potentially get the logic for client/server communication within a Lobby to work (e.g. join a lobby, get packets from the server about everyone else in the lobby, once the lobby is full don’t accept any new client connections). However this isn’t directly needed for integration with the other branches, so it is less important.</li>
+      </ol>
     <h2>What did you learn this week, if anything (and did you expect to learn it?)</h2>
+      <p>The main thing I learned was how to use boost::asio, and I also reinforced a bunch of C++ knowledge that I vaguely knew, but was shaky on. This came from a couple rough debugging sessions with asio where I wasn’t correctly managing the lifetimes of the data my buffers were referencing and they were getting deallocated before actually being sent across the network—which made me appreciate Rust more. I also got more comfortable with asynchronous programming because asio lets you make extensive use of asynchronous methods where you pass in callback functions.</p>
+      <p>I expected to learn about the intricacies of boost::asio, but one thing I didn’t expect to learn were a bunch of other boost related libraries and utilities. I didn’t end up using all of them, but I didn’t realize how much functionality boost provides. Boost::serialization was especially helpful and easy to use. I think it definitely isn’t as efficient as doing it manually and sending the raw bytes of our packet structs, but it lets us not worry about network byte ordering and struct packing and other lower level concerns. If it ends up being too much overhead then we might have to switch away from it, but we would still probably use it for the packet that sends the entire GameState.</p>
     <h2>What is your individual morale (which might be different from the overall group morale)?</h2>
+      <p>My morale towards the project is very high because it seems like everyone is making good progress and being very communicative. I am very stressed out from all of my work, but strangely (or I guess not strangely) none of that is really coming from this class because I really enjoy working on the project.</p>
 </body>
 
 </html>

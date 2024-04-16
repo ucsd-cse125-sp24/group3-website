@@ -10,11 +10,42 @@
     <h1> Anthony's Week 2 Individual Report </h1>
 
     <h2>What were your concrete goals for the week?</h2>
+    <ul>
+      <li>Add graphics libraries to project (GLEW, GLFW, GLM, imGUI)</li>
+      <li>Render a cube with OpenGL</li>
+      <li>Setup docs page with automated deployment                 </li>
+      <li>Add CI for cross-platform builds, unit tests, and linting </li>
+    </ul>
+
     <h2>What goals were you able to accomplish?</h2>
+      <ul>
+        <li>I was able to add all the graphics libraries together with David. We originally planned to add GLAD instead of GLEW but ran into some issues with GLAD on Windows. Instead of trying to debug it, we opted to go with GLEW (which also implements the OpenGL spec) since 125 groups seemed to have success with it in the past.</li>
+        <li>David and I got some simple OpenGL code together that we think should render a cube but for some reason or another it's not and the viewport is all black. I'll touch on this a bit more in the following section.</li>
+        <li>I was able to set up <a href="https://www.doxygen.nl/index.html">Doxygen</a> to run locally for our project and set up a GitHub Action to automatically deploy docs to our 125 server when the dev branch is updated. Docs can be viewed here. It will hopefully make it easy for our group to write Javadoc style comments and have readable documentation be generated from it.</li>
+        <li>I also spent a fair chunk of time on my own adding a few CI jobs to our repository's GitHub actions. To ensure that any changes we make will still compile, I added checks to build both the client and server. Since we are making our game cross-platform, it's crucial that we maintain compatibility with Windows since thats what the lab computers are running. Therefore, the GitHub action makes sure that both the client and server are compiling on Windows with the Visual Studio 2022 compiler. This will hopefully avoid any scenarios where we break compatibility due to a quirk in behavior of the different compilers. We will still be regularly testing on the lab computers but this is just another safeguard to make sure that things don't break. I also added unit testing with <a href="https://google.github.io/googletest/">GoogleTest</a> which lets us automatically test components of the client, server and shared library. Additionally, I added linting with <a href="https://clang.llvm.org/extra/clang-tidy/">clang-tidy</a> to help catch any unnoticed errors. With these additions to the project, I feel that we can have a bit more confidence in the correctness of our code.</li>
+      </ul>
     <h2>If the week went differently than you had planned, what were the reasons?</h2>
+      <ul>
+          <li> I don't think David and I got as much done with rendering as I had hoped. However, I still think we made good progress. Much of the blockage was due to issues with getting OpenGL and shaders loaded. We ran into many issues with debugging what versions of GLSL shaders were compatible on all the machines we were working on. However, we stuck to it and were able to get our client to compile and load shaders on Windows, macOS, and Linux. </li>
+          <li> I definitely spent more time on CI than I anticipated. With that said, I think it was worth it and that it will pay off in the long run of the project. My philosophy is that it's better to automate as much of this correctness checking as possible. This leaves us to focus on the details of development while not having to worry about if core components are broken. </li>
+      </ul>
     <h2>What are your specific goals for the next week?</h2>
+      <ul>
+          <li>Get the cube rendered. This will be a debugging exercise to try to find out where things are going wrong in our OpenGL skeleton code and basic rendering sequence.</li>
+          <li>Handle user input from keyboard and mice. I'd like to design this in an extensible way that makes it easy to create bindings and modify them later from a config file or game menu screen.</li>
+          <li>Move the cube's position itself with the aforementioned user input.</li>
+          <li>Move the camera based on user input.</li>
+          <li>Merge graphics and networking implementation together to have the client respond to updated state from the server.</li>
+      </ul>
     <h2>What did you learn this week, if anything (and did you expect to learn it?)</h2>
+      <ul>
+        <li>I definitely brushed up on my OpenGL and graphics knowledge. Having taken CSE 167 over a year ago, it was nice to fill in the holes of all the concepts I had forgotten. I feel like I'm more familiar with the workflow of rendering objects with OpenGL.</li>
+        <li>I learned how finicky Graphics and GPU drivers can be. We had some seemingly simple OpenGL boilerplate code with GLAD and we ran into several issues getting it to work on all our platforms. We went down a whole rabbit hole of supported OpenGL versions on every platform and tried to find snippets that would make our client just work on all platforms. I also sunk a fair bit of time into trying to get the client working on Wayland (a Linux display server). Eventually, I put that effort on pause since it was working fine on X11 (another display server).</li>
+      </ul>
     <h2>What is your individual morale (which might be different from the overall group morale)?</h2>
+      <ul>
+        <li>I'm feeling a bit nervous about where the graphics side of things are right now but otherwise optimistic at where the project is heading. The team has been great this past week and it's great to see everyone bring their passion and expertise to their components. I'm also feeling great to work with David on the graphics side of things since he's more knowledgeable on the topic then I am and he's been super helpful when we are debugging. I'm confident that we'll get to the bottom of why our rendering is not working.</li>
+      </ul>
 </body>
 
 </html>
