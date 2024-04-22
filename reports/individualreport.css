@@ -1,0 +1,19 @@
+/* TODO: nice css for report pages */
+@font-face {
+   font-family: 'Lato';
+   src: url('../css/Lato-Regular.ttf') format('truetype');
+}
+
+html,
+body {
+   padding: 1.5%;
+   font-family: Lato;
+}
+
+h1 {
+   text-decoration: underline;
+}
+
+.group-report-imgs img {
+   max-height: 500px;
+}

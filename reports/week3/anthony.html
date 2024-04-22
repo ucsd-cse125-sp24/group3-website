@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Torchlight Games</title>
+  <link rel="stylesheet" href="../individualreport.css">
+
+<body>
+  <h1> Anthony's Week 3 Individual Report </h1>
+
+  <h2>What were your concrete goals for the week?</h2>
+  <ul>
+    <li>Fix issues with our cube being rendered and accept user input.</li>
+    <li>Complete milestone 1 which is the merge of the graphics, networking and game state teams. The final product
+      should be a cube being rendered which you can move with user input.</li>
+  </ul>
+
+  <h2>What goals were you able to accomplish?</h2>
+  <ul>
+    <li>We managed to fix the bugs with our rendering and got the cube to render.</li>
+    <li>Also, are now handling user input which can be used to move the cube.</li>
+    <li>Successfully sat down with the team and got the merge for Milestone 1 completed. Now a client can press a key to
+      move the cube and have the server tell it to render the new position of the cube. We even got to test this with
+      multiple clients on the lab computers and had multiple clients rendering the updated position of the cube.</li>
+  </ul>
+  <h2>If the week went differently than you had planned, what were the reasons?</h2>
+  <ul>
+    <li>I spent a good chunk of time fixing our CI since it was breaking for the Windows runners. Additionally, I had to
+      add opengl dependencies to the Linux runners which took a bit to figure out. I also moved our linting to cppcheck
+      which doesn’t take as long to run as clang-tidy. </li>
+    <li>We ended up completing the milestone earlier in the week than expected so I had some extra time where I started
+      refactoring how we handle user input and creating a main menu and lobby UI. </li>
+  </ul>
+  <h2>What are your specific goals for the next week?</h2>
+  <ul>
+    <li>Make a simple UI for the title screen and lobby to set the server IP and set keybinds.</li>
+    <li>Start rendering a hallway of the maze and try to see if we can get the cube moving down the hallway integrated
+      with the collision work that Ted has done.</li>
+  </ul>
+  <h2>What did you learn this week, if anything (and did you expect to learn it?)</h2>
+  <ul>
+    <li>Learned a bit more about how the game state and networking works after the merge.</li>
+    <li>Learned how compiling C++ projects on windows can be down when debugging the actions breaking.</li>
+    <li>Learned a bit about how imGui works for setting up our UI.</li>
+  </ul>
+  <h2>What is your individual morale (which might be different from the overall group morale)?</h2>
+  <ul>
+    <li>I’m feeling alright but a bit wary. I’m satisfied with our progress but I’m feeling a bit unsure on what to
+      focus on now that the first milestone is complete. I’m sure this will go away once we discuss the team’s goals and
+      priorities for the coming week.</li>
+  </ul>
+</body>
+
+</html>

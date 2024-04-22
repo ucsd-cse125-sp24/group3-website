@@ -1,42 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Torchlight Games</title>
-  <link rel="stylesheet" href="../report.css">
+  <link rel="stylesheet" href="../individualreport.css">
 
 <body>
-    <h1> David's Week 2 Individual Report </h1>
+  <h1> David's Week 2 Individual Report </h1>
 
-    <h2>What were your concrete goals for the week?</h2>
-      My concrete goals were to:
-      <ul>
-        <li>Set up graphics libraries (OpenGL, glm, glad, imgui)</li>
-        <li>Render basic wireframe cube on the client window</li>
-        <li>Add simple user interaction to move the wireframe cube around</li>
-        <li>Add camera interaction via mouse movement</li>
-      </ul>
-    <h2>What goals were you able to accomplish?</h2>
-      <ul>
-        <li>I worked with Anthony to get the graphics libraries set up on both our local devices and the lab computers. There were some issues with OpenGl versioning and differences between the operating systems we were using, but we were able to resolve them and have a client window show up and compile.</li>
-        <li>We added code for rendering a simple cube using OpenGl, but the cube is unable to render on the window.</li>
-      </ul>
-    <h2>If the week went differently than you had planned, what were the reasons?</h2>
-      <ul>
-        <li>The setup of the graphics libraries was more involved than originally thought, and there were some issues with getting all of the code to compile on the lab Windows machine. We had to import glew for the Windows machine instead of using glad, which ended up allowing the code to compile.</li>
-        <li>Due to the issue of the cube not rendering on the window, we focused more on trying to resolve this issue. In particular, the user interaction and camera movement require that the cube be visibly rendered on the window for us to test their functionality.</li>
-      </ul>
-    <h2>What are your specific goals for the next week?</h2>
-      <ul>
-        <li>For next week, the main goal is to get rendering working and resolve issues related to the rendering. This is the primary issue that blocked progress this previous week, and is critical to the game as a whole that rendering is able to run properly.</li>
-        <li>Afterwards, I aim to implement the user interaction, using both the cube and camera movement. While the cube may not be reused in the future, the implementation of movement, both of the camera and the object, can be adapted for player interactivity in later parts of the game.</li>
-        <li>The last goal would be to start tying the client with the server and adapting the client-side user interaction into events and communicate with the server. While this is dependent on the previous goal being completed, I hope to get the echo server functional so that we have a basic structure for communication between the client and server.</li>
-      </ul>
-    <h2>What did you learn this week, if anything (and did you expect to learn it?)</h2>
-      <p>This week, I learned some aspects of using CMake for project compilation.</p>
-    <h2>What is your individual morale (which might be different from the overall group morale)?</h2>
-      <p>Currently, my individual morale is slightly apprehensive due to the issues encountered with the rendering on the client, but overall very hopeful and optimistic about our progress.</p>
+  <h2>What were your concrete goals for the week?</h2>
+  My concrete goals were to:
+  <ul>
+    <li>Set up graphics libraries (OpenGL, glm, glad, imgui)</li>
+    <li>Render basic wireframe cube on the client window</li>
+    <li>Add simple user interaction to move the wireframe cube around</li>
+    <li>Add camera interaction via mouse movement</li>
+  </ul>
+  <h2>What goals were you able to accomplish?</h2>
+  <ul>
+    <li>I worked with Anthony to get the graphics libraries set up on both our local devices and the lab computers.
+      There were some issues with OpenGl versioning and differences between the operating systems we were using, but we
+      were able to resolve them and have a client window show up and compile.</li>
+    <li>We added code for rendering a simple cube using OpenGl, but the cube is unable to render on the window.</li>
+  </ul>
+  <h2>If the week went differently than you had planned, what were the reasons?</h2>
+  <ul>
+    <li>The setup of the graphics libraries was more involved than originally thought, and there were some issues with
+      getting all of the code to compile on the lab Windows machine. We had to import glew for the Windows machine
+      instead of using glad, which ended up allowing the code to compile.</li>
+    <li>Due to the issue of the cube not rendering on the window, we focused more on trying to resolve this issue. In
+      particular, the user interaction and camera movement require that the cube be visibly rendered on the window for
+      us to test their functionality.</li>
+  </ul>
+  <h2>What are your specific goals for the next week?</h2>
+  <ul>
+    <li>For next week, the main goal is to get rendering working and resolve issues related to the rendering. This is
+      the primary issue that blocked progress this previous week, and is critical to the game as a whole that rendering
+      is able to run properly.</li>
+    <li>Afterwards, I aim to implement the user interaction, using both the cube and camera movement. While the cube may
+      not be reused in the future, the implementation of movement, both of the camera and the object, can be adapted for
+      player interactivity in later parts of the game.</li>
+    <li>The last goal would be to start tying the client with the server and adapting the client-side user interaction
+      into events and communicate with the server. While this is dependent on the previous goal being completed, I hope
+      to get the echo server functional so that we have a basic structure for communication between the client and
+      server.</li>
+  </ul>
+  <h2>What did you learn this week, if anything (and did you expect to learn it?)</h2>
+  <ul>
+    <li>This week, I learned some aspects of using CMake for project compilation.</li>
+  </ul>
+  <h2>What is your individual morale (which might be different from the overall group morale)?</h2>
+  <ul>
+    <li>Currently, my individual morale is slightly apprehensive due to the issues encountered with the rendering on the
+      client, but overall very hopeful and optimistic about our progress.</li>
+  </ul>
 </body>
 
 </html>

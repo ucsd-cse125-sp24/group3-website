@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Torchlight Games</title>
+  <link rel="stylesheet" href="../individualreport.css">
+
+<body>
+  <h1> Tyler's Week 3 Individual Report </h1>
+
+  <h2>What were your concrete goals for the week?</h2>
+  <ul>
+    <li>My concrete goals for the week were to help graphics and game systems get all of our branches merged in, and to
+      implement the logic to handle connection drops and reconnects</li>
+  </ul>
+  <h2>What goals were you able to accomplish?</h2>
+  <ul>
+    <li>I was able to mostly accomplish both of my goals. We successfully got all of our branches merged together fairly
+      quickly, although there are still some graphics refactors that have yet to be merged in. I also mostly finished
+      the connection drop logic. It is fully implemented on the server side that if a client drops connection and tries
+      to reconnect, the server will allow them to reconnect and reassign them to the same player slot that they had
+      before. I just need to do work on the client side now so that if the connection drops then the client tries to
+      automatically reconnect, because right now the client would have to completely restart the game.</li>
+  </ul>
+  <h2>If the week went differently than you had planned, what were the reasons?</h2>
+  <ul>
+    <li>The week went about as I had planned, but there were some things I wanted to get done that I wasn’t able to. I
+      knew that I would have less time to work this week because I knew I was going to be out of town for the weekend,
+      so that was expected. I plan to work a little extra next week to try and get everything done.</li>
+  </ul>
+  <h2>What are your specific goals for the next week?</h2>
+  <ul>
+    <li>Currently the networking infrastructure is fairly solid for now, unless we decide to optimize it later on, so at
+      our Tuesday meeting we are planning to discuss how to redivide tasks to meet our MVP milestone.</li>
+    <li>In addition, before I expand out there are a couple of small networking things I need to touch up on
+      <ul>
+        <li>make the client automatically try to reconnect if connection drops</li>
+        <li>make the client not crash if you launch it without a server to connect to</li>
+      </ul>
+    </li>
+  </ul>
+  <h2>What did you learn this week, if anything (and did you expect to learn it?)</h2>
+  <ul>
+    <li>I didn’t learn anything too huge, but I did learn a bunch of small things about boost and c++.</li>
+    <li>Specifically, I fell down a rabbit hole trying to learn how boost::multi_index_container works, because I wanted
+      on the server side to store Sessions in a HashMap that was indexable by both the id of the player and the player’s
+      IP address, because there are different parts of the code where you would want to use one of those values and not
+      the other to index into the sessions. It was probably overkill, but it was cool to learn and didn’t take that much
+      time.</li>
+    <li>Also I used the std::weak_ptr class for the first time to keep track of which sessions were still valid, which
+      was cool because I had always wondered when you would actually use that kind of smart pointer.</li>
+    <li>I also learned more about the game system and graphics system teams’ progress and setup because I helped them
+      integrate the networking code into their branches.</li>
+  </ul>
+  <h2>What is your individual morale (which might be different from the overall group morale)?</h2>
+  <ul>
+    <li>Overall I have high morale still. I was a little worried this week because I felt like we weren’t making as much
+      progress as I expected, and there were some goals this week that we didn’t meet, but we still met our most
+      important goal of merging together all of our separate branches so once I realized that was a success I felt
+      better. I think as long as we replan out how we are dividing tasks on Tuesday we will be in a very good position.
+    </li>
+  </ul>
+</body>
+
+</html>
