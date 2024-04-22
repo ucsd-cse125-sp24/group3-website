@@ -1,39 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Torchlight Games</title>
   <link rel="stylesheet" href="../individualreport.css">
 
 <body>
-    <h1> Ted's Week 3 Individual Report </h1>
+  <h1> Ted's Week 3 Individual Report </h1>
 
-    <h2>What were your concrete goals for the week?</h2>
-      <p>My goal was to complete the gamestate skeleton with Gil this week. This includes conceptualizing various classes (Object, Player, etc.) that are necessary components of the game, implementing these classes, and testing some interactions.</p>
-    <h2>What goals were you able to accomplish?</h2>
-      <ul>
-        <li>I was able to accomplish creating a UML diagram of classes that we need and created basic versions of these classes. Also, I focused on the collider classes and the collision detection since this would be a crucial component of our game.</li>
-        <li>In addition to my goals, I started to work on our website as a side project.</li>
-      </ul>
-    <h2>If the week went differently than you had planned, what were the reasons?</h2>
-      <p>I think that we spent the week mostly as planned but deciding some details and testing different approaches like whether to proceed with Object-Oriented Programming or Entity Component System cost us some time to fully complete the skeleton.</p>
-    <h2>What are your specific goals for the next week?</h2>
-      <ul>
-        <li>
-          My specific goals for next week include the following: 
-          <ul>
-            <li>Player movement and enemy AI setup: With objects and collider classes in place, we would now need the different objects to move in the gamestate. </li>
-            <li>Hard-coded structure of the map: The small map would help testing in early stages.</li>
-            <li>EventManager to manage incoming events: After meeting the goals above, we would need the event manager to control the movements of players and alterations of the gamestate, depending on which events that the client sends.</li>
-          </ul>
-        </li>
-        <li>These components would set up the basic structure of the game.</li>
-      </ul>
-    <h2>What did you learn this week, if anything (and did you expect to learn it?)</h2>
-      <p>I learned that making a game engine from scratch is much more complex than I had originally thought about. Every detail of implementing graphics, network, and etc. all have to come from scratch and we have to manually connect all the pieces. In a well-known game engine like unity, all these are done behind the scenes. This may be difficult, but I learned that a custom game engine gives more freedom in terms of how you want the game components to interact, which would be helpful for designing our game.</p>
-    <h2>What is your individual morale (which might be different from the overall group morale)?</h2>
-      <p>Looking at all the hard work everyone is putting in, I believe that our team can create a great game. Really enjoying the process with everyone.</p>
+  <h2>What were your concrete goals for the week?</h2>
+  <ul>
+    <li>Refactor gamestate to better optimize for both the server-side and client-side</li>
+    <li>Eventmanager to handle different events and allow the server to handle different events</li>
+    <li>Player movement and hard coded map</li>
+  </ul>
+  <h2>What goals were you able to accomplish?</h2>
+  <ul>
+    <li>Gil and I were able to discuss different versions of the optimized gamestate, and separated into two classes
+      (ServerGamestate, SharedGamestate).</li>
+    <li>General event manager class was handled by the network team, so I mainly worked on how to incorporate this into
+      the servergamestate, so that the logic of how to handle the event could happen in this class.</li>
+  </ul>
+  <h2>If the week went differently than you had planned, what were the reasons?</h2>
+  <ul>
+    <li>Since the gamestate class needed to be refactored for better networking communications, we spent a lot of time
+      making this happen.</li>
+    <li>To implement player movement and maps, it seems like having milestone 1 completed would be necessary, so we
+      could not further make progress on this part.
+    </li>
+  </ul>
+  <h2>What are your specific goals for the next week?</h2>
+  <ul>
+    <li>
+      Further implement different events (complex movement, collision) that may happen between the server and the
+      clients</li>
+    <li>Finish refactoring the gamestate so that it can be used in all other parts of the project</li>
+  </ul>
+
+  <h2>What did you learn this week, if anything (and did you expect to learn it?)</h2>
+  <ul>
+    <li>Learned that OOP in game development can be very difficult due to the number of classes and inheritance that
+      it creates.</li>
+    <li>Learned that plans can change very quickly depending on what is needed for the team and our milestone</li>
+  </ul>
+  <h2>What is your individual morale (which might be different from the overall group morale)?</h2>
+  <ul>
+    <li>As the project gets larger, it seems difficult to understand every part of the other codebase. Though this is
+      concerning, I want to just focus on what I am doing and see how it turns out when everything comes together.</li>
+  </ul>
 </body>
 
 </html>

@@ -1,70 +1,180 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Torchlight Games</title>
   <link rel="stylesheet" href="../individualreport.css">
 
 <body>
-    <h1> Gil's Week 3 Individual Report </h1>
+  <h1> Gil's Week 3 Individual Report </h1>
 
-    <h2>What were your concrete goals for the week?</h2>
-      My concrete goals for the week were to:
+  <h2>What were your concrete goals for the week?</h2>
+  <ul>
+    <li>Gameplay (highest priority)
       <ul>
-        <li>Create an initial implementation skeleton for the <code>GameState</code> class (which holds all “abstract” game state data) that allows for object movement when <code>update()</code> is called</li>
-        <li>Brainstorm a minimalistic design for the <code>GameState</code> class</li>
-        <li>Settle on a “design philosophy” (how to make <code>GameState</code> extendable for new object types, e.g. when to use inheritance vs. when to use “interfaces” for new functionality)</li>
-        <li>Implement a simple prototype of the <code>GameState</code> that can hold a list of all objects in the game instance and move forward in time via calls to <code>update()</code> (which updates all objects' movement for now)</li>
-      </ul>
-    <h2>What goals were you able to accomplish?</h2>
-      <ul>
-        <li>I was able to create an initial implementation skeleton for the <code>GameState</code> class by making a simple “debugger” that allows the user to see the <code>GameState</code> instance information, create / delete / modify objects, and step forward by some number of time steps. Though a debugger may be helpful to us during development, the main goal was to get a sense of how the <code>GameState</code> class would be used by the server, and to see whether the minimal API we started with was sufficient for this initial prototype.</li>
-        <li>(1-a) I worked with Ted and we were able to come up with an initial minimalistic design for the <code>GameState</code> class. Our goal was to keep things simple so that we could get an initial prototype up and running.</li>
-        <li>(1-b) I'm still feeling a bit “muddy” regarding how the <code>GameState</code> should be expanded for a more general implementation, but I hope that as we progress further in an incremental approach, this will become more clear.</li>
-        <li>(1-c) As mentioned above, the simple <code>GameState</code> prototype took the form of a simple debugger (fondly nicknamed “gsdb” for “<code>GameState</code> Debugger”) to see how our initial minimalistic design for the <code>GameState</code> class would hold up with how the server may end up using it. My hope going forward is that the debugger may live up to its name (we may use it for testing), but more importantly, that it helps Ted and I expand the <code>GameState</code> in a way that extends well and avoids extensive redesigns.</li>
-      </ul>
-    <h2>If the week went differently than you had planned, what were the reasons?</h2>
-      <ul>
-        <li>I had hoped that after looking at the problem posed by the <code>GameState</code>, things would fall into place and I would have a general idea both of how to start with designing it and how to continue it in the future when more complex behavior would need to be added. This lack of clarity (a “fog of war” in design?) is troubling to me, which is why I wanted to create the simplest possible design to quickly see how its implementation would turn out and hopefully clarify certain things.</li>
-        <li>This issue makes me believe that an incremental approach would be most applicable here, taking small steps towards making the <code>GameState</code> more complex and hopefully catching when a redesign / rewrite is needed early to avoid having to move everything around into a different structure.</li>
-      </ul>
-    <h2>What are your specific goals for the next week?</h2>
-      My specific goals for the next week are as follows:
-      <ul>
-        <li>
-          Gameplay (highest priority)
+        <li>Work with Ted to merge the current GameState implementation with his object collision code</li>
+        <li>Extend the GameState implementation with an event queue to allow for client input (the idea is that client
+          events would be received by the networking code and piped into the GameState instance on the server, which
+          would then clear the queue and handle all events within it when update() gets called. Assuming that the number
+          of client events that will arrive every time step is fairly low since the time step is short, this may be a
+          fine approach; otherwise, a more complex design involving an additional thread acting as a “client event
+          listener” may be pertinent, and could handle client events from the networking code as they arrive and update
+          the next timestep's state accordingly)</li>
+        <li>Coordinate with the Graphics and Networking teams to begin integration of the GameState on the server and on
+          the client.
           <ul>
-            <li>Work with Ted to merge the current <code>GameState</code> implementation with his object collision code</li>
-            <li>Extend the <code>GameState</code> implementation with an event queue to allow for client input (the idea is that client events would be received by the networking code and piped into the <code>GameState</code> instance on the server, which would then clear the queue and handle all events within it when <code>update()</code> gets called. Assuming that the number of client events that will arrive every time step is fairly low since the time step is short, this may be a fine approach; otherwise, a more complex design involving an additional thread acting as a “client event listener” may be pertinent, and could handle client events from the networking code as they arrive and update the next timestep's state accordingly)</li>
-            <li>
-              Coordinate with the Graphics and Networking teams to begin integration of the <code>GameState</code> on the server and on the client.
-              <ul>
-                <li>Graphics - see what APIs would be helpful to add / modify on the <code>GameState</code> class for the client to easily render its local copy of the <code>GameState</code></li>
-                <li>Server - see what APIs would be helpful to add / modify to send the <code>GameState</code> instance to the client and to pipe incoming client events to the <code>GameState</code> instance on the server</li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-        <li>
-          Web (lower priority - if time allows; prioritize the Gameplay goals to approach the initial Graphics Client-Server goal)
-          <ul>
-            <li>Contribute to the current website design (adding / modifying CSS)</li>
-          </ul>
-        </li>
-        <li>
-          Music (lowest priority - this may be a goal that's too early to realize, as the game is still brewing its image / feel)
-          <ul>
-            <li>Based on the general idea of the game and initial art sketches, come up with some musical ideas for different points in the game: main menu theme, 3 players winning, DM winning, or 3 stages of escaping the maze (green / yellow / red, depending on how much time is left)</li>
+            <li>Graphics - see what APIs would be helpful to add / modify on the GameState class for the client to
+              easily render its local copy of the GameState</li>
+            <li>Server - see what APIs would be helpful to add / modify to send the GameState instance to the client and
+              to pipe incoming client events to the GameState instance on the server</li>
           </ul>
         </li>
       </ul>
+    </li>
+    <li>Web (lower priority - if time allows; prioritize the Gameplay goals to approach the initial Graphics
+      Client-Server
+      goal)
+      <ul>
+        <li>Contribute to the current website design (adding / modifying CSS)</li>
+      </ul>
+    </li>
+    <li>Music (lowest priority - this may be a goal that's too early to realize, as the game is still brewing its image
+      / feel)
+      <ul>
+        <li>Based on the general idea of the game and initial art sketches, come up with some musical ideas for
+          different points in the game: main menu theme, 3 players winning, DM winning, or 3 stages of escaping the maze
+          (green / yellow / red, depending on how much time is left)</li>
+      </ul>
+    </li>
+  </ul>
 
-    <h2>What did you learn this week, if anything (and did you expect to learn it?)</h2>
-      <p>I learned about the ECS design approach to see if it's applicable for our project (initially we thought we might use ECS to handle our game state, though due to lack of familiarity with ECS, the initial infrastructure it requires, and the expectation that our game won't require a very high object count, we have decided to use OOP).</p>
-      <p>I reviewed / learned new things in C++ (mostly syntax / programming model things as I'm still thinking in Java to some extent).</p>
-    <h2>What is your individual morale (which might be different from the overall group morale)?</h2>
-      <p>I'm excited but also somewhat daunted; in the past (like in the Nachos projects in CSE 120), I liked to approach problems by extensively documenting the requirements and then creating a more-or-less full picture of the design before implementation (a very Big Design Up Front approach); this worked well when the requirements were already there and it gave me the sense of clarity regarding the design / software architecture that I'm missing currently. Hence, I'm trying to cautiously move forward with the design incrementally, hoping that I'll get that sense of clarity at some more advanced point.</p>
+  <ul>
+    <li>However, as the week progressed, we had a new goal to redesign the abstract game state with Ted on the basis
+      that the client only needs a subset of the abstract game state required by the server and to create an
+      implementation of this new design.</li>
+    <li>By the Project Specification document schedule, the goal of the Gameplay group was expected to be implementing
+      basic player movement and basic enemy AI.</li>
+  </ul>
+
+  <h2>What goals were you able to accomplish?</h2>
+  <ul>
+    <li>Ted merged his object collision code with our GameState implementation</li>
+    <li>Tyler implemented an event queue implementation for the server-client integration, but we still need to
+      integrate it with our game state implementation (it currently is implemented as part of the server instance
+      outside of the game’s update logic).</li>
+    <li>Ted and I coordinated with the Graphics and Networking teams on Wednesday to begin integration of the GameState
+      on the server and on the client - in this meeting, we started discussing a redesign of the abstract game state
+      implementation, the design and implementation of which would become the only goal until the end of the week.</li>
+    <li>I was able to redesign the abstract game state and finish an initial implementation of the new design by Sunday.
+      The reason this took so long was because we were working on a different redesign idea at first, and then changed
+      from it since it didn’t seem scalable. Here is an overview of the design process:</li>
+    <li>We started with the initial design of the GameState class, which contained all abstract game state data and
+      functionality. The original idea was that, for our MVP, the server would serialize its instance of the GameState
+      and broadcast it to all of the clients every timestep. However, during our weekly team meeting on Wednesday
+      evening, it was brought up that the client doesn’t need certain information from the server; for instance, the
+      client doesn’t need information about an object’s collider, velocity, or acceleration, as the client doesn’t
+      perform any computation that requires this.</li>
+    <li>Therefore, we started a redesign of the GameState class to tailor what was sent to the client such that only
+      data required by the client would be sent to it by the server. Initially, our approach was to create another class
+      called ServerGameState that would store all of the abstract game state data and functionality that was only
+      required by the server, while the rest would be stored in the GameState class. Since the server needs all of the
+      abstract game state data and functionality, the ServerGameState class would maintain an instance of the GameState
+      class.</li>
+    <li>However, upon thinking on this further, I came to the conclusion that this is very difficult to work with and
+      doesn’t scale well - every struct / class that we would add in the future would need to be cut in two, with some
+      of its data going on a server-only struct and the rest going in a shared (i.e., includes data needed by both the
+      server and the client) struct. This splitting of semantic data and functionality purely based on what the client
+      needs to know would be hard to work with and difficult to change (e.g., any change to the client’s needs would
+      require moving data from the GameState to ServerGameState or vice versa and all code that uses it would need to be
+      altered).</li>
+    <li>Instead, our newer redesign approached the problem based on the idea that only the server needs to do any update
+      logic, and that the client really only needs a read-only representation of the game state maintained by the
+      server. Our new design has two classes: ServerGameState and SharedGameState. The ServerGameState contains all
+      abstract game state data and functionality, and the SharedGameState is a representation of the server’s
+      ServerGameState instance. This creates (as Tyler succinctly put it) a separation of concerns as the
+      SharedGameState can be written independently of the ServerGameState to contain exactly the subset of data needed
+      by the client.</li>
+    <li>The disadvantage of this new approach is that the server now must generate a SharedGameState instance after
+      updating its ServerGameState instance in every timestep, which can hurt performance. This could be in the future
+      improved by updating the SharedGameState in every timestep (instead of generating a new one from scratch) and also
+      sending the updates instead of the full serialized SharedGameState to the client.</li>
+    <li>Since we were working on this, we didn’t add any new gameplay features (such as the basic player movement and
+      basic enemy AI expected by the project specification schedule). However, I am hopeful that the problem of gameplay
+      architecture (i.e., how the game state is stored and how to extend it) is more difficult than the individual
+      problems of adding “content” functionality (i.e., adding to the existing game state implementation), and so we
+      could hopefully make faster progress regarding “content” feature additions in the coming week (and make up for
+      lost time).</li>
+    <li>I wasn’t able to complete either lower-priority goal (contribution to the website + initial musical ideas).</li>
+  </ul>
+
+  <h2>If the week went differently than you had planned, what were the reasons?</h2>
+  <ul>
+    <li>As mentioned above, we redesigned the architecture of the abstract game state so that the client would only get
+      the subset of abstract game state data and functionality it needed. This took longer than expected as we went
+      through multiple design proposals (and it is generally a bit more difficult to think about as whether the design
+      is good or not is more up in the air than a more concrete feature implementation).</li>
+    <li>As a result, we weren’t able to complete this week’s expected goals in the project specification schedule
+      (implementing basic player movement and basic enemy AI).</li>
+  </ul>
+
+  <h2>What are your specific goals for the next week?</h2>
+  My goals for the next week are as follows:
+  <ul>
+    <li>Complete a code review with group members on the initial implementation of the abstract game state redesign and
+      improve where possible, then merge the new implementation to the dev branch.
+      <ul>
+        <li>The code review will hopefully find ways to clean up the code, make it more easy to use, scalable,
+          efficient, usable by the networking and graphics teams (this may require new changes to the API), as well as
+          communicate the new design philosophy to the rest of the team.</li>
+      </ul>
+    </li>
+    <li>Work with Ted to integrate the event queue into the ServerGameState class (in our initial graphics client-server
+      integration, the event queue for player input events was implemented outside of the ServerGameState class).</li>
+    <li>With the ServerGameState + SharedGameState abstract game state design more-or-less stable, the plan is to start
+      adding gameplay features (copied from last week’s goals in the project specification schedule):
+      <ul>
+        <li>Implement basic player movement</li>
+        <li>Implement basic enemy AI (i.e., NPC movement)</li>
+        <li>If time allows, we should try to catch up with the project schedule and implement the following additional
+          features:
+          <ul>
+            <li>Trap design / implementation</li>
+            <li>Initial Dungeon Master logic</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li>Web (lower priority - if time allows; prioritize the above Gameplay goals as they’re the most critical to moving
+      the project forward)
+      <ul>
+        <li>Contribute to the current website design (adding / modifying CSS)</li>
+      </ul>
+    </li>
+    <li>Music (lowest priority - as mentioned in last week’s report, this may be a goal that’s too early to realize, as
+      the game is still brewing its image / feel).
+      <ul>
+        <li>Come up with some musical ideas / leitmotifs for different points in the game (main menu theme, 3 players
+          victory theme, Dungeon Master victory theme, 3 stages of escaping the maze (green / yellow / red depending on
+          how much time is left))</li>
+      </ul>
+    </li>
+  </ul>
+
+  <h2>What did you learn this week, if anything (and did you expect to learn it?)</h2>
+  <ul>
+    <li>During the implementation of the abstract game state redesign, I had to write a fair amount of new code; I
+      brushed up on a lot of C++ to do this. In order to make sure that the redesign was implemented correctly for our
+      project, I also went through other project code (e.g., the client and server code) and got a general idea of how
+      the rest of the project is implemented.</li>
+  </ul>
+  <h2>What is your individual morale (which might be different from the overall group morale)?</h2>
+  <ul>
+    <li>I’m excited and have more confidence than I did last week, as it seems that the gamestate architecture is
+      finally taking shape!
+    </li>
+  </ul>
 </body>
 
 </html>

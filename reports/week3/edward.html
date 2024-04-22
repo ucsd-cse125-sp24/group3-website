@@ -1,37 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Torchlight Games</title>
   <link rel="stylesheet" href="../individualreport.css">
 
 <body>
-    <h1> Edward's Week 3 Individual Report </h1>
+  <h1> Edward's Week 3 Individual Report </h1>
 
-    <h2>What were your concrete goals for the week?</h2>
-      My concrete goals for the week were to
-      <ol>
-        <li>Learn boost::asio</li>
-        <li>Set up a basic TCP echo client/server using boost::asio</li>
-        <li>Focus on getting initial setup where client and server can send packets to each other</li>
-        <li>Get packets sent across the network on the lab computers</li>
-      </ol>
-    <h2>What goals were you able to accomplish?</h2>
-      <p>I was able to accomplish all of the aforementioned concrete goals except testing to ensure packets can get sent across different lab machines. In theory it should work (Tyler and I might need to mess around with the ports), but no assumptions will be made until it is tested.</p>
-      <p>More specifically, I helped get an initial implementation of the Client & Server communicating using a custom-defined Session class. This Session class is now used on both the Client and Server side, and has helper functions to simplify the process of sending and receiving our packets across the network. I worked on the Client side functionality whereas Tyler handled Server side.</p>
-    <h2>If the week went differently than you had planned, what were the reasons?</h2>
-      <p>I think everything went according to how I envisioned it to go. Tyler and I were able to lay out some concrete goals, then follow through with them.</p>
-    <h2>What are your specific goals for the next week?</h2>
-    <ol>
-      <li>Make sure current Client and Server implementations work across lab machines</li>
-      <li>Handle connection drops and reconnects at a Session level (e.g. something along the lines of don’t create a new session, but instead reassign the new socket to an old, disconnected Session)</li>
-      <li>Potentially get the logic for client/server communication within a Lobby to work (e.g. join a lobby, get packets from the server about everyone else in the lobby, once the lobby is full don’t accept any new client connections). However this isn’t directly needed for integration with the other branches, so it is less important.</li>
-    </ol>
-    <h2>What did you learn this week, if anything (and did you expect to learn it?)</h2>
-      <p>I learned a lot of Boost Asio functionality and C++ general knowledge (like how to use lambdas in C++). I expected to learn all this as it is a necessity if we are to get a correct Server and Client implementation.</p>
-    <h2>What is your individual morale (which might be different from the overall group morale)?</h2>
-      <p>My individual morale is high! I’m pretty happy with what I’ve done so far. I hope most of my group shares this same morale.</p>
+  <h2>What were your concrete goals for the week?</h2>
+  <ul>
+    <li>Achieve milestone 1: connect the client, server, and graphics</li>
+    <li>Refactor server main loop to have tick structure like in slides</li>
+    <li>Change server code to start game in lobby phase, and transition to game phase when enough players connect</li>
+  </ul>
+  <h2>What goals were you able to accomplish?</h2>
+  <ul>
+    <li>All the above goals were able to be accomplished! Currently, multiple different client machines can connect to a
+      server machine and be able to move a cube around. Additionally, the server main loop has the appropriate structure
+      of: getting all client events, updating the game state, sending all clients the new game state, and waiting until
+      the tick ends. Also, code is in place such that if one client connects but not enough clients have joined, the
+      client currently just sees an empty screen. The moment enough clients connect, things appear. All my PRs were able
+      to be reviewed and merged into the central dev branch</li>
+  </ul>
+  <h2>If the week went differently than you had planned, what were the reasons?</h2>
+  <ul>
+    <li>From my end, everything went mostly how I expected it to. We ended up getting the first milestone achieved and I
+      also improved / enhanced networking features.</li>
+  </ul>
+  <h2>What are your specific goals for the next week?</h2>
+  <ul>
+    <li>Code review GameState code</li>
+    <li>Additional goals would be set in upcoming meeting</li>
+  </ul>
+  <h2>What did you learn this week, if anything (and did you expect to learn it?)</h2>
+  <ul>
+    <li>The main learnings came from digging into some boost networking details. Specifically, there was some concern
+      whether a function we were calling truly lasted the specified time, or exited early. After doing some digging
+      online, I was able to confirm that it in fact does not exit early based on how we were using it. I expect learning
+      stuff like this, especially as the project progresses into more advanced stages.</li>
+  </ul>
+  <h2>What is your individual morale (which might be different from the overall group morale)?</h2>
+  <ul>
+    <li>My individual morale is pretty high. I’ve been pretty happy with the code I’ve gotten to work on and the
+      concepts I’ve learned. It’s honestly pretty fun seeing everything connect together like in milestone 1.</li>
+  </ul>
 </body>
 
 </html>
