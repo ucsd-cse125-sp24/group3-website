@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torchlight Games</title>
+    <link rel="stylesheet" href="../individualreport.css">
+
+<body>
+    <h1> Ted's Week 3 Individual Report </h1>
+
+    <h2>What were your concrete goals for the week?</h2>
+    <ul>
+        <li>Further implement different events (complex movement, collision) that may happen between the server and the clients</li>
+        <li>
+            Finish refactoring the gamestate so that it can be used in all other parts of the project
+        </li>
+    </ul>
+
+    <h2>What goals were you able to accomplish?</h2>
+    <ul>
+        <li>Gil, Tyler, Edward, and I were able to sit down together and finish the crux of our new gamestate, separating both the server and the client side. This allowed us to keep the logic and computation on the serverside, and only send down necessary data for the clients. While doing so, we also created Objects / SharedObjects to differentiate the data needed on the server and the client.</li>
+        <li>I also implemented the movement for the players along the 2D plane using keydown and keyup events, instead of constantly sending moveEvents. This allowed optimization for networking and built up the foundation for easier match with animations further down the line.</li>
+    </ul>
+
+    <h2>If the week went differently than you had planned, what were the reasons?</h2>
+    <ul>
+        <li>Since the graphics are not completely integrated with new objects and Gil is working on developing wall/maze, I am waiting on implementing and testing more collisions amongst the objects. </li>
+        <li>
+            Jumping has been implemented but has not been generalized to platforming on different levels of y-axis. We would need further discussions about what types of movement the players are going to have.
+        </li>
+    </ul>
+
+    <h2>What are your specific goals for the next week?</h2>
+    <ul>
+        <li>Work with Gil on integrating collision calculations amongst players and the maze.</li>
+        <li>Work with Anthony and David to figure out how to render different shapes for testing serverside computations.</li>
+        <li>Implement more general jumping for various platforms.</li>
+        <li>Implement simple Item class for post-MVP</li>
+    </ul>
+
+    <h2>What did you learn this week, if anything (and did you expect to learn it?)</h2>
+    <ul>
+        <li>I learned how networking works in the middle for communication between server and client while developing movement. This has helped in understanding and planning how to implement other features in the future.</li>
+    </ul>
+
+    <h2>What is your individual morale (which might be different from the overall group morale)?</h2>
+    <ul>
+        <li>With more things taking shape, I feel great with our game. However, I think that we should push a little more to meet our MVP on week 5.</li>
+    </ul>
+</body>
+
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torchlight Games</title>
+    <link rel="stylesheet" href="../individualreport.css">
+
+<body>
+    <h1> David's Week 3 Individual Report </h1>
+
+    <h2>What were your concrete goals for the week?</h2>
+    <ul>
+        <li>Finish implementing the camera logic and connect it with the server</li>
+        <li>Finish refactoring the client server render loop</li>
+        <li>Start looking into model loading</li>
+    </ul>
+
+    <h2>What goals were you able to accomplish?</h2>
+    <ul>
+        <li>I was able to implement the camera on the client side, and it now supports lateral movement as well as mouse interaction, and successfully implements a first-person perspective.</li>
+        <li>I refactored the client side render logic and separated some of the functions into two callback functions, one for rendering and one for any object updates, which creates a distinction and makes the code a bit cleaner.</li>
+        <li>Talked with Anthony and Coco about model exporting and loading the files into the client.</li>
+    </ul>
+
+    <h2>If the week went differently than you had planned, what were the reasons?</h2>
+    <ul>
+        <li>The client refactoring went well, but there were some slight hiccups with refactoring some methods into static methods for binding with the glfw window. Ultimately, I had to settle for a mixed static/OOP structure for the class, which is less than ideal but works for now.</li>
+        <li>The camera logic is not yet connected to the server and is currently only available on client-side, since I need catch up with the network side and create some new events for the camera interactions, as well as figure out the proper representation for the camera on the server side.</li>
+        <li>I had to do some digging on my end to resolve some import issues with imgui on Macos. Ultimately, I realized that we weren’t using imgui so I removed it from the cmake and everything fixed itself.</li>
+    </ul>
+
+    <h2>What are your specific goals for the next week?</h2>
+    <ul>
+        <li>Get camera interaction fully connected to the server.</li>
+        <li>Look into the text display code and figure out how to get it to render on the window.</li>
+        <li>Start working on model representation and rendering on the client side</li>
+    </ul>
+
+    <h2>What did you learn this week, if anything (and did you expect to learn it?)</h2>
+    <ul>
+        <li>I learned a few different representations for camera position and viewing angles</li>
+    </ul>
+
+    <h2>What is your individual morale (which might be different from the overall group morale)?</h2>
+    <ul>
+        <li>Overall, I am a bit apprehensive since I feel that model loading and animations is going to be a difficult task, and will probably be the bulk of the work for the next few weeks, but I feel that as a group we are on a good pace.</li>
+    </ul>
+</body>
+
+</html>
