@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torchlight Games</title>
+    <link rel="stylesheet" href="../individualreport.css">
+
+<body>
+    <h1> Anthony's Week 3 Individual Report </h1>
+
+    <h2>What were your concrete goals for the week?</h2>
+    <ul>
+        <li>Make a simple UI for the title screen and lobby to set the server IP and set keybinds</li>
+        <li>Start rendering a hallway of the maze and try to see if we can get the cube moving down the hallway integrated with the collision work that Ted has done.</li>
+    </ul>
+
+    <h2>What goals were you able to accomplish?</h2>
+    <ul>
+        <li>I didn't end up accomplishing any of my original goals. Instead I pivoted to work on getting infrastructure for loading models into our game which I was able to get done.</li>
+    </ul>
+
+    <h2>If the week went differently than you had planned, what were the reasons?</h2>
+    <ul>
+        <li>Originally I set out to make the UI and work on getting an initial hallway setup. I started getting the imGUI library set up for making our UI but after meeting with Professor Voelker and Josh, it became apparent that we needed to be able to load the models Coco was making.</li>
+        <li>When I started creating the model loader I set out to create a simple loader that was limited in scope. I was planning on re-using the loading code from CSE167 and only loading OBJ files. However, after several hours of working on it I realized it would not be as straightforward as I thought. The crude loader would work for the models provided in CSE167 but I was running into issues with loading other models. The implementation I had would only work for models that were all triangles (no quads), didn’t have support for loading textures, and wouldn’t handle the inconsistencies I saw in various OBJ files.</li>
+        <li>Once I realized the simple loader I was making was insufficient, I looked for a library that could aid in loading the models. I ended up settling on Assimp which is an easy to use model loader that converts models into its own intermediate data structures. I saw on the tips page that previous 125 groups had had success with using this library and decided to go with it. It should give us the flexibility to throw any kind of model at our game and have it be renderable.</li>
+        <li>I spent the rest of the week taking the Assimp intermediate format and converting it into our own data structures to be rendered. I ended up spending a lot more time on getting the loaded models to render. Initially, nothing was showing up on the viewport even with all the rendering code set up. I spent several hours staring at the code and trying to figure out what was different between this version and what we had from the cube. Finally, I changed tactics and decided to start from the working cube and swap out the hard coded cube data for the data given by the Assimp intermediate data structures.</li>
+        <li>I had some issues with getting textures to load from Assimp which will need future debugging.</li>
+        <li>I set out to load the Player model that Coco made but unfortunately it had too many vertices and was crashing the loading in a weird way. I tried to reduce the vertex count in blender but couldn’t figure it out. For the time being I’m loading smaller models like the Warren Bear and humans I found online.</li>
+    </ul>
+
+    <h2>What are your specific goals for the next week?</h2>
+    <ul>
+        <li>Fix up texture loading and rendering.</li>
+        <li>Debug why the object loading is failing to compile on Windows GitHub actions and verify that it works on lab computers. </li>
+        <li>Work with Coco and optimize the number of vertices to get the Player models loaded.</li>
+        <li>Start working on animating the movement of the player models.</li>
+    </ul>
+
+    <h2>What did you learn this week, if anything (and did you expect to learn it?)</h2>
+    <ul>
+        <li>Debugging graphics is hard. When something isn’t working it just doesn’t render and your screen is blank. You’re left to scramble to find which line of code is the offender within a sea of boilerplate and setup. I haven’t found great tools to observe the state of an OpenGL program and the existing functions to check errors are not too helpful.</li>
+        <li>Start from a known working state and make changes incrementally. When I started the model loading, I was trying to render things from scratch which was taking forever to debug. Starting from the cube rendering code really sped things up.</li>
+    </ul>
+
+    <h2>What is your individual morale (which might be different from the overall group morale)?</h2>
+    <ul>
+        <li>I’m feeling alright. I feel like my personal progress has been a bit slow but I’m confident that I can do what needs to be done to meet our goals.</li>
+    </ul>
+</body>
+
+</html>

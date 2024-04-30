@@ -44,3 +44,12 @@ a:hover {
 .group-report-imgs img {
    max-height: 500px;
 }
+
+table {
+   border-collapse: collapse;
+}
+
+td, th {
+   border: 1px solid black;
+   text-align: center;
+}

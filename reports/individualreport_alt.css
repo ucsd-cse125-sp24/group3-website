@@ -8,20 +8,28 @@ html,
 body {
    padding: 1.5%;
    font-family: Lato;
+   margin: 0;
+   padding: 0;
 }
+
 
 h1 {
    text-decoration: underline;
+   text-align: center;
 }
 
 .group-report-imgs img {
    max-height: 500px;
 }
 
+section {
+   padding: 1rem 3rem;
+}
+
+
 .invert {
    background-color: black;
    color: white;
    overflow-y: hidden;
    overflow-x: auto;
-   border: 1px solid red;
 }

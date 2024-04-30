@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torchlight Games</title>
+    <link rel="stylesheet" href="../individualreport_alt.css">
+
+<body>
+    <h1> Tyler's Week 3 Individual Report </h1>
+
+    <section>
+        <h2>What were your concrete goals for the week?</h2>
+        <ul>
+            <li>Finish my connection drop logic on the server side, so the server can reestablish connections between clients who drop from the game</li>
+            <li>Plan out and assign tasks for the coming milestones</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>What goals were you able to accomplish?</h2>
+        <ul>
+            <li>I finished my connection drop logic, so the server can now identify when a connection request is coming from a client who was previously connected, and get them reintegrated into the game. Also, a server will no longer try to send data through a broken socket.</li>
+            <li>
+                I helped game systems make a plan for how to divide out the next stage of work
+                <ul>
+                    <li>First, we finished the background/scaffolding required for the game systems setup. Gil already wrote a great writeup of the process in his report, so I won’t repeat it here.</li>
+                    <li>Then, we divided out the next stage of work for game systems
+                        <ul>
+                            <li>Gil -> Maze Environment</li> 
+                            <li>Ted -> Inventory/Item Logic</li>
+                            <li>Edward -> Player/Creature logic</li>
+                        </ul>
+                    </li>
+                    <li>Some of these weren’t as immediately important as some other tasks we had been planning to do, so Ted and Edward also expanded out to some of their other tasks they had been planning on doing, which was really good.</li>
+                </ul>
+            </li>
+            <li>Then, I jumped over to the graphics team and started working on UI since Anthony had shifted to model loading, and didn't have time to also do UI.</li>
+        </ul>
+    </section>
+
+    <section class="invert">
+        <h3>The UI Journey</h3>
+        <p>
+            Anthony had already done some work on UI getting imgui set up, but it was on an older branch because he had to drop the task and work on model loading because we determined that to be higher priority.
+        </p>
+        <p>
+            After setting up imgui and talking about it with David and Anthony, we quickly realized it wouldn’t really be what we wanted. It did not mesh neatly with how we have our window set up, and if we wanted to use it for the results we wanted we would have had to render everything inside of the imgui window, which seemed very strange. Also, we weren’t fans of the imgui “look” that every app that uses it seems to have.
+        </p>
+        <p>
+            Instead, we decided to unroll our own UI solution. I had a vision for how we could lay this out, and after bouncing ideas off David I had some initial design goals that tried to balance time spent and extensibility, since making a fully fledged UI library that was fully extensible would take far too much time, and would be a project on its own.
+            These design goals were:
+            <ul>
+                <li>
+                    Be able to load static images and render them to coordinates on screen, i.e. item icons, inventory borders, stuff like that
+                </li>
+                <li>
+                    Be able to dynamically render text from some font file, i.e. for item descriptions and menus, HUD information possibly
+                </li>
+            </ul>
+            At the most basic level, I planned that we would hardcode screen coordinates for all of these, but I also wanted to lay groundwork for a more robust flexbox-inspired system.
+        </p>
+
+        <p>
+            That was the plan, so far I successfully have
+            <ul>
+                <li>set up FreeType in our project, got it compiling on mac and linux, and added in code that loads in fonts to texture files that can be pulled from a hashmap on demand, indexed by Font, FontSize, and character to render.</li>
+                <li>Set up scaffolding for Widgets and Fonts, with a DynamicText Widget created that theoretically can render Fonts</li>
+            </ul>
+        </p>
+
+        <p>In my biased opinion the code looks good and I’ve set it up to hopefully be easy to use and extensible. However, I have not been able to get any fonts to render to the screen. I’ve been using <a href="https://learnopengl.com/In-Practice/Text-Rendering">this</a> article as a guide, but I must be doing something wrong because nothing is rendering. It is very hard to debug because I don’t really know how to observe the opengl state and see what is wrong. David has more experience with opengl so he took a look and noticed some things different than the article, but fixing those didn’t fix the main problem, although they almost certainly were problems. Tonight (Monday) I plan on grinding out the font code, so I may have more to update at tomorrow’s meeting, but i don’t know if I’ll be able to solve it quickly.</p>
+
+        <figure>
+            <img src="./assets/not_rendering_sadface.png" width="800">
+            <figcaption>The current state of font rendering, and the corresponding code that should be specifying the text. Note the distinct lack of "KSAD:AKSJD:L AJKSDLK JAS:LDKJ :ALSKJD :LKJ KL:J" being rendered to the screen.</figcaption>
+        </figure>
+    </section>
+
+    <section>
+        <h2>If the week went differently than you had planned, what were the reasons?</h2>
+        <ul>
+            <li>I didn’t have a super specific road map for the week. I knew that I would end up jumping somewhere else in the system after finishing my networking task because networking can be put on hold until it needs to be optimized (if it does), but I just didn’t know exactly where that would be.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>What are your specific goals for the next week?</h2>
+        <p>
+            I want to be able to do these things with my UI implementation 
+            <ul>
+                <li>Render a simple title screen, with menu options loaded and rendered from a font file</li>
+                <li>Render a simple lobby screen, with the text also loaded and rendered from a font file</li>
+                <li>Be able to load in a simple png/jpg onto the screen inside of the framework of my Widget object that I have created, and to just generally have the scaffolding set up so making a UI is as easy as specifying widgets to put on the screen. Ideally I’ll have some sort of flexbox layout, but it will be ok if I just have to hardcode coordinates.</li>
+            </ul>
+        </p>
+    </section>
+
+    <section>
+        <h2>What did you learn this week, if anything (and did you expect to learn it?)</h2>
+        <ul>
+            <li>I learned more about openGL and fonts in general.</li>
+            <li>I also learned how complicated fonts actually are, and that I actually know very little about how they work.
+            </li>
+            <img src="./assets/font.png">
+        </ul>
+    </section>
+
+    <section>
+        <h2>What is your individual morale (which might be different from the overall group morale)?</h2>
+        <ul>
+            <li>I am a little nervous about the font rendering situation because I spent a lot of time getting everything set up and then it just didn’t render anything. I am nervous I won’t be able to figure it out quickly and get far behind. But overall I am still feeling good about the project as a whole.</li>
+        </ul>
+    </section>
+</body>
+
+</html>
