@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torchlight Games</title>
+    <link rel="stylesheet" href="../individualreport.css">
+
+<body>
+    <h1> Gil's Week 5 Individual Report </h1>
+
+    <h2>What were your concrete goals for the week?</h2>
+    <ul>
+        <li> 
+            Gameplay
+            <ul>
+                <li>
+                    Fix weird Boost issue that occurred by updating Boost from 1.82.0 to 1.85.0 (a new error has popped up that doesn’t actually stop anything from building but is concerning). I’ll probably need Tyler’s help to figure this out.
+                </li>
+                <li>Improve the existing environment implementation (SolidSurface and using it):
+                    <ul>
+                        <li>Add anchor points (or at least a lower-corner anchor point) if they are helpful for easier level design.
+                        </li>
+                        <li>Discuss maze file design (this will affect other aspects of how the environment works in the ServerGameState since if we use the angband-y maze representation, we may not need to worry about anchor points) with the rest of the team and reach a consensus, then design and implement that system (i.e., angband-y maze representation, JSON file, maybe something else entirely?).
+                        </li>
+                        <li>Using this new system, create a small maze level proof-of-concept to replace the current “moving cube” client-server integration (moving towards Mini Milestone 2).
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    Work with Ted on integrating collision calculations to the ServerGameState. All objects that have a collider can collide with other objects that also have a collider. Need to integrate collision detection calculations + collision response to the ServerGameState::update() method.
+                </li>
+            </ul>
+        </li>
+        <li> 
+            Debugger (lower priority)
+            <ul>
+                <li> As the ServerGameState and SharedGameState change, the debugger goes out of date (new properties are added that don’t get printed in object to_string()s, for instance, and the debugger needs to recognize new properties).
+                    <ul>
+                        <li>Keep the debugger updated to the current implementation of ServerGameState and SharedGameState (all properties recognized).</li>
+                        <li>Add an ability for the user to simulate receiving player input events; these will be pushed to the debugger’s maintained event queue in order and handled when the user enters the step command (which calls ServerGameState::update()).
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>
+            Web (lower priority - if time allows; prioritize the above Gameplay goals as they’re the most critical to moving the project forward)
+            <ul>
+                <li>Contribute to the current website design (adding / modifying CSS)</li>
+            </ul>
+        </li>
+        <li>
+            Music (lowest priority - as mentioned in last week’s report, this may be a goal that’s too early to realize, as the game is still brewing its image / feel).
+            <ul>
+                <li>Come up with some musical ideas / leitmotifs for different points in the game. As the game is set in a sort of Mythological Greece, it may make sense to create leitmotifs for different Greek gods that may appear in the game as well as for the heroes that the players play as.
+                </li>
+                <li>Come up with musical ideas / themes / leitmotifs for: main menu theme, 3 players victory theme, Dungeon Master victory theme, and 3 stages of escaping the maze (green / yellow / red depending on how much time is left)). (For certain hero / DM abilities, it may make sense to play a short leitmotif (e.g. for power ups or special abilities)).
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+    <h2>What goals were you able to accomplish?</h2>
+
+    <p>
+        We were able to fix the weird Boost error by side-stepping it - we stayed at Boost version 1.82.0 and swapped std::optional for boost::optional, which could be serialized in version 1.82.0. This saved us quite a headache (as upgrading to 1.85.0 caused odd breakage that was inconsistent across machines, and who knows what else could’ve broken down the line - sticking with the version we started with felt like a much safer decision, especially since upgrading would’ve given us only marginal benefit (the ability to serialize std::optional))!
+    </p>
+
+    <p>Regarding the environment implementation improvements:</p>
+    <p>
+        Ted and I discussed how to implement anchor points; since we only really need two anchor points (an anchor point at the center of an object and an anchor point at its lower corner from which the x and z (horizontal) dimensions increase), we decided to add an additional vector for each Object that denotes its corner position. Ted implemented this as an additional corner vector of the SharedPhysics struct, and also added a corner field to the base Collider class. When the ServerGameState updates from one timestep to the next, each Object’s position must be updated by updating 3 vectors: its center position, its corner position, and its collider’s corner position (assuming it has a collider).
+    </p>
+
+    <p>
+        Regarding maze file representation - following our class meeting on Tuesday, we decided to go ahead with the ASCII Angband-style maze file representation. I implemented this as part of the ServerGameState as a loadMaze() method which reads the maze from a file and fills an intermediate representation which is a 2-D vector of GridCells. Then, loadMaze() iterates over the GridCell 2-D vector and adds an object in the game environment at the specified position (converting from the GridCell’s position (an (x, y) integer ordered pair) to Object position (an (x, y, z) float ordered triple)). Following Anthony’s comment on my PR for this, I have also updated this code so that instead of the maze file name and the name of the directory that stores maze files being specified in an hpp file, the name of the maze file to load (and the directory it’s in) can be specified in our game’s config.json file, meaning that maze environments can be swapped without needing to recompile the server. This has greatly simplified the problem of creating the maze - in mere minutes, a complex maze can be easily created and then for testing the developer can jump into the 3-D representation of the maze in the game to see if it’s as they expected.
+    </p>
+
+    <p>
+        What’s more, this can easily be extended to add additional GridCell types: at present, we only support 3, being # (a wall), . (an empty space), and @ (a spawn point, which is also an empty space). Later, we could specify to spawn monsters, items, fake walls, lava traps, etc. 
+    </p>
+
+    <p>
+        Additionally (now that I think about it), keeping the GridCell abstraction will likely not only be good for improving the collision detection algorithm (to only check object pairs that are within 1 GridCell of each other or something like this), but may likely also be good for implementing the Dungeon Master’s trap placement UI! (e.g., the Dungeon Master may be able to see a grid of GridCells and place traps discretely on this grid).
+    </p>
+
+    <p>
+        As this new implementation made maze-creation easy, I created a small maze with different sections in a few minutes (this is the maze you see in Tyler’s speed-run video).
+    </p>
+
+    <p>
+        Two things I did that weren’t listed as explicit goals were to: refactor the ObjectManager code and to integrate spawn points so that when a player joins a game their Player would be spawned at one of the spawn points randomly (this may be changed later so that players would be assigned to spawn points to avoid two players spawning in the same location).
+    </p>
+
+    <p>
+        I refactored the ObjectManager code in the following way:
+    </p>
+    <p>
+        First, each Object has two IDs: a global EntityID (its unique index among all objects) and a type-specific SpecificID (its unique index among objects of its type).
+    </p>
+    <p>
+        Originally, object creation was written like this (which requires explicit casting):
+    </p>
+    <p>
+        EntityID playerID = this->objects.createObject(ObjectType::Player);
+        Player * player = (Player *) this->objects.getObject(playerID);
+    </p>
+    <p>
+        I added type-specific object getters (e.g., Player * getPlayer(SpecificID id)) and changed createObject() to return an object’s SpecificID instead of its global EntityID, which allowed us to use the somewhat cleaner
+    </p>
+    <p>
+        SpecificID playerID = this->objects.createObject(ObjectType::Player);
+        Player * player = this->objects.getPlayer(playerID);
+    </p>
+    <p>
+        I also discussed with Tyler whether we should update the ObjectManager to use smart pointers as opposed to raw pointers. However, since using smart pointers adds a performance hit and all object allocation and deallocation is encapsulated within ObjectManager (i.e., a developer never needs to write new Object() or delete object, instead using ObjectManager::createObject() and ObjectManager::removeObject()), we should be able to easily contain object allocation-related memory leaks.
+    </p>
+    <p>
+        The only potential memory-related bug that I can see arising here would be dangling pointers; consider the following scenario:
+    </p>
+    <p>
+        Object * object = …; // create object
+        // … use object
+        this->objects.removeObject(object->globalID);
+        // object pointer is now dangling, must set to nullptr explicitly
+        object = nullptr;
+        To address this, I added an overload for ObjectManager::removeObject() which takes in an Object ** argument and sets the pointer pointed to by this double pointer to nullptr after successfully removing the Object being pointed to:
+        Object * object = …; // create object
+        // … use object
+        this->objects.removeObject(&object);
+        // object is now nullptr
+    </p>
+    <p>
+        Ted did an amazing job implementing and integrating collision detection - I discussed the problem with him and we came up with approaches, but he implemented it such that now the player can walk around the maze and collide correctly with walls.
+    </p>
+    <p> 
+        One issue that came up was that once the player collides with a wall, they can’t slide across the wall: this was caused by the player’s velocity vector containing some component pointing towards the wall which caused the player’s position in the next timestep to overlap with the wall’s collider; this was detected by the collision detection implementation and so the player position wasn’t updated. To fix this, if a collision between a moving object (the player in this case) and another object (the wall in this case)  is detected, additional collision detection is performed on the moving object’s position had it only moved in one axis (i.e., only moved in the x or z directions, which are our horizontal axes). If moving in x doesn’t cause a collision, the moving object’s position’s x component will still be updated, and the same logic is applied for z. This therefore allows sliding because the player’s velocity component that isn’t pointing at the wall is not affected, and so the player can slide along the wall. Note that this requires some simplifying assumptions: first, that colliders cannot rotate (i.e., the collider’s sides in a box collider are always parallel to the x or z axes) and that all walls are placed such that their sides are also always parallel to the x or z axes (if this weren’t the case, additional math would have to be performed to determine the part of the velocity vector of the moving object that is parallel to the wall and which part is perpendicular to the wall).
+    </p>
+    <p>
+        I wasn’t able to accomplish the lower priority goals, though I have started putting some ideas for the game’s premise (i.e., we’ve decided that the game is set in a Greek mythological setting, but still need to flesh out who the players are, why they are in the labyrinth, and who the Dungeon Master is. Currently, the premise that we might converge on is that the players have stolen godly powers from Olympus (or were secretly given these by three gods, one for each player). Zeus has found out about this and is outraged, and so decides to lock the players in a labyrinth. 
+    </p>
+    <p> Either Zeus feels like giving the players a chance or the three gods that gave the players their powers plead with him, but he allows some of the labyrinth exits to be opened for a short period of time to let the players attempt escape. But he won’t wait idly - he controls the labyrinth and may place traps, obstacles, and enemies to hinder the players’ escape. He has promised that should even a single player escape, all players can leave the labyrinth and keep their godly powers).</p>
+
+    <h2>If the week went differently than you had planned, what were the reasons?</h2>
+    <p>
+        I think this week went more-or-less according to plan and according to the goals I set up for myself last week.
+    </p>
+
+    <h2>What are your specific goals for the next week?</h2>
+    <p>We’ve completed mini milestone 2 - the next step is to complete the MVP. Based on our specifications for the MVP, we’ll need to add support for the Dungeon Master player and trap placement. Additionally, we should be looking at improving our collision detection algorithm since already we’ve had to increase the timestep length to 40 milliseconds to avoid server crashes due to the timestep length assert.
+    </p>
+    <!-- <li>Hence my goals for next week are the following: -->
+        <ul>
+            <li>
+                Gameplay
+                <ul>
+                    <li>
+                        Work with Ted to optimize the collision detection algorithm from the O(n^2) implementation we’re currently using.
+                        Some thoughts on how to do this:
+                            <ul>
+                                <li>As the Professor mentioned in our Tuesday meeting last week, we can use the GridCell abstraction to help with this. What I was thinking was maintaining a GridCell position -> vector<Object *> hashmap so that given a movable object, we can determine from its position the GridCell that it’s in and then from that get a list of objects that are also in that GridCell. (We’ll likely need to check 9 GridCells around the object’s future position, i.e. the GridCell it’s in and all adjacent GridCells, but this will still only grow linearly as opposed to quadratically)</li>
+                                <li>We may also be able to keep track of which objects are moving and only iterate over these (e.g., adding a vector<Object *> movingObjects field to the ServerGameState)</li>
+                            </ul>
+                    </li>
+                    <li>
+                        Add trap support to the ServerGameState and SharedGameState
+                        <!-- <ul> -->
+                            <li>
+                                We can leverage the GridCell abstraction here - though some traps may be part of the environment (read in the maze environment file), some may also be dynamically placed during the game by the Dungeon Master. We can place traps to cover an entire GridCell (or at least spawn inside of the GridCell, and each trap may have its own offset as to what part of the GridCell it will cover)
+                            </li>
+                        <!-- </ul> -->
+                    </li>
+                    <li>
+                        Add the Dungeon Master player type to the ServerGameState and SharedGameState
+                        <ul>
+                            <li>Some thoughts regarding the Dungeon Master:
+                                <ul>
+                                    <li>This player doesn’t need a player model and so doesn’t need to be rendered; it can be implemented with just a camera position somewhere above the maze such that they can see the entire maze.
+                                    </li>
+                                    <li>The Dungeon Master will likely need to be able to move the camera to look around the maze and zoom in / out (this can be implemented like RTS overhead view camera movement).
+                                        <li>This means the ceiling of the maze shouldn’t be rendered for the Dungeon Master.
+                                        </li>
+                                    </li>
+                                    <li>The Dungeon Master will need to be able to place traps. We can again leverage the GridCell representation here so that when placing a trap, a grid overlay shows up on the maze of where the trap may be placed; alternatively, when placing a trap, the Dungeon Master can place it discretely on GridCell positions (i.e., when moving the trap-to-be-placed around, it doesn’t move continuously, but rather “snaps” to the GridCell being pointed at)
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                Debugger (lower priority)
+                <li>
+                    Update the Debugger to the current state of the ServerGameState and SharedGameState.
+                    <ul>
+                        <li>This isn’t a small task - ideally, the debugger should allow the user to print / modify all ServerGameState properties.
+                        </li>
+                        <li>Another potential aspect of the debugger would be to allow the user to simulate receiving player input events in the debugger (the debugger maintains its own event queue)
+                        </li>
+                    </ul>
+                </li>
+            </li>
+            <li>
+                Music (low priority)
+                <ul>
+                    <li>Come up with some musical ideas / leitmotifs for different points in the game. As the game is set in a sort of Mythological Greece, it may make sense to create leitmotifs for different Greek gods that may appear in the game as well as for the heroes that the players play as.
+                    </li>
+                    <li>Come up with musical ideas / themes / leitmotifs for: main menu theme, 3 players victory theme, Dungeon Master victory theme, and 3 stages of escaping the maze (green / yellow / red depending on how much time is left)). (For certain hero / DM abilities, it may make sense to play a short leitmotif (e.g. for power ups or special abilities)).
+                    </li>
+                </ul>
+            </li>
+            <li>
+                Web (lowest priority)
+                <ul>
+                    <li>Contribute to the current website design (adding / modifying CSS)
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    <!-- </li> -->
+    <p>I have switched the Music and Web priorities as Music will be a part of the game and our website is at a fairly stable state.</p>
+
+    <h2>What did you learn this week, if anything (and did you expect to learn it?)</h2>
+    <p>I learned about collision detection - there’s a crazy depth of complexity here, depending on the variety of object collider shapes / rotations the engine allows. Thankfully, we’re keeping it very simple with very strong constraints.</p>
+    <p>I also refreshed on C++ file reading to implement the maze environment loading from a file.</p>
+    <p>Last (but not least!) I received good pointers for my approach in Tuesday’s guest lecture! I was happy to see that the (hopefully correctly followed) KISS approach is appropriate, but also to note that I should also not worry so much about unclean code. It was also interesting to learn about the nature of bug fixing and which bugs should be fixed in a large project - I took from it that there’s a sort of Amdahl’s Law for bug fixing - i.e., one must consider the percent of the time that the bug is relevant weighted by its effect and balance that with how much effort it would take to fix the bug (as well as the effort to fix any other behavior that depends on the bug, as we saw with the sorting example from the guest lecture).</p>
+
+    <h2>What is your individual morale (which might be different from the overall group morale)?</h2>
+    <p>I’m very happy that we finished mini milestone 2, and am excited to see the game take shape! I’m also very excited to complete the necessary work to implement our MVP, and to start “finding the fun” as was pointed out in Tuesday’s guest lecture!
+    </p>
+</body>
+
+</html>

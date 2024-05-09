@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torchlight Games</title>
+    <link rel="stylesheet" href="../individualreport.css">
+
+<body>
+    <h1> Ted's Week 5 Individual Report </h1>
+
+    <h2>What were your concrete goals for the week?</h2>
+    <ul>
+        <li>Work with Gil on integrating collision calculations amongst players and the maze.</li>
+        <li>
+            Work with Anthony and David to figure out how to render different shapes for testing serverside computations.
+        </li>
+        <li>Implement more general jumping for various platforms.</li>
+        <li>Implement simple Item class for post-MVP</li>
+    </ul>
+
+    <h2>What goals were you able to accomplish?</h2>
+    <ul>
+        <li>Using scaling with the current basic cube model, created different rectangles for the maze wall/floor/ceiling.
+        </li>
+        <li>I added on the colliders onto Gil’s mazeloader, which allowed us to create mazes that were fully collideable with the player model.
+        </li>
+        <li>Gil and I were able to divide the collision axis into x and z, which enabled us to implement “collide and slide” with walls. Collision is currently detected by naive O(n^2) algorithm checking with all objects.
+        </li>
+        <li>Fixed movement issues when looking up and down with mouse</li>
+    </ul>
+
+    <h2>If the week went differently than you had planned, what were the reasons?</h2>
+    <ul>
+        <li>We decided to not have much platforming in our game, settling with flat mazes in general, because it would be difficult to plan and make with our Angband maze builder. However, this allowed easier implementation with gravity. 
+        </li>
+        <li>
+            With testing collisions and making it feel smooth for the players, collision implementation took much longer than expected. 
+        </li>
+    </ul>
+
+    <h2>What are your specific goals for the next week?</h2>
+    <ul>
+        <li>Implement items that players can use (health potions  / swiftness potions / keys)
+        </li>
+        <li>Finally start implementing dungeon master and its interactive actions to the game
+        </li>
+        <li>Optimize the collision algorithm, as we will get more objects</li>
+    </ul>
+
+    <h2>What did you learn this week, if anything (and did you expect to learn it?)</h2>
+    <ul>
+        <li>I learned the “physics” part of the game can be simulated easily with a bunch of conditional statements and addition/subtraction. 
+        </li>
+        <li>Also learned that if my computer’s way of handling non-unicode characters is not in English, it is not friendly for building an application in general.</li>
+    </ul>
+
+    <h2>What is your individual morale (which might be different from the overall group morale)?</h2>
+    <ul>
+        <li>Now that we have the maze, movement, UI, and modeling,  it really feels like a game. I believe that we can make a great game!
+        </li>
+    </ul>
+</body>
+
+</html>

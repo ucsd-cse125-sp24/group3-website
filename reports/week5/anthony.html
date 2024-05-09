@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torchlight Games</title>
+    <link rel="stylesheet" href="../individualreport.css">
+
+<body>
+    <h1> Anthony's Week 5 Individual Report </h1>
+
+    <h2>What were your concrete goals for the week?</h2>
+    <ul>
+        <li>Fix up texture loading and rendering.</li>
+        <li>Debug why the object loading is failing to compile on Windows GitHub actions and verify that it works on lab computers. </li>
+        <li>Work with Coco and optimize the number of vertices to get the Player models loaded.</li>
+        <li>Start working on animating the movement of the player models.</li>
+    </ul>
+
+    <h2>What goals were you able to accomplish?</h2>
+    <ul>
+        <li>I was able to get lighting materials loaded from the models and integrated into our shaders. 
+            Additionally, I was able to render texture maps and we have a rocky Warren Bear.</li>
+        <li>I worked with Coco to get the player models she made to load into the game.
+            It turned out that the issue wasn’t that the models had too many vertices. 
+            Instead, the models that were being exported from her modeling program were OBJ files that were formatted slightly differently than what the ASSIMP model loading library was expecting. 
+            She found a compatibility export setting and we were able to load all the models (even the 700k vertex version) totally fine.
+        </li>
+        <li>I messed around with some simple light sources and was able to get some specular lighting effects on our models.</li>
+        <li>I was able to debug the Windows GitHub action issues and also tested all the model loading and textures on the lab computers</li>
+        <li>This wasn’t in my scope of work for this week, but I worked with Tyler to get two players to be able to see each other’s models move around in the game.</li>
+    </ul>
+    
+    <h2>If the week went differently than you had planned, what were the reasons?</h2>
+    <ul>
+        <li>I expected to spend a lot more time debugging why the player models weren’t loading but thankfully it was a straightforward fix once we sat down and looked at it.</li>
+        <li>Spent a lot more time on lighting materials and textures and realized there was a lot I didn’t fully understand.</li>
+    </ul>
+
+    <h2>What are your specific goals for the next week?</h2>
+    <ul>
+        <li>Set up light sources for the maze. My plan is to add torches along the walls (hopefully with some flickering effect)</li>
+        <li>Load textures for the player models and the floors/walls (right now the only textured model is the bear)</li>
+        <li>Make player models rotate when the user moves their mouse.</li>
+    </ul>
+
+    <h2>What did you learn this week, if anything (and did you expect to learn it?)</h2>
+    <ul>
+        <li>Textures and lighting are more complicated than I thought. But I’m learning a lot about the lighting models that are used to approximate real world lighting.</li>
+    </ul>
+
+    <h2>What is your individual morale (which might be different from the overall group morale)?</h2>
+    <ul>
+        <li>My morale is feeling a lot better now that we’ve crossed our mini-milestone 2. I’m reassured that we’re making good progress now that we have a game where you can walk\
+            around a maze, look at other players, and collide with the environment. With that said, I’m still a bit apprehensive since we\
+            still have a lot to do with making the game look nice (textures/lighting), animation and \
+            actual gameplay elements (traps, dungeon master)
+        </li>
+    </ul>
+</body>
+
+</html>

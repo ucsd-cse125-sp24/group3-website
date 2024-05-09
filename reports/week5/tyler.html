@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torchlight Games</title>
+    <link rel="stylesheet" href="../individualreport_alt.css">
+
+<body>
+    <h1> Tyler's Week 5 Individual Report </h1>
+    <P>
+    Editor's note: This is a tedious report from the editor but Tyler made a more interesting version available in Tyler's folder
+    Please check that first!
+    </P>
+    <section>
+        <h2>What were your concrete goals for the week?</h2>
+        <li>Use my UI library to render
+        <ul>
+            <li>a Title Screen</li>
+            <li>a Lobby Screen</li>
+            <li>sprites that we can load in from image files</li>
+        </ul>
+        </li>
+    </section>
+
+    <section>
+        <h2>What goals were you able to accomplish?</h2>
+        <ul>
+            <li>I was able to do most of my goals, plus some extra, and ended up doing a lot of minor changes to things I had already implemented
+            </li>
+            <li>
+                I ended up implementing these screens:
+                <ul>
+                    <li>Loading Screen</li>
+                    <li>Title Screen</li>
+                    <li>Lobby Browser Screen</li>
+                    <li>Lobby Screen</li>
+                    <li>In-game Escape Menu</li>
+                </ul>
+            </li>
+            <li>You can see some screenshots of these on the main page’s gallery</li>
+            <li>Also, with some immense help from David I was able to get Sprites rendered, however we haven’t implemented positioning for them yet. So I still need to go back and make it so you can specify coordinates at which to render the sprites.
+            </li>
+        </ul>
+    </section>
+    
+
+    <h2>If the week went differently than you had planned, what were the reasons?</h2>
+    <ul>
+        <li>At a high level things went as I expected, but there were a lot of smaller implementation level details that I hadn’t planned needing to solve.
+        </li>
+        <li>
+            There were an obnoxious amount of bugs dealing with rendering for Sprites that took the entire week on/off to solve. David and I kept alternating taking cracks at it, each finding new bugs and problems but not the root cause. It was very demoralizing because you would have an empty screen being rendered, then you would find a definite bug and fix it, only to find that you were still rendering an empty screen.
+        </li>
+        <li>I thought I had most of the high level design done in the previous week for the GUI library, but I realized quickly that I hated everything and it was all bad, so throughout the entire week I slowly tweaked things as I had to actually start using my interfaces and things annoyed me. I still kind of hate it, but I know it would be a herculean effort to redo everything and make it completely generalized for anything you might want to do, and what I have right now should be able to do ~90% of anything we would want to do, and if it can’t then we will just have to think of a creative way to work around it.
+        </li>
+    </ul>
+
+    <h2>What are your specific goals for the next week?</h2>
+    <ul>
+        <li>There are a couple more UI things that I need to touch up on, namely finalizing the code for positioning Sprites so that we can arbitrarily render them to coordinates on the screen, instead of them just being in the center all overlapping.
+        </li>
+        <li>In addition, I want to potentially start looking into optimizing the networking code slightly so that the Server only sends gamestate updates for objects that have changed. Therefore it won’t have to send down the information for each and every “Wall” object on every frame, which should save on a lot of bandwidth.
+        </li>
+        <li>The motivation for this came around after we ran into our first networking related bug where we had set aside a buffer of 10,000 bytes for incoming packets, which we finally exceeded once our mazes got larger than ~60 walls. This optimization won’t solve this problem because the initial load will still need to handle all the objects, but it still will be nice to have.
+        </li>
+        <li>However, the networking optimizations may not be the highest priority so after our Wednesday meeting at 7:30pm (which will be after this report is turned in) if we determine there is a more pressing task (like perhaps combat / traps / some other game system) that somebody needs to do, then I may put off the networking optimization.</li>
+    </ul>
+
+    <h2>What did you learn this week, if anything (and did you expect to learn it?)</h2>
+    <ul>
+        <li>I learned a lot about the OpenGL rendering pipeline. Before I was completely 100% phoning it in by copy pasting code from online, but now after being forced to parse it and understand what is going on in order to debug rendering problems I am starting to understand how things work.
+        </li>
+        <li>I also just got a lot of experience designing an API and then having to tweak it as I realized my initial assumptions about how I would use it turned out to be wrong.
+        </li>
+    </ul>
+
+    <h2>What is your individual morale (which might be different from the overall group morale)?</h2>
+    <ul>
+        <li>
+            I am simultaneously feeling really good about our progress and also worried that the amount of time left in the quarter is dwindling. I feel like for the past couple of weeks we’ve been really working well together as a team and I hope to help continue that into the coming weeks.
+        </li>
+    </ul>
+</body>
+
+</html>
+
+
+
+   

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torchlight Games</title>
+    <link rel="stylesheet" href="../individualreport.css">
+
+<body>
+    <h1> David's Week 5 Individual Report </h1>
+
+    <h2>What were your concrete goals for the week?</h2>
+    <ul>
+        <li>Get camera interaction fully connected to the server by sending events for camera position and orientation change to the server.
+        </li>
+        <li>Look into the text display code and figure out how to get it to render on the window.
+        </li>
+        <li>Start working on model representation and rendering on the client side.
+        </li>
+        <li>Go back and refactor some of the structure and callbacks for the client class.</li>
+    </ul>
+
+    <h2>What goals were you able to accomplish?</h2>
+    <ul>
+        <li>I was able to fully flesh out the camera implementation, and created a ChangeFacing event to change the facing direction of the player object on the server side. I also tied the camera movement to the event framework and was able to have that send the camera / player position as well. 
+        </li>
+        <li>I refactored the structure for the client class after doing some research on the OpenGL input callbacks, and was able to migrate much of the class from a hybrid static/object-oriented structure to a primarily object structure. I also made changes to the logic for when events were sent to the server, in order to avoid having a large number of different flags for button presses. 
+        </li>
+    </ul>
+
+    <h2>If the week went differently than you had planned, what were the reasons?</h2>
+    <ul>
+        <li>There were two slightly annoying bugs that I completely missed when first implementing the camera movement. The first was that when the player looked up or down, the vertical y-component was added to the movement vector, which was passed along to the server. This caused the player to mildly float up/down, which did not cause a significant vertical height change but did lead to some stuttering, especially when looking at the floor, since the player position would very slightly move beneath the floor and then get clamped back to the surface. The second bug was a mathematical error when computing the camera movement, and caused the player to move at an angle forwards and backwards when their camera was perfectly eye level. Luckily, both of these were minor fixes that did not require much change, just some math logic.
+        </li>
+        <li>I helped Tyler out with debugging some of the UI element logic. In particular, there were issues with rendering text and rendering sprites as textures, so I went through the client-side UI code and ended up finding the issues after playing around with different OpenGL options. For the text, it was because the draw mode was set to draw the wireframe instead a filled surface, so the text was unable to render, and for the sprites the issue was that we had a call to glEnable(GL_CULL_FACE), which essentially erased the surface of rendered texture.
+        </li>
+        <li> While I was working on the refactoring of the client class, I had to continuously update it as different feature branches were merged into the development branch, some of which conflicted with the client logic. One thing that I realized, especially after the Tanzin’s guest lecture on Tuesday, was that some of the work that I was doing was a bit superfluous, since the implementation was already working originally, and I decided to cut some planned changes and focus on more core aspects of the refactoring in order to move on to some more pressing features that needed to be implemented.
+        </li>
+    </ul>
+
+    <h2>What are your specific goals for the next week?</h2>
+    <ul>
+        <li>Since the model loading was just merged into the development branch, I plan on extending upon it and start implementing animation logic for the game. Since Anthony used the Assimp library, the first step is going to get familiar with the library representation for models, and see if there are any helpful tools that I can take advantage of for animation. I expect this to take up a decent chunk of next week’s development time, and will touch base with Coco to get some sample animations for testing.
+        </li>
+    </ul>
+
+    <h2>What did you learn this week, if anything (and did you expect to learn it?)</h2>
+    <ul>
+        <li>I ended up learning a lot about different OpenGL options, settings, and general pipeline for textures in particular, which I did not have a lot of experience with before. The LearnOpenGL website was particularly helpful in explaining a lot of the different aspects of rendering textures, and I also consulted the documentation to learn about the different internal functions and settings.
+        </li>
+        <li>I learned more about some C++ syntax (like optionals).</li>
+    </ul>
+
+    <h2>What is your individual morale (which might be different from the overall group morale)?</h2>
+    <ul>
+        <li>I am currently feeling like we are a bit behind, but I am very happy that we have the mini milestone 2 completed and are working towards getting the MVP fully implemented. I am a bit anxious especially with the animation, since I know it will be a hurdle to overcome, but am still excited to work on it nonetheless.
+        </li>
+    </ul>
+</body>
+
+</html>
