@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torchlight Games</title>
+    <link rel="stylesheet" href="../individualreport.css">
+</head>
+<body>
+    <h1>Gil's Week 6 Individual Report</h1>
+
+    <h2>What were your concrete goals for the week?</h2>
+    <p>From my previous report, my weekly goals were:</p>
+    <ul>
+        <li>
+            Gameplay
+            <ul>
+                <li>
+                    <p>
+                        Work with Ted to optimize the collision detection algorithm
+                        from the <code>O(n<sup>2</sup>)</code> implementation we're
+                        currently using. Some thoughts on how to do this:
+                    </p>
+                    <ul>
+                        <li>
+                            <p>
+                                As the Professor mentioned in our Tuesday meeting
+                                last week, we can use the <code>GridCell</code>
+                                abstraction to help with this. What I was thinking
+                                was maintaining a <code>GridCell</code> position to
+                                <code>vector&lt;Object *&gt;</code> hashmap so that,
+                                given a movable object, we can determine from its
+                                position the <code>GridCell</code> that it's in and
+                                then from that get a list of objects that are also
+                                in that <code>GridCell</code>. (We'll likely need to
+                                check 9 <code>GridCell</code>s around the object's
+                                future position, i.e., the <code>GridCell</code> it's
+                                in and all adjacent <code>GridCell</code>s, but this
+                                will still only grow linearly as opposed to
+                                quadratically)
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                We may also be able to keep track of which objects
+                                are moving and only iterate over these (e.g., adding
+                                a <code>vector&lt;Object *&gt; movingObjects</code>
+                                field to the <code>ServerGameState</code>)
+                            </p>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <p>
+                        Add trap support to the <code>ServerGameState</code> and
+                        <code>SharedGameState</code>
+                    </p>
+                    <ul>
+                        <li>
+                            <p>
+                                We can leverage the <code>GridCell</code> abstraction
+                                here - though some traps may be part of the
+                                environment (read in the maze environment file), some
+                                may also be dynamically placed during the game by the
+                                Dungeon Master. We can place traps to cover an entire
+                                <code>GridCell</code> (or at least spawn inside of
+                                the <code>GridCell</code>, and each trap may have its
+                                own offset as to what part of the 
+                                <code>GridCell</code> it will cover)
+                            </p>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <p>
+                        Add the Dungeon Master player type to the 
+                        <code>ServerGameState</code> and <code>SharedGameState</code>
+                    </p>
+                    <ul>
+                        <li>
+                            <p>
+                                Some thoughts regarding the Dungeon Master:
+                            </p>
+                            <ul>
+                                <li>
+                                    <p>
+                                    This player doesn't need a player model and so
+                                    doesn't need to be rendered; it can be
+                                    implemented with just a camera position somewhere
+                                    above the maze such that they can see the entire
+                                    maze.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p>
+                                        The Dungeon Master will likely need to be
+                                        able to move the camera to look around the
+                                        maze and zoom in / out (this can be
+                                        implemented like RTS overhead view camera
+                                        movement).
+                                    </p>
+                                    <ul>
+                                        <li>
+                                            <p>
+                                                This means the ceiling of the maze
+                                                shouldn't be rendered for the
+                                                Dungeon Master.
+                                            </p>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <p>
+                                        The Dungeon Master will need to be able to
+                                        place traps. We can again leverage the
+                                        <code>GridCell</code> representation here
+                                        so that when placing a trap, a grid overlay
+                                        shows up on the maze of where the trap may
+                                        be placed; alternatively, when placing a
+                                        trap, the Dungeon Master can place it 
+                                        discretely on <code>GridCell</code> positions
+                                        (i.e., when moving the trap-to-be-placed
+                                        around, it doesn't move continuously, but
+                                        rather "snaps" to the <code>GridCell</code>
+                                        being pointed at)
+                                    </p>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>
+            Debugger (lower priority)
+            <ul>
+                <li>
+                    <p>
+                        Update the Debugger to the current state of the 
+                        <code>ServerGameState</code> and 
+                        <code>SharedGameState</code>.
+                    </p>
+                    <ul>
+                        <li>
+                            <p>
+                                This isn't a small task - ideally, the debugger
+                                should allow the user to print / modify all
+                                <code>ServerGameState</code> properties.
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                Another potential aspect of the debugger would be to
+                                allow the user to simulate receiving player input
+                                events in the debugger (the debugger maintains its
+                                own event queue)
+                            </p>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>
+            Music (low priority)
+            <ul>
+                <li>
+                    <p>
+                        Come up with some musical ideas / leitmotifs for different
+                        points in the game. As the game is set in a sort of
+                        Mythological Greece, it may make sense to create leitmotifs
+                        for different Greek gods that may appear in the game as well
+                        as for the heroes that the players play as.
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        Come up with musical ideas / themes / leitmotifs for: main
+                        menu theme, 3 players victory theme, Dungeon Master victory
+                        theme, and 3 stages of escaping the maze (green / yellow
+                        / red depending on how much time is left). (For certain
+                        hero / DM abilities, it may make sense to play a short
+                        leitmotif (e.g., for power ups or special abilities))
+                    </p>
+                </li>
+            </ul>
+        </li>
+        <li>
+            Web (lowest priority)
+            <ul>
+                <li>
+                    <p>
+                        Contribute to the current website design (adding / modifying
+                        CSS)
+                    </p>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+    <h2>What goals were you able to accomplish?</h2>
+
+    <h2>If the week went differently than you had planned, what were the reasons?</h2>
+
+    <h2>What are your specific goals for next week?</h2>
+
+    <h2>What did you learn this week, if anything (and did you expect to learn it?)</h2>
+
+    <h2>What is your individual morale (which might be different from the overall
+        group morale)?
+    </h2>
+</body>
+</html>

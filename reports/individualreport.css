@@ -6,7 +6,8 @@
 
 html,
 body {
-   padding: 1.5%;
+   /* padding: 1.5%; */
+   padding: 1rem;
    font-family: Lato;
 }
 
@@ -24,4 +25,19 @@ h1 {
    overflow-y: hidden;
    overflow-x: auto;
    border: 1px solid red;
+}
+
+p {
+   /* 
+      A paragraph can be at most 100 characters wide, then overflows to the
+      next line (easier to read)
+   */
+   max-width: 100ch;
+   font-size: 1.1rem;
+}
+
+code {
+   color: #188038;
+   font-family: 'Courier New', Courier, monospace;
+   font-weight: bold;
 }
