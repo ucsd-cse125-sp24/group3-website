@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torchlight Games</title>
+    <link rel="stylesheet" href="../individualreport_alt.css">
+    <style>
+        .yipee {
+            position: absolute;
+            top: 20vh;
+            animation-name: move;
+            animation-duration: 2.2s;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: 1;
+        }
+
+        .no {
+            position: absolute;
+            top: 20vh;
+            animation-name: fall;
+            animation-duration: 1.5s;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: 1;
+        }
+
+        .gr {
+            position: absolute;
+            bottom: 0vh;
+            animation-name: shake;
+            animation-duration: 100ms;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+
+        .btn-container {
+            display: flex;
+            align-items: right;
+            justify-content: right;
+            margin-bottom: 10vh;
+
+            position: sticky;
+            min-height: 3em;
+            top: 1em;
+            padding-right: 1em;
+        }
+
+        button {
+            font-size: 30pt;
+            text-align: center;
+        }
+
+        @keyframes move {
+            from {
+                transform: translateX(0);
+            } 
+            to {
+                transform: translateX(30vw);
+            }
+        }
+
+        @keyframes fall {
+            from {
+                transform: translateY(-30vh);
+            } 
+            to {
+                transform: translateY(130vh);
+            } 
+        }
+
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+    </style>
+    <script>
+        var counter = 0;
+        var can_no = true;
+        var can_gr = true;
+        document.addEventListener("DOMContentLoaded", () => {
+            let btn = document.getElementById('btn');
+            btn.addEventListener("click", () => {
+                btn.insertAdjacentHTML("afterend", `
+                    <img class="yipee" style="left: ${Math.random() * 50}vw" id="yippee-${counter}"src="./assets/yipee-${counter % 20}.gif"></img> 
+                `);
+                setTimeout(() => {
+                    let sound = new Audio('./assets/yippee.mp3');
+                    sound.play();
+                }, 300);
+                const curr_val = counter;
+                setTimeout(() => {
+                    document.getElementById(`yippee-${curr_val}`).remove();
+                }, 2200);
+                counter++;
+            });
+
+            let btn_no = document.getElementById('btn-no');
+            btn_no.addEventListener('click', () => {
+                if (can_no) {
+                    can_no = false;
+                    let sound = new Audio('./assets/vine-boom.mp3');
+                    sound.play();
+                    btn.insertAdjacentHTML("afterend", `
+                        <img class="no" style="left: ${Math.random() * 50}vw" id="no" src="./assets/no.gif"></img> 
+                    `);
+                    setTimeout(() => {
+                        document.getElementById(`no`).remove();
+                        can_no = true;
+                    }, 1500);
+                }
+            });
+
+
+            let btn_gr = document.getElementById('btn-gr');
+            btn_gr.addEventListener('click', () => {
+                if (can_gr) {
+                    can_gr = false;
+                    let sound = new Audio('./assets/gr.mp3');
+                    sound.play();
+
+                    btn_gr.insertAdjacentHTML("afterend", `
+                        <img class="gr" style="right: 5vw; top:33vh" id="gr" src="./assets/gr.gif"></img> 
+                    `);
+
+                    setTimeout(() => {
+                        document.getElementById('gr').remove();
+                        can_gr = true;
+                    }, 1500);
+                }
+            });
+        });
+    </script>
+
+<body>
+    <h1> Tyler's Week 6 Individual Report </h1>
+
+    <section>
+        <h2>Rules</h2>
+        <p>
+            Whenever you see an emoji in the text, click on the corresponding button on the sidebar.
+        </p>
+        <p>
+            For a fully "immersive" experience, turn on audio :)
+        </p>
+    </section>
+
+    <div class="btn-container">
+        <div style="display: flex; flex-direction: column;">
+            <button id="btn">😊</button>
+            <button id="btn-no">😫</button>
+            <button id="btn-gr">😡</button>
+        </div>
+    </div>
+
+    <section>
+        <h2>What were your concrete goals for the week?</h2>
+        My concrete goals for the week were to
+        <ul>
+            <li>Finish the UI code so we could correctly position sprites</li>
+            <li>Optimize the networking code to only send deltas</li>
+            <li>Potentially implement new game system features as needed to reach our MVP goal.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>What goals were you able to accomplish?</h2>
+        a lot 😊
+    </section>
+    <section class="invert">
+        <h3>I. Sprite Positioning</h3>
+        <p>
+            I hate linear algebra. 😡. I couldn't get the matrix transformations to work for our sprite rendering. So I
+            made something terrible that works.
+        </p>
+        <img width="1000px" src="./assets/tyler_linear_algebra.png"></img>
+        <p>
+            We were able to merge this with Ted's inventory code and now display an inventory at the bottom of the screen.
+        </p>
+        <img width="1000px" src="./assets/tyler_inventory_tiny.png"></img>
+        <p> Uh oh, it's tiny. 😫 (And doesn't scale with different screen sizes...). I'll need to take a second pass at this eventually. But it's good enough for now.</p>
+        <h3>II. 1001 Ways to Die in the Maze</h3>
+        <p>
+            After getting the GUI finalized, after our meeting we split up the remaining tasks for the MVP, and I volunteered
+            to start working on traps.
+        </p>
+        <p>
+            I may have implemented a lot of traps. Players can thank me later.
+        </p>
+        <h4>Ceiling "Spike" Traps</h4>
+        <video width=1000 controls>
+            <source src="./assets/tyler_ceiling_spike.mp4" type="video/mp4"/>
+        </video>
+        <h4>Fireball Shooting Trap</h4>
+        <video width=1000 controls>
+            <source src="./assets/tyler_fireball_trap.mp4" type="video/mp4"/>
+        </video>
+        <h4>Arrow Shooting Trap & Floor Spike Trap</h4>
+        <video width=1000 controls>
+            <source src="./assets/tyler_arrow_plus_spike_trap.mp4" type="video/mp4"/>
+        </video>
+        <p>
+            This was the majority of my week, and there will still likely need to be a lot of tuning on the traps to balance them.
+            But overall I am very happy with how they turned out. 😊
+        </p>
+        <h3>III. Network Optimization</h2>
+        <p>
+            After only 2 hours of work I was able to optimize the networking code to split its update packets into chunks of 200 objects,
+            preventing crashes if the maze was larger than our 10MB recv buffer. Then, I made it so after the initial load
+            the server only sends updates for objects that changed.
+        </p>
+        <p>
+            It was surprisingly not hard at all! The only bug was I forgot to mark both objects in a collision as "updated", so
+            when you picked up a potion the game wouldn't send down the updated version of the potion that was no longer on the ground.
+            That wasn't hard to fix. 😊😊
+        </p>
+        <h3>IV. Randomly Generated Mazes</h3>
+        <p>
+            Everything up until this point took me to Tuesday morning at our guest lecture. Afterwards we had an impromptu group
+            meeting where we talked about a lot of ideas we were having. One thing I pitched was a plan I had been cooking in the
+            back of my head to do basic random generation for the mazes. Everyone thought it was a cool idea, so I went about
+            implementing it.
+        </p>
+        <p>
+            It took me over 5 hours of work before I even had anything "working". I went through probably 5 different architectures
+            before I finally settled on the final version. 
+        </p>
+        <p>
+            At a high level, the algorithm works by loading in a collection of 10x10, 20x20, and 40x40 maze rooms which can be fully
+            customized and designed by one of us. It then orchestrates this collection of rooms into a randomly generated maze. I
+            thought this would be good for a number of reasons:
+            <ol>
+                <li>It would actually make level design easier. Instead of one person having to design an entire maze from scratch, it
+                    could be a group effort with everyone contributing unique rooms with their own themes and traps and concepts.
+                </li>
+                <li>
+                    It isn't all or nothing. We can easily output our generated maze files as ascii files that can then be fed back
+                    into the program using the original maze loading code. This is probably what we'll do at the demo: generate a set
+                    of random mazes, verify that they are interesting and possible, and then use our favorites for the demo.
+                </li>
+                <li>
+                    Continuing with the previous point, even if this whole experiment blew up and we got mazes that 50% of the time
+                    were impossible, someone could still go back and use it as a template to design a big maze. We can still even do
+                    this if the mazes are always possible, if we want to spice them up a bit for the demo.
+                </li>
+            </ol>
+
+            In hindsight, I'm happy to say that the concern about generating impossible mazes doesn't seem to be an issue.
+        </p>
+        <p>
+            When we are designing rooms, they all have to be based off one of these three templates, based off of the desired size.
+        </p>
+<pre>
+####..####
+#........#
+#........#
+#........#
+..........
+..........
+#........#
+#........#
+#........#
+####..####
+</pre>
+
+<pre>
+####..########..####
+#..................#
+#..................#
+#..................#
+....................
+....................
+#..................#
+#..................#
+#..................#
+#..................#
+#..................#
+#..................#
+#..................#
+#..................#
+....................
+....................
+#..................#
+#..................#
+#..................#
+####..########..####
+</pre>
+<pre>
+####..########..########..########..####
+#......................................#
+#......................................#
+#......................................#
+........................................
+........................................
+#......................................#
+#......................................#
+#......................................#
+#......................................#
+#......................................#
+#......................................#
+#......................................#
+#......................................#
+........................................
+........................................
+#......................................#
+#......................................#
+#......................................#
+#......................................#
+#......................................#
+#......................................#
+#......................................#
+#......................................#
+........................................
+........................................
+#......................................#
+#......................................#
+#......................................#
+#......................................#
+#......................................#
+#......................................#
+#......................................#
+#......................................#
+........................................
+........................................
+#......................................#
+#......................................#
+#......................................#
+####..########..########..########..####
+</pre>
+
+        There are only a couple of rules you have to follow when designing rooms:
+        <ol>
+            <li>A room must be fully connected, i.e. entering from any entrypoint you should be able to exit from any other entrypoint.</li>
+            <li>The position of entry/exit points is standardized, so you cannot have an entry or exit elsewhere along the edge.</li>
+            <li>If you close off an entryway on one side, you must close off all of that side's entryways</li>
+        </ol>
+
+        <p>
+            Rule 1 and 2 are pretty restricive, but rule 3 actually gives a lot of flexibility when designing rooms. It did make the algorithm
+            more complex because it has to keep track of which entrypoints each room has, and correctly place them, but I think
+            the extra effort was worth it.
+        </p>
+
+        <p>
+            Beyond this there are various classes of rooms, which are specified by the file extension of a room file.
+            For example, to classify a room as "easy" you make the file extension .easy. This is the only extra manual
+            annoation the designer has to do besides creating the maze itself. The program can detect the room size and
+            entrypoints on its own.
+        </p>
+
+        <p>
+            All of the current classes of rooms are (and these are very much subject to change):
+            <ul>
+                <li>Empty (for testing)</li>
+                <li>Spawn</li>
+                <li>Easy</li>
+                <li>Medium</li>
+                <li>Hard</li>
+                <li>Loot</li>
+                <li>Exit</li>
+            </ul>
+
+            Eventually the algorithm will have some of policy for which types of rooms to place, but currently there are only
+            easy rooms and it always just selects a random easy room.
+        </p>
+
+        <p>
+            The pseudocode of the current algorithm is as follows:
+
+            <pre>
+                Place the spawn room at (0,0)
+                For each outgoing edge from the spawn room, append (new_coordinate, required_entryway) to the Frontier
+                While the frontier is not empty AND we have placed less than 30 rooms:
+                    Pop the front of the Frontier (queue)
+                    Pull a random easy room
+                    Calculate all possible orientations to attach this random room to the frontier (new_coordinate, required_entryway)
+                    If it is possible, place the room while appending new outgoing edges to the Frontier
+                    If it is not possible, repull another random room and try again.
+            </pre>
+
+            Note that it also does not currently place an exit, but with how the frontier is set up (and seems to be working) it
+            should just fit into the same framework except we specifically pull an Exit room.
+        </p>
+        <p>
+            One thing I will need to solve is the case when the maze terminates when the frontier is empty. This could potentially
+            mean that the maze is super small, and there wouldn't be a place to put an exit. I will have to think of a good way
+            to solve this.
+        </p>
+
+        <p>Here are a collection of mazes made throughout various phases of the algorithm:</p>
+        <figure>
+            <img width=600 src="./assets/tyler_gen_mazes_progress1.png">
+            <figcaption>This was the first generated maze. It was completely broken.</figcaption>
+        </figure>
+        <figure>
+            <img width=600 src="./assets/tyler_gen_mazes_progress2.png">
+            <figcaption>After fixing a bug (which I do not remember, since I didn't write it down!). The
+                mazes looked like this. Note that it is completely messed up. 😡
+            </figcaption>
+        </figure>
+        <figure>
+            <img width=600 src="./assets/tyler_gen_mazes_progress3.png">
+            <figcaption>
+                After realizing that <pre>a & b != 0</pre> is actually evaluated as <pre>a & (b != 0)</pre> instead of
+                <pre>(a & b) != 0</pre> like a sane person, I was able to get a real generated maze! 😊😊!! Note at this
+                point I was only placing 10x10 rooms, and it was only selecting from hallways leading the maze to be very
+                much full of walls. But this proves that the entrypoint calculation was working correctly
+            </figcaption>
+        </figure>
+        <p>
+            I then tried to make a <a href="./assets/tyler_gen_mazes_progress4.txt">big big maze </a>.
+            Holy crap, that looks cool! I should probably make sure this can be loaded in the game now that we have
+            optimized collision detection and networking!
+        </p>
+    </section>
+    <section>
+        <h3><b>UNDEFINED BEHAVIOR: The Journey...</b></h3>
+
+        <p>
+            This took 3 hours of my life, and I still have no answers. I was having a bug in the new collision detection code where it would only
+            crash on Release mode, and not Debug mode, which immediately made me think we were doing undefined
+            behavior that only caused a problem in -03. 😫. 
+        </p>
+        <p>
+            I pretty quickly found a place where I thought we were doing undefined behavior, and I fixed it but it
+            didn't fix the problem. I then spent so much time tracing through with print statements because gdb wouldnt
+            be helpful in release mode since it would have no debug symbols and optimized code is terrible to step through.
+            I ended up tracing down some insane behavior shown in this screenshot.
+        </p>
+        <img width=1000 src="./assets/WTF.png">
+        <p>
+            I think I need a PHD in C++ to understand what is going on here. I haven't really described the issue all that
+            much here because I still don't understand really what was going on. Later on I tried switching back to Debug
+            mode and it then started breaking in Debug mode too! I switched back to dev and it was broken in Dev too! I then
+            went back to my branch and killed the CMakeCache.txt and it was still broken!
+        </p>
+        <p>
+            And in my final moments when I had finally given up, it magically started working after changing nothing new besides 
+            placing print statements???
+        </p>
+        <p>
+            I haven't ran into this again on my maze branch, but it apparently is still a problem in dev because Anthony ran into
+            it the following morning. We're still investigating at the time of writing.
+        </p>
+    </section>
+    <section class="invert">
+        <p>
+            Oh yeah, I was going to test if the program could handle the large maze, and that was why I recompiled in Release in the 
+            first place!
+        </p>
+        <p>
+            After some minor optimizations (removing a foreach through every Object (including walls) that 
+            called a virtual function which did nothing (because they were walls))
+            it worked perfectly fine. That was anticlimatic.
+        </p>
+        <p>
+            After some further development and bugs I got 20x20 and 40x40 mazes to generate correctly. 
+            <a href="./assets/tyler_gen_mazes_progress8.txt">Here</a> is the most recent maze I generated:
+        </p>
+
+        <p>
+            There is still a lot of work to be done, but I'm really proud of what I've gotten working so far.
+            Now it will just be tuning the policy it uses to place rooms, and designing cool and unique rooms.
+            And also probably squashing the bugs I haven't found yet as I find them.
+        </p>
+    </section>
+    <section>
+        <h2>If the week went differently than you had planned, what were the reasons?</h2>
+        <p>
+            I fell down rabbit holes I didn't know existed. I had a lot more free time this week, so I did a lot more
+            work than I expected, which was super fun.
+        </p>
+    </section>
+
+    <section>
+        <h2>What are your specific goals for the next week?</h2>
+        <p>
+            I want to get the maze generation algorithm fully fleshed and have a good selection of rooms to choose from that
+            are cool. I also would like to get other team members to submit some of their own creations.
+        </p>
+    </section>
+
+    <section>
+        <h2>What did you learn this week, if anything (and did you expect to learn it?)</h2>
+        <p>
+            I learned a lot about procedural generation. And C++. Unfortunately, mostly C++ (😫) and the fun land of undefined behavior.
+        </p>
+    </section>
+
+    <section>
+        <h2>What is your individual morale (which might be different from the overall group morale)?</h2>
+        <p>
+            My morale is very high 😊! Everyone on the team is making great progress, and it's honestly crazy to see
+            everything come together.
+        </p>
+    </section>
+
+    <section>
+        <h2>Conclusion</h2>
+        <p>
+😊😊😊😊😊😊
+😊😊😊😊😊😊
+😊😊😊😊😊😊
+😊😊😊😊😊😊
+😊😊😊😊😊😊
+😊😊😊😊😊😊
+😊😊😊😊😊😊
+😊😊😊😊😊😊
+😊😊😊😊😊😊
+😊😊😊😊😊😊
+😊😊😊😊😊😊
+😊😊😊😊😊😊
+😊😊😊😊😊😊
+😊😊😊😊😊😊
+😊😊😊😊😊😊
+        </p>
+    </section>
+</body>
+
+</html>
