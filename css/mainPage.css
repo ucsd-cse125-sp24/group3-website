@@ -3,6 +3,11 @@
   src: url('Lato-Regular.ttf') format('truetype');
 }
 
+@font-face {
+  font-family: 'Title';
+  src: url('Lightning\ Bolt.ttf') format('truetype');
+}
+
 html,
 body {
   width: 100%;
@@ -25,12 +30,12 @@ body {
 }
 
 .game-title {
-  font-size: 7rem;
-  color: #ffffff;
+  font-size: 10rem;
   display: flex;
   font-weight: bold;
   justify-content: center;
-  font-family: Lato;
+  font-family: 'Title';
+  color: #e6cd15;
   margin-bottom: -150px;
   animation: magic 2s 0.45s ease-in-out infinite alternate;
 }
