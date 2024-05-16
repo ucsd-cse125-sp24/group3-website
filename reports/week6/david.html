@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torchlight Games</title>
+    <link rel="stylesheet" href="../individualreport.css">
+</head>
+<body>
+    <h1>David's Week 6 Individual Report</h1>
+
+    <h2>What were your concrete goals for the week?</h2>
+
+    <ul>
+        <li>
+            <p>
+                My main goal for this week was to get started on animation and implementing a basic animation manager, with the ability to read in animation data using Assimp and play it during the game phase. I had planned to meet up with Coco once the animation code was fully implemented so that we could test animating her models inside the game.
+            </p>
+        </li>
+    </ul>
+
+    <h2>What goals were you able to accomplish?</h2>
+
+    <ul>
+        <li>
+            <p>
+                I have a basic structure of the animation and animation manager classes, and played around with modifying the shader code to support animation. Currently, there are some issues with the implementation that require debugging, which is my primary focus in the upcoming week.
+            </p>
+        </li>
+    </ul>
+
+    <h2>If the week went differently than you had planned, what were the reasons?</h2>
+
+    <ul>
+        <li>
+            <p>
+                Although I have worked with implementing animation in a previous project, and largely implemented the classes and data structures myself for keyframes and animation data, this time we are using Assimp as a model and animation data loader, and it has some different structures and tools that I needed to get familiar with before starting on the implementation. There were several issues with the way I ws adding data to the Vertex structs in the Model class, and currently I believe the issue stems from shader uniforms not properly being assigned values.
+            </p>
+        </li>
+        <li>
+            <p>
+                There was a bug with the client code that caused it to segfault in the loading screen and lobby menu, which I had some trouble identifying and blocked me from making progress for a bit. Eventually, I was able to figure it out and fix the issue.
+            </p>
+        </li>
+        <li>
+            <p>
+                I also briefly met with Edward to get him up to speed on the camera implementation and code, since he was starting work on getting the Dungeon Master logic and movement working.
+            </p>
+        </li>
+    </ul>
+
+    <h2>What are your specific goals for next week?</h2>
+
+    <ul>
+        <li>
+            <p>
+                My goal for next week is to finish up the basic animation code and get it fully working. Afterwards, I plan on extending the implementation to support multiple concurrent animations playing at once, as well the ability to interpolate and blend between animations to give the game a smoother feel.
+            </p>
+        </li>
+        <li>
+            <p>
+                I also want to take a closer look at the implementation and see if I can find any areas for optimization, since I am a bit worried that it will become very compute heavy especially when rendering animations for the various players, enemies, and traps at the same time.
+            </p>
+        </li>
+    </ul>
+
+    <h2>What did you learn this week, if anything (and did you expect to learn it?)</h2>
+
+    <ul>
+        <li>
+            <p>
+                I learned a lot about the Assimp library, as well as how they structure animation data and read it in from data files.
+            </p>
+        </li>
+    </ul>
+
+    <h2>What is your individual morale (which might be different from the overall
+        group morale)?
+    </h2>
+
+    <ul>
+        <li>
+            <p>
+                I am feeling stressed about getting the animation code completed in a timely manner, especially since the demo is only a few weeks away. However, I think the overall group progress is great, and the game is quickly getting more and more features.
+            </p>
+        </li>
+    </ul>
+</body>
+</html>
