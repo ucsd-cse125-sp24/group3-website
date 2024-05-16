@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torchlight Games</title>
+    <link rel="stylesheet" href="../individualreport.css">
+</head>
+<body>
+    <h1>Anthony's Week 6 Individual Report</h1>
+
+    <h2>What were your concrete goals for the week?</h2>
+
+    <ul>
+        <li>
+            <p>
+                Set up light sources for the maze. My plan is to add torches along the walls (hopefully with some flickering effect)
+
+            </p>
+        </li>
+        <li>
+            <p>
+                Load textures for the player models and the floors/walls (right now the only textured model is the bear)
+
+            </p>
+        </li>
+        <li>
+            <p>
+                Make player models rotate when the user moves their mouse.
+ 
+            </p>
+        </li>
+    </ul>
+
+    <h2>What goals were you able to accomplish?</h2>
+
+    <ul>
+        <li>
+            <p>
+                I got the torch light sources set up with an “eerie” pulsating effect. The torches are just cubes right now until we get the torch models added. But they’re using the Blinn lighting model that warmly illuminates the hallways of the maze.
+
+            </p>
+        </li>
+        <li>
+            <p>
+                I was able to update some of the client side code to be able to calculate the size/bounding box of the models we are loading in with ASSIMP. This was important so that the server could specify the dimensions of the model and the client could find the right scale factor to go from the original model dimensions to the one the server requested.
+
+            </p>
+        </li>
+        <li>
+            <p>
+                I also added bounding boxes that get rendered around the models to tell where the collisions are.
+
+            </p>
+        </li>
+    </ul>
+
+    <h2>If the week went differently than you had planned, what were the reasons?</h2>
+
+    <ul>
+        <li>
+            <p>
+                Getting the dimensions of the models took a bit longer. ASSIMP gives us bounding boxes but only the bounding box of each mesh. I had to add some functionality to consolidate these into one larger bounding box.
+
+            </p>
+        </li>
+        <li>
+            <p>
+                Lighting took a bit longer since I had some bugs in my shader that took a while to debug. I realized that the shader loading code was printing a shader compiling error message that was getting lost in the wall of logs. Instead I changed it to throw an exception and actually print out the shader compiler error which helped me track down some of the compiling issues. From there it was just more debugging where I started from the working shaders and iterated on them until I got the desired lighting effects.
+
+            </p>
+        </li>
+        <li>
+            <p>
+                Another issue I ran into with the torchlights was the lack of dynamic memory in the shader program. I don’t know for sure how many torches the entire maze will have and the shader needs to statically allocate a defined amount of memory for the light source data. To solve this, I allocated a static number of light sources in the shader. On every draw call I sort the light sources by distance from the player’s position. Then, I pass the first x number of light sources to the shader.
+            </p>
+        </li>
+        <li>
+            <p>
+                Once I added the torchlights, I realized that they were visible through walls since the fragment shader will just shade things with color from the light as long as it’s a close distance away from the light source. It doesn’t take into account walls or objects that are blocking light. I went down a rabbit hole and realized that I need to add shadow maps to the objects to prevent the stuff behind them from being shaded from the light.  I tried adding rudimentary shadows to the walls but I didn’t get enough time to debug what was going wrong.
+
+            </p>
+        </li>
+    </ul>
+
+    <h2>What are your specific goals for next week?</h2>
+
+    <ul>
+        <li>
+            <p>
+                Finish integrating torchlights into the maze generation. The plan is to have characters in the maze file that describe torches that point in each of the 4 directions (up, down, left, right).
+            </p>
+        </li>
+        <li>
+            <p>
+                Add shadow maps to not have lights go through walls
+
+            </p>
+        </li>
+        <li>
+            <p>
+                Add a blinding light at the end of the maze to signify the ending. 
+
+            </p>
+        </li>
+        <li>
+            <p>
+                Load in the Sun God model to be used as the source of fireballs.
+
+            </p>
+        </li>
+        <li>
+            <p>
+                Sync up with Coco to get the models/textures she’s been working on into the game.
+
+            </p>
+        </li>
+    </ul>
+
+    <h2>What did you learn this week, if anything (and did you expect to learn it?)</h2>
+
+    <ul>
+        <li>
+            <p>
+                Lighting and shadows are pretty complicated and I learned more about the various lighting models.
+ 
+            </p>
+        </li>
+    </ul>
+
+    <h2>What is your individual morale (which might be different from the overall
+        group morale)?
+    </h2>
+
+    <ul>
+        <li>
+            <p>
+                My morale is relatively low. There’s still a lot of work to be done with the look and feel of the maze but I think we can grind it out to make it look great. 
+            </p>
+        </li>
+    </ul>
+
+</body>
+</html>

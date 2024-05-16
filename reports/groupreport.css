@@ -42,6 +42,16 @@ li:first-child {
    margin-left: 0.5rem;
 }
 
+.normal-list {
+   display: grid;
+   gap: 1rem;
+}
+
+.normal-list li {
+   margin-left: 0;
+   margin-right: 0;
+}
+
 a:link {
    color: #000000;
    text-decoration: none;
