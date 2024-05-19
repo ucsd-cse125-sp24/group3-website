@@ -42,10 +42,11 @@ body {
 .game-title {
   font-size: 7rem;
   display: flex;
+  color: gold;
   /* font-weight: bold; */
   justify-content: center;
+  text-shadow: 4px 4p 2px black;
   font-family: 'Title';
-  color: black;
   margin-bottom: -150px;
   /* animation: magic 3s 0.45s ease-in-out infinite alternate; */
 }
