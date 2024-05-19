@@ -32,12 +32,12 @@ body {
 .game-title {
   font-size: 10rem;
   display: flex;
-  font-weight: bold;
+  /* font-weight: bold; */
   justify-content: center;
   font-family: 'Title';
   color: #e6cd15;
   margin-bottom: -150px;
-  animation: magic 2s 0.45s ease-in-out infinite alternate;
+  animation: magic 3s 0.45s ease-in-out infinite alternate;
 }
 
 @keyframes magic {
