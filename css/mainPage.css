@@ -3,6 +3,16 @@
   src: url('Lato-Regular.ttf') format('truetype');
 }
 
+@font-face {
+  font-family: 'Title';
+  src: url('spqr.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Logo';
+  src: url('AncientModernTales-a7Po.ttf') format('truetype');
+}
+
 html,
 body {
   width: 100%;
@@ -24,15 +34,21 @@ body {
   margin-top: -135px;
 }
 
+.logo {
+  font-family: Logo;
+  font-size: 3rem;
+}
+
 .game-title {
   font-size: 7rem;
-  color: #ffffff;
   display: flex;
-  font-weight: bold;
+  color: gold;
+  /* font-weight: bold; */
   justify-content: center;
-  font-family: Lato;
+  text-shadow: 4px 4p 2px black;
+  font-family: 'Title';
   margin-bottom: -150px;
-  animation: magic 2s 0.45s ease-in-out infinite alternate;
+  /* animation: magic 3s 0.45s ease-in-out infinite alternate; */
 }
 
 @keyframes magic {
