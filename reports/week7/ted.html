@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torchlight Games</title>
+    <link rel="stylesheet" href="../individualreport.css">
+</head>
+<body>
+    <h1>Ted's Week 7 Individual Report</h1>
+
+    <h2>What were your concrete goals for the week?</h2>
+
+    <ul>
+        <li>
+            <p>
+                Implement items that players can use (health potions  / swiftness potions / keys)
+
+            </p>
+        </li>
+        <li>
+            <p>
+                Finally start implementing dungeon master and its interactive actions to the game
+            </p>
+        </li>
+        <li>
+            <p>
+                Optimize the collision algorithm, as we will get more objects
+
+            </p>
+        </li>
+    </ul>
+
+    <h2>What goals were you able to accomplish?</h2>
+
+    <ul>
+        <li>
+            <p>
+                To implement different items for the game, I first implemented an inventory system that each player has, which can store items within the maze.
+            </p>
+        </li>
+        <li>
+            <p>
+                With Tyler’s help, I made the GUI for the inventory hotbar, which shows the currently selected item slot and item name.
+
+            </p>
+        </li>
+        <li>
+            <p>
+                Added use / drop keys for the different items, and also added drop all items upon death mechanism (this is not yet pushed to dev)
+
+            </p>
+        </li>
+        <li>
+            <p>
+                Items that are currently added are health potion, nausea potion (walk inverse), fire wand (throws fireball), and heal wand (throws heal orb).
+
+            </p>
+        </li>
+    </ul>
+
+    <h2>If the week went differently than you had planned, what were the reasons?</h2>
+
+    <ul>
+        <li>
+            <p>
+                As I used the majority of my time implementing the system above, I did not have much time to do dungeon master or the collision algorithm. Luckily, Edward created a nice-looking dungeon master implementation and Gil optimized the collision algorithm. 
+            </p>
+        </li>
+        <li>
+            <p>
+                The collision for the items along with general collision detection had problems with repeated variables amongst multiple classes. This led us to decide on having another major refactor of how we store the positions and dimensions of the objects, and how we use them for collision. This was also led by Gil. Great job from him.
+
+            </p>
+        </li>
+    </ul>
+
+    <h2>What are your specific goals for next week?</h2>
+
+    <ul>
+        <li>
+            <p>
+                To add more items within the game (keys that can open doors, other consumables for players, and weapons for combat)
+            </p>
+        </li>
+        <li>
+            <p>
+                Implement different enemies (possibly ai for them)
+            </p>
+        </li>
+    </ul>
+
+    <h2>What did you learn this week, if anything (and did you expect to learn it?)</h2>
+
+    <ul>
+        <li>
+            <p>
+                I learned (again) that getting the basic system down for any components of the game will be the most difficult part. After we make a working system, adding onto the system is so much easier.
+            </p>
+        </li>
+    </ul>
+
+    <h2>What is your individual morale (which might be different from the overall
+        group morale)?
+    </h2>
+
+    <ul>
+        <li>
+            <p>
+                Better than ever. Now that we have a game, we only need to add contents and make it look better!
+            </p>
+        </li>
+    </ul>
+</body>
+</html>

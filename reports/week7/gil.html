@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torchlight Games</title>
+    <link rel="stylesheet" href="../individualreport.css">
+</head>
+<body>
+    <h1>Gil's Week 7 Individual Report</h1>
+
+    <h2>What were your concrete goals for the week?</h2>
+    <p>From my previous report, my weekly goals were:</p>
+    <ul>
+        <li>
+            Gameplay
+            <ul>
+                <li>
+                    <p>
+                        Work with Ted to optimize the collision detection algorithm
+                        from the <code>O(n<sup>2</sup>)</code> implementation we're
+                        currently using. Some thoughts on how to do this:
+                    </p>
+                    <ul>
+                        <li>
+                            <p>
+                                As the Professor mentioned in our Tuesday meeting
+                                last week, we can use the <code>GridCell</code>
+                                abstraction to help with this. What I was thinking
+                                was maintaining a <code>GridCell</code> position to
+                                <code>vector&lt;Object *&gt;</code> hashmap so that,
+                                given a movable object, we can determine from its
+                                position the <code>GridCell</code> that it's in and
+                                then from that get a list of objects that are also
+                                in that <code>GridCell</code>. (We'll likely need to
+                                check 9 <code>GridCell</code>s around the object's
+                                future position, i.e., the <code>GridCell</code> it's
+                                in and all adjacent <code>GridCell</code>s, but this
+                                will still only grow linearly as opposed to
+                                quadratically)
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                We may also be able to keep track of which objects
+                                are moving and only iterate over these (e.g., adding
+                                a <code>vector&lt;Object *&gt; movingObjects</code>
+                                field to the <code>ServerGameState</code>)
+                            </p>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <p>
+                        Add trap support to the <code>ServerGameState</code> and
+                        <code>SharedGameState</code>
+                    </p>
+                    <ul>
+                        <li>
+                            <p>
+                                We can leverage the <code>GridCell</code> abstraction
+                                here - though some traps may be part of the
+                                environment (read in the maze environment file), some
+                                may also be dynamically placed during the game by the
+                                Dungeon Master. We can place traps to cover an entire
+                                <code>GridCell</code> (or at least spawn inside of
+                                the <code>GridCell</code>, and each trap may have its
+                                own offset as to what part of the 
+                                <code>GridCell</code> it will cover)
+                            </p>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <p>
+                        Add the Dungeon Master player type to the 
+                        <code>ServerGameState</code> and <code>SharedGameState</code>
+                    </p>
+                    <ul>
+                        <li>
+                            <p>
+                                Some thoughts regarding the Dungeon Master:
+                            </p>
+                            <ul>
+                                <li>
+                                    <p>
+                                    This player doesn't need a player model and so
+                                    doesn't need to be rendered; it can be
+                                    implemented with just a camera position somewhere
+                                    above the maze such that they can see the entire
+                                    maze.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p>
+                                        The Dungeon Master will likely need to be
+                                        able to move the camera to look around the
+                                        maze and zoom in / out (this can be
+                                        implemented like RTS overhead view camera
+                                        movement).
+                                    </p>
+                                    <ul>
+                                        <li>
+                                            <p>
+                                                This means the ceiling of the maze
+                                                shouldn't be rendered for the
+                                                Dungeon Master.
+                                            </p>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <p>
+                                        The Dungeon Master will need to be able to
+                                        place traps. We can again leverage the
+                                        <code>GridCell</code> representation here
+                                        so that when placing a trap, a grid overlay
+                                        shows up on the maze of where the trap may
+                                        be placed; alternatively, when placing a
+                                        trap, the Dungeon Master can place it 
+                                        discretely on <code>GridCell</code> positions
+                                        (i.e., when moving the trap-to-be-placed
+                                        around, it doesn't move continuously, but
+                                        rather "snaps" to the <code>GridCell</code>
+                                        being pointed at)
+                                    </p>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>
+            Debugger (lower priority)
+            <ul>
+                <li>
+                    <p>
+                        Update the Debugger to the current state of the 
+                        <code>ServerGameState</code> and 
+                        <code>SharedGameState</code>.
+                    </p>
+                    <ul>
+                        <li>
+                            <p>
+                                This isn't a small task - ideally, the debugger
+                                should allow the user to print / modify all
+                                <code>ServerGameState</code> properties.
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                Another potential aspect of the debugger would be to
+                                allow the user to simulate receiving player input
+                                events in the debugger (the debugger maintains its
+                                own event queue)
+                            </p>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>
+            Music (low priority)
+            <ul>
+                <li>
+                    <p>
+                        Come up with some musical ideas / leitmotifs for different
+                        points in the game. As the game is set in a sort of
+                        Mythological Greece, it may make sense to create leitmotifs
+                        for different Greek gods that may appear in the game as well
+                        as for the heroes that the players play as.
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        Come up with musical ideas / themes / leitmotifs for: main
+                        menu theme, 3 players victory theme, Dungeon Master victory
+                        theme, and 3 stages of escaping the maze (green / yellow
+                        / red depending on how much time is left). (For certain
+                        hero / DM abilities, it may make sense to play a short
+                        leitmotif (e.g., for power ups or special abilities))
+                    </p>
+                </li>
+            </ul>
+        </li>
+        <li>
+            Web (lowest priority)
+            <ul>
+                <li>
+                    <p>
+                        Contribute to the current website design (adding / modifying
+                        CSS)
+                    </p>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+    <h2>What goals were you able to accomplish?</h2>
+
+    <p>
+        The goals I had listed out here were fairly different than what I accomplished
+        this week - this is partially because some goals I listed were performed by
+        different people as we had assigned tasks in our Wednesday meeting (i.e.,
+        Tyler implemented traps and Edward implemented the Dungeon Master), and also
+        an issue in our <code>Object</code> position + dimensions design required a
+        significant refactoring which I implemented on Friday. I was assigned to
+        optimize the collision detection code this week as well as implementing the
+        victory condition.
+    </p>
+
+    <h3>Object Position + Dimensions Refactoring</h3>
+
+    <p>Regarding <code>Object</code> position + dimensions:</p>
+
+    <p>
+        On Thursday (May 9, 2024), we encountered odd bugs where the position of the
+        player model wasn't being rendered properly (and bugs with the colliders not
+        acting properly). This was largely due to the fact that <code>Object</code>
+        position + dimensions data was duplicated in three different places that
+        needed to be kept in sync:
+    </p>
+
+    <ol>
+        <li>
+            Server-Side
+            <ol>
+                <li>
+                    <p>
+                        In the <code>SharedPhysics</code> struct (stored in
+                        <code>Object.physics</code>)
+                    </p>
+                    <ol>
+                        <li>
+                            <p>
+                            <code>position</code> vector (absolute position of an
+                            <code>Object</code>'s center point)
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                            <code>corner</code> vector (absolute position of an
+                            <code>Object</code>'s lower corner from which the
+                            <code>x</code> and <code>z</code> values increase)
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                            <code>dimensions</code> vector (a vector whose components
+                            define the dimensions of a rectangular prism that outlines
+                            the <code>Object</code> in the game world)
+                            </p>
+                        </li>
+                    </ol>
+                </li>
+                <li>
+                    <p>
+                        In the <code>Collider</code> class
+                    </p>
+                    <ol>
+                        <li>
+                            <p>
+                                <code>corner</code> vector (absolute position of an
+                                <code>Object</code>'s collider's lower corner)
+                            </p>
+                            <ol>
+                                <li>
+                                    <p>
+                                        This must <strong>ALWAYS</strong> be equal to
+                                        <code>object.physics.shared.corner</code> for
+                                        correct behavior
+                                    </p>
+                                </li>
+                            </ol>
+                        </li>
+                    </ol>
+                </li>
+            </ol>
+        </li>
+        <li>
+            Client-Side
+            <ol>
+                <li>
+                    <p>
+                        In the <code>Model</code> class (I am not sure if these are
+                        stored exactly as described, but the "notion" of these exists
+                        in some way)
+                    </p>
+                    <ol>
+                        <li>
+                            <p>
+                                <code>dimensions</code> vector (a vector whose components
+                            define the dimensions of a rectangular prism that outlines
+                            the given <code>Model</code>)
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                <code>scale</code> vector (a vector multiplier for
+                                resizing the <code>Model</code>)
+                            </p>
+                        </li>
+                    </ol>
+                </li>
+                <li>
+                    <p>
+                        <strong>Note:</strong> For correctness, it must <strong>ALWAYS</strong>
+                        be the case that
+                        <code>Object.physics.shared.dimensions = Model.dimensions * Model.scale</code>
+                    </p>
+                </li>
+            </ol>
+        </li>
+    </ol>
+
+    <p>
+        As you can see, this is a fairly horrendous duplication of state which must be kept in sync - we could make little progress adding new objects and features so long as this design was in place. The goal therefore was to refactor the game code in such a way that object position and dimensions data was not duplicated at all (or at least duplicated as least as possible and encapsulated by setters and getters if such duplication was necessary to avoid desyncing dependent fields).
+    </p>
+
+    <p>
+        The idea was to ensure that only the <code>ServerGameState</code> dictates
+        object position and dimensions; the most natural place for this is within the
+        <code>SharedPhysics</code> struct maintained by every <code>Object</code>.
+        Hence, <code>SharedPhysics</code> maintained its <code>corner</code> position
+        and <code>dimensions</code> fields (we did away with the <code>position</code>
+        vector, as it must always be kept in sync with <code>corner</code> and can
+        be easily calculated from <code>corner</code> and <code>dimensions</code> by
+        the formula <code>position = corner + 0.5f * dimensions</code>)
+    </p>
+
+    <p>
+        It then followed that the <code>Collider</code> shouldn't maintain any
+        duplicated state (it should simply use the position and dimensions data from
+        an <code>Object</code>'s <code>SharedPhysics</code> struct); this meant that
+        the <code>Collider</code> doesn't hold state at all, so I refactored the
+        <code>Collider</code> class into an <code>enum</code> that specified the kind
+        of <code>Collider</code> to use (box or sphere) and placed the collider overlap
+        code into global functions (as opposed to <code>Collider</code> methods).
+    </p>
+
+    <p>
+        An issue arose though with deciding object dimensions - e.g., when the server
+        creates a player, the dimensions of the <code>Player</code> object in the
+        <code>ServerGameState</code> must match the dimensions of the rendered model
+        (otherwise, the player could appear squashed / stretched on the client). For
+        this, I added a <code>ModelType</code> enum to each <code>Object</code> which
+        specified its rendering model, and upon object creation, given a specific
+        <code>ModelType</code>, the <code>Object</code>'s dimensions are correctly
+        initialized using a hashmap that maps from <code>ModelType</code> to
+        <code>glm::vec3</code> where the stored vector is the known dimensions of the
+        model (which are presently hardcoded in a <code>constants.hpp</code> file).
+    </p>
+
+    <p>
+        This refactor required changing a significant amount of code, but I believe that the code is now much cleaner, more readable, and more extensible, and we’ve likely avoided many difficult bugs as a result.
+    </p>
+
+    <h3>Collision Detection Optimization</h3>
+
+    <p>
+        Regarding the collision detection optimization - I have been able to implement
+        the <code>O(n)</code> optimization for the collision detection algorithm using
+        the <code>GridCell</code> abstraction. Here was my approach to doing so:
+    </p>
+
+    <p>
+        I added a hashmap that maps from a <code>GridCell</code> position to a vector
+        of <code>Object</code>s that overlap with the <code>GridCell</code> to the
+        <code>ObjectManager</code> maintained by the <code>ServerGameState</code>.
+        The idea here is that, if for any given <code>Object</code>, the
+        <code>ServerGameState</code> can know the <code>GridCell</code>(s) it currently
+        occupies and for any given <code>GridCell</code> it knows the list of 
+        <code>Object</code>s that currently overlap it, we can narrow down the list of
+        objects that could collide with an object to the list of objects within
+        <code>GridCell</code>s that the object overlaps with.
+    </p>
+
+    <p>
+        Hence, for this to work, each <code>Object</code> must also maintain a list
+        of positions of <code>GridCell</code>s that it overlaps with, and we must
+        have a way to map from the <code>Object</code>'s position and dimensions to
+        the list of <code>GridCell</code>s that it overlaps.
+    </p>
+
+    <p>
+        Each <code>Object</code> therefore maintains a
+        <code>vector&lt;glm::ivec2&gt; gridCellPositions</code> of the positions of
+        all <code>GridCell</code>s it overlaps with. However, this addition runs
+        counter to the object position + dimensions refactor, given that now this vector
+        must be kept in sync with the object's position and dimensions. I can see no
+        way to avoid this, however, and so I have added a <code>moveObject()</code>
+        method to the <code>ObjectManager</code> class which ensures that the
+        <code>GridCell</code> position to <code>vector&lt;Object *&gt;</code>
+        hashmap and the relevant <code>Object</code>'s <code>gridCellPositions</code>
+        vector are correctly updated once an <code>Object</code> is moved. When moving
+        an object, this method should be used to avoid desyncing the <code>Object</code>'s
+        position / dimensions with the list of <code>GridCell</code>s it occupies
+        (desyncing could lead to false negatives / positives in collision detection).
+    </p>
+
+    <p>
+        How can we tell which <code>GridCell</code>(s) an <code>Object</code>
+        occupies? This is simply done by considering the <code>Object</code>'s
+        presence as a rectangle over the <code>x-z</code> plane (which is our
+        horizontal plane, since <code>y</code> is our vertical axis). We can define
+        this rectangle using the <code>x-z</code> components of the <code>Object</code>'s
+        <code>corner</code> position (which is its lower corner from which the 
+        <code>x</code> and <code>z</code> values increase) and the <code>x-z</code>
+        components of the <code>Object</code>'s <code>corner</code> position plus the
+        <code>x-z</code> components of the <code>Object</code>'s <code>dimensions</code>;
+        these give two points on the <code>x-z</code> plane that are on the diagonal
+        of the rectangle. If we can map these two points to two containing <code>GridCell</code>s,
+        we can determine the range of <code>GridCell</code>s that the object overlaps.
+        A key piece of information is the <code>GridCell</code> width which defines how
+        wide each <code>GridCell</code> is within the 3-D game world, so that we can
+        map 2-D <code>(x, y)</code> <code>GridCell</code> coordinates to 3-D
+        <code>(x_w, y_w, z_w)</code> game world coordinates.
+    </p>
+
+    <p>
+        Firstly, consider a <code>GridCell</code> with 2-D coordinates <code>(x, y)</code>.
+        A 3-D game world position <code>(x_w, y_w, z_w)</code> is within that
+        <code>GridCell</code> <emphasis>iff</emphasis>
+    </p>
+
+    <p>
+        <code>x * grid_cell_width &lt;= x_w &lt; (x + 1) * grid_cell_width</code>
+    </p>
+    <p>
+        and
+    </p>
+    <p>
+        <code>y * grid_cell_width &lt;= z_w &lt; (y + 1) * grid_cell_width</code>
+    </p>
+
+    <p>(This ensures that every 3-D position is mapped to exactly one <code>GridCell</code>)</p>
+
+    <p>
+        Therefore, given a 3-D game world position <code>(x_w, y_w, z_w)</code>, we
+        can determine the coordinates of the <code>GridCell</code> containing it via
+    </p>
+
+    <p>
+        <code>x = floor(x_w / grid_cell_width)</code> and
+        <code>y = floor(z_w / grid_cell_width)</code>
+    </p>
+
+    <p>
+        This calculation is performed by a static method in the <code>Grid</code>
+        class and deriving the range of <code>GridCell</code> positions covered between
+        two points is performed by an additional static method in the <code>Grid</code>
+        class.
+    </p>
+
+    <p>
+        I have used this to reduce the search volume for objects that could collide with
+        a given object in the <code>ServerGameState::updateMovement()</code> method
+        where collision detection and resolution is performed. Given that the number
+        of <code>Object</code>s that overlap the same <code>GridCell</code>s as a 
+        given object is likely bounded by some constant <code>x</code> such that
+        <code>x &lt;&lt; n</code>, the amount of work required to perform collision
+        detection for a single <code>Object</code> is <code>O(1)</code> and therefore
+        the total amount of work to perform collision detection for all objects is
+        <code>O(n)</code>, meaning that now our collision detection code scales
+        linearly.
+    </p>
+
+    <p>
+        I have also updated our collision resolution code so that, whenever two objects collide, their pair is added into a set of collided objects so that collision resolution can be run exactly once for two colliding objects; this was an issue as our collision detection code may require testing for collisions multiple times between two specific objects (this is done so that, if a collision occurs, we may be able to save some of the movement components to allow for sliding across walls for instance).
+    </p>
+
+    <p>
+        Regarding the exit condition - this is something that I thought would be fairly straightforward to implement. It still is in a certain conception (I outlined a particular approach in which this could be done) but what exactly is our exit condition is at present somewhat in debate, so I’m holding off on implementing this for now (we will discuss it as a team in our Wednesday meeting this week). However, this is a necessary part of the MVP and so I’d like to implement it sooner than later, so hopefully in our Wednesday meeting this week we shall iron out exactly how our exit condition should behave (or at least agree on an initial idea and see if it works).
+    </p>
+
+    <p>
+        I wasn't able to complete the lower priority goals for the debugger this week.
+    </p>
+
+    <p>
+        I have made some progress regarding the game’s music, but it’s still fairly limited at this point (I have a theme idea for the main menu).
+    </p>
+
+    <p>
+        I am in charge of compiling this week's reports and have added some new css
+        (e.g., for <code>code</code> representation / list items), but these are minor
+        changes.
+    </p>
+
+    <h2>If the week went differently than you had planned, what were the reasons?</h2>
+
+    <p>
+        As mentioned above, our issues with the object position / dimensions required a significant refactor before additional progress could be made, and additionally some of the tasks I laid out for myself were assigned to other teammates in our Wednesday team meeting; because of this, my actual task list this week was significantly different than the goals I outlined for myself last week.
+    </p>
+
+    <h2>What are your specific goals for next week?</h2>
+
+    <p>
+        The goal now is to finish the MVP by next week. By my estimation, the gameplay features presently missing are only two:
+    </p>
+
+    <ul>
+        <li>
+            <p>
+                A playable Dungeon Master (this is in the works with some excellent work by Edward)
+            </p>
+        </li>
+        <li>
+            <p>
+                A victory condition (i.e., once a victory is achieved by either the players or the Dungeon Master, the game should end and correctly display who won)
+            </p>
+        </li>
+    </ul>
+
+    <p>
+        Our victory condition is at present in debate - here are two potential approaches:
+    </p>
+
+    <ol>
+        <li>
+            <p>
+                The original approach (and the one for which I currently have an approach planned) is that when the game starts, a timer starts counting down (e.g., a 5 minute timer). If at least one player manages to escape the labyrinth (by colliding with an open exit) within this time limit, the players win. Otherwise, the Dungeon Master wins.
+            </p>
+            <ol>
+                <li>
+                    <p>
+                        I dislike this approach for two reasons:
+                    </p>
+                    <ol>
+                        <li>
+                            <p>
+                                Firstly, the Dungeon Master becomes somewhat more passive - the DM can win simply by the incompetence of the 3 players failing to find an exit on their own. In such a case, the DM doesn’t have to do anything besides waiting for the timer to run out.
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                Secondly, a timer increases the stress on the players to rush towards an exit as fast as possible and so discourages them from exploring the maze.
+                            </p>
+                        </li>
+                    </ol>
+                </li>
+            </ol>
+        </li>
+        <li>
+            <p>
+                A different approach is as follows: there is no timer in the game. Instead, the game is broken off into phases (Green / Yellow / Red / Black). The game starts in the Green phase. The Dungeon Master has a constant supply of mana that increases / regenerates at a given rate every second. Using mana, the DM can either attack the players (via throwing a lightning bolt since the DM is Zeus), place traps, or proceed to the next phase. When the phase becomes Black, all the dungeon exits close and if no player managed to escape by then, the DM wins.
+            </p>
+            <ol>
+                <li>
+                    <p>
+                        This can make the gameplay more strategic from the DM’s point of view as the DM must constantly make decisions regarding how to spend mana. Only waiting for the mana to go up enough to proceed to the Black phase may give the players enough time to find the exit by themselves unimpeded by traps the DM could’ve placed. However, placing traps means it’ll take more time to progress to the next phase, giving the players more time to explore the maze.
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        We could even take this further by letting the DM invest in structures that either generate mana faster or act as additional mana storage; these are placed in the maze somewhere and if a player finds them they can try to destroy them to slow down the DM’s efforts.
+                    </p>
+                </li>
+            </ol>
+        </li>
+    </ol>
+
+    <p>So with this in mind, here are my goals for next week:</p>
+
+    <ul>
+        <li>
+            <p>
+                Gameplay
+            </p>
+            <ul>
+                <li>
+                    <p>
+                        After settling on a victory condition implementation, implement this victory condition so that the game can correctly end when either side satisfies their victory condition.
+                    </p>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <p>Music</p>
+            <ul>
+                <li>
+                    <p>Compose the main menu theme</p>
+                </li>
+                <li>
+                    <p>Compose the theme(s) for exploring the maze (can use the Green / Yellow / Red indicators for level of urgency)</p>
+                </li>
+                <li>
+                    <p>
+                        Compose victory themes (for the players and for the DM)
+                    </p>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <p>Debugger (low priority)</p>
+            <ul>
+                <li>
+                    <p>
+                        Update the debugger to allow the user to access all fields of
+                        the <code>ServerGameState</code> and the <code>SharedGameState</code>
+                    </p>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+    <h2>What did you learn this week, if anything (and did you expect to learn it?)</h2>
+
+    <p>
+        I learned (to my dismay) that <code>std::pair</code> does not have a built-in
+        hash function in C++ for use in <code>unordered_set</code>. However, with
+        Tyler's help and the usefulness of Boost, I learned how to create a custom
+        hash function for <code>std::pair</code> and pass it to <code>unordered_set</code>.
+    </p>
+
+    <h2>What is your individual morale (which might be different from the overall
+        group morale)?
+    </h2>
+    
+    <p>
+        Somewhat stressed - I somehow need to make a lot of progress with the game music, and I’m still not 100% sure where to go with it. However, the game is progressing nicely towards the MVP and already is fairly fun to go through, picking up potions and avoiding traps.
+    </p>
+</body>
+</html>
