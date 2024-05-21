@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torchlight Games</title>
+    <link rel="stylesheet" href="../individualreport.css">
+
+<body>
+    <h1> Anthony's Week 7 Individual Report </h1>
+
+    <h2>What were your concrete goals for the week?</h2>
+    <ul>
+        <li>
+            <p>Finish integrating torchlights into the maze generation. The plan is to have characters in the maze file that describe torches that point in each of the 4 directions (up, down, left, right).</p>
+        </li>
+        <li>
+            <p>Add shadow maps to not have lights go through walls</p>
+        </li>
+        <li>
+            <p>Add a blinding light at the end of the maze to signify the ending. </p>
+        </li>
+        <li>
+            <p>Load in the Sun God model to be used as the source of fireballs.</p>
+        </li>
+        <li>
+            <p>Sync up with Coco to get the models/textures she’s been working on into the game.</p>
+        </li>
+    </ul>
+
+    <h2>What goals were you able to accomplish?</h2>
+    <ul>
+        <li>
+            <p>Torches with flickering animations are integrated into the maze generation. You can specify which direction you want the torch to face.</p>
+        </li>
+        <li>
+            <p>Synced up with Coco and started on getting textures for walls of maze.</p>
+        </li>
+    </ul>
+
+    <h2>If the week went differently than you had planned, what were the reasons?</h2>
+    <ul>
+        <li>
+            <p>I spent way too much time on optimizing the process of deciding which torchlights to select when rendering lighting effects. As mentioned last week, the shader can only have a static amount of memory. This means that I can’t just pass all the light sources from the entire maze to the shader. I have to be selective and sort the light sources by their distance from the player. </p>
+        </li>
+        <li>
+            <p>Initially I went with the naive approach of calling std::sort across all light sources for every frame render call. This worked fine for my testing maze but quickly broke with tens of torches. Instead, I opted to have this sorting happen every few seconds instead of every frame. I created a timer that would fire in a few seconds and update the light sources closest to the player. Long story short, this kinda worked but performance still wasn’t great. I spent a good chunk of time iterating with this (various data structures and comparators). This approach wasn’t ideal since it broke the flickering animations. The server was sending down the current flickering state every tick but now the client was only updating it every few seconds. </p>
+        </li>
+        <li>
+            <p>I iterated through some more optimized versions that ran on every draw call. It got to a decent state which I was somewhat satisfied with. </p>
+        </li>
+        <li>
+            <p>However, the final straw for this client side updating approach was when I tested it with procedural maze generation and it completely broke. There were way  too many objects to iterate through now that the mazes had exploded in size. </p>
+        </li>
+        <li>
+            <p>Then, I went back to the drawing board and moved all this computation to the server side. Now the server sorts all the torches on every tick and sends each player a handful of torches that are nearby. I also paired this with an optimization where the client only renders objects within a certain radius away from the player.</p>
+        </li>
+    </ul>
+
+    <h2>What are your specific goals for the next week?</h2>
+    <ul>
+        <li>
+            <p>Load in the wall textures that Coco has made. Will probably need to mess with the texture coordinates of the wall model for the texture to look correct.</p>
+        </li>
+        <li>
+            <p>Load in the 3 different textured player models that Coco has created. </p>
+        </li>
+        <li>
+            <p>Load in the Sun God model to be used as the source of fireballs.</p>
+        </li>
+        <li>
+            <p>Add a blinding light at the end of the maze to signify the ending. </p>
+        </li>
+        <li>
+            <p>Add shadow maps to not have lights go through walls</p>
+        </li>
+    </ul>
+
+
+
+    <h2>What did you learn this week, if anything (and did you expect to learn it?)</h2>
+    <ul>
+        <li>
+            <p>I learned a lot about some C++ STL containers and how comparators worked…</p>
+        </li>
+    </ul>
+
+
+
+    <h2>What is your individual morale (which might be different from the overall group morale)?</h2>
+    <ul>
+        <li>
+            <p>I’m not feeling amazing about my progress right now. This torch business has taken way longer than expected and I still want to shadow maps which could open up a whole can of worms. I’m planning on prioritizing loading in player/world models and textures first so that we have the look of our game nailed down. With that said, I haven’t lost hope yet and the group as a whole is making great progress towards reaching our goals.</p>
+        </li>
+    </ul>
+</body>
+
+</html>
