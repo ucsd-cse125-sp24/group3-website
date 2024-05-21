@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torchlight Games</title>
+    <link rel="stylesheet" href="../individualreport.css">
+
+<body>
+    <h1> David's Week 7 Individual Report </h1>
+
+    <h2>What were your concrete goals for the week?</h2>
+    <ul>
+        <li>
+            <p>My goal for this week was to get the basic animation code fully working and able to successfully animate based on an input animation file.</p>
+        </li>
+        <li>
+            <p>Once that was complete, my goal was to extend the implementation of the animation manager to support some new features:</p>
+            <ul>
+                <li>
+                    <p>Manage & update several different animations at the same time</p>
+                </li>
+                <li>
+                    <p>Store an association between animations and object types & actions</p>
+                </li>
+                <li>
+                    <p>Ability to blend animations between one another for more seamless transitions</p>
+                </li>
+                <li>
+                    <p>Interpolate between animation keyframes to create smoother rendering</p>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+    <h2>What goals were you able to accomplish?</h2>
+    <ul>
+        <li>
+            <p>I was able to get the animation code set up and running. I talked with Coco and tried her animations, but there were some issues with the way the animations were exported from blender since they were not working as intended. We tried to troubleshoot this, but it seems that this is a semi-common issue with exporting animations, and ended up causing some strange model transformations and scalings in the animations.</p>
+            <ul>
+                <li>
+                    <p>I tried using some files from mixamo.com just to verify that the animation code itself was not causing the issue, and it was able to render those animations properly. Coco ended up importing an animation and skeleton into her own model, and when I tried that out it worked fine, but specifically for the .fbx file format and not .dae.</p>
+                </li>
+                <li>
+                    <p>I also found that I was able to animate the model based on two different files: one that only held the model’s data (i.e. vertices, bones, meshes), and one that held animation keyframe data. In the future, I can use this to apply different animations on a base model, which will also be helpful for blending.</p>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <p>I modified the shared object class to include a field that denotes the current ‘animation state’ of the object, i.e.walking, running, jumping, etc. This was done so that it would be easier for the animation manager to know which animations to keep track of, and to know when to play each animation for each entity.</p>
+        </li>
+    </ul>
+
+    <h2>If the week went differently than you had planned, what were the reasons?</h2>
+    <ul>
+        <li>
+            <p>While the animation code worked for a test model and animation, because it didn’t work with Coco’s model, I did some research on model and animation file formats, and whether or not they were supported by Assimp. I also went back and reviewed the animation code to make sure that there weren't issues popping up there, and overall I did spend a bit more time trying to troubleshoot everything and make sure the basic animation system was working properly.</p>
+        </li>
+        <li>
+            <p>Another ‘issue’ that I ran into was when I was trying to add an AnimState field to the SharedObject. Upon compiling, I was getting an odd boost::archive error, but it turns out it was because I only recompiled the client, so the server had no idea what the AnimState was.</p>
+        </li>
+    </ul>
+
+    <h2>What are your specific goals for the next week?</h2>
+    <ul>
+        <li>
+            <p>My specific goals for next week are to continue working on animation manager and implement some of the features mentioned above.</p>
+        </li>
+        <li>
+            <p>Of these tasks, I think that extending the animation manager to support multiple concurrent animations is the most important part, since that is critical for the multiplayer aspect of the game and seeing players interacting with the surrounding world and with one another.</p>
+        </li>
+    </ul>
+
+
+
+    <h2>What did you learn this week, if anything (and did you expect to learn it?)</h2>
+    <ul>
+        <li>
+            <p>I learned a bit of blender and how animations can be edited and keyframed.</p>
+        </li>
+        <li>
+            <p>I learned a bit more about Assimp, our model / animation importer library, and the way it imports and represents model / animation data internally.</p>
+        </li>
+    </ul>
+
+
+
+    <h2>What is your individual morale (which might be different from the overall group morale)?</h2>
+    <ul>
+        <li>
+            <p>Currently I am feeling a bit nervous that the animation work is behind, especially since there’s only around 2 weeks left until the demo.</p>
+        </li>
+    </ul>
+</body>
+
+</html>

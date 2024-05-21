@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torchlight Games</title>
+    <link rel="stylesheet" href="../individualreport.css">
+
+<body>
+    <h1> Tyler's Week 7 Individual Report </h1>
+
+    <p>no silly antics this week 🙁</p>
+
+    <h2>What were your concrete goals for the week?</h2>
+    <ul>
+        <li>
+            <p>Finalize the maze generation algorithm and get some basic rooms designed</p>
+        </li>
+    </ul>
+
+    <h2>What goals were you able to accomplish?</h2>
+    <ul>
+        <li>
+            <p>I did a lot of tuning for the random generation.</p>
+            <ul>
+                <li>
+                    <p>With Gil and Ted adding in the “Orb” system, I added new functionality to the maze generation algorithm to place the exit room as far from the spawn as possible, and then place the Orb room as far from the exit as possible.</p>
+                </li>
+                <li>
+                    <p>I added a system to specify the ratios of different room types. For example, the current ratio is 7 Easy for every 5 Medium for every 3 hard for every 1 loot room.</p>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <p>I implemented an enemy and spawning system</p>
+            <ul>
+                <li>
+                    <p>currently there is only one enemy type: a Slime</p>
+                </li>
+                <li>
+                    <p>The Slimes break into two smaller slimes on death, until they reach a minimum size</p>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <p>I started on a directional audio system</p>
+            <ul>
+                <li>
+                    <p>I have done a lot of architectural planning and development, but haven’t actually run it yet. However, by the time of our meeting I’m expecting to at least be able to play simple sounds localized at a position sent by the server.</p>
+                </li>
+            </ul>
+        </li>
+
+    </ul>
+
+    <h2>If the week went differently than you had planned, what were the reasons?</h2>
+    <ul>
+        <li>
+            <p>I didn’t have too many expectations since I wasn’t exactly sure what the highest priority tasks were, and I adapted as the week went on.</p>
+        </li>
+        <li>
+            <p>One thing I didn’t expect was to also help out with some other tasks, such as Edwards Dungeon Master code and Anthony’s Torch code</p>
+            <ul>
+                <li>
+                    <p>I helped Edward debug a crash related to the trap creation code I set up previously</p>
+                </li>
+                <li>
+                    <p>I helped Anthony refactor the algorithm to determine which Torches are the nearest to the player. Doing this on the client side was causing a lot of slowdown, so I helped him move it to the server side and send down a new EventType so the Server tells each client which light sources to consider for rendering. I also helped optimize the render loop by only rendering objects that are close to the player</p>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+    <h2>What are your specific goals for the next week?</h2>
+    <ul>
+        <li>
+            <p>I want to finalize the directional audio code, get that working for all of the sound effects we want, and then go and help around as needed.</p>
+        </li>
+    </ul>
+
+
+
+    <h2>What did you learn this week, if anything (and did you expect to learn it?)</h2>
+    <ul>
+        <li>
+            <p>I learned that SFML has very nice documentation</p>
+        </li>
+    </ul>
+
+
+
+    <h2>What is your individual morale (which might be different from the overall group morale)?</h2>
+    <ul>
+        <li>
+            <p>I have really high morale, but as we’re getting to the end I’m starting to realize that we won’t be able to implement everything that I want to, which is a little sad but to be expected.</p>
+        </li>
+    </ul>
+</body>
+
+</html>
