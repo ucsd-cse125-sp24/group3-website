@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torchlight Games</title>
+    <link rel="stylesheet" href="../individualreport.css">
+
+<body>
+    <h1> Edward's Week 8 Individual Report </h1>
+
+    <h2>What were your concrete goals for the week?</h2>
+    <ul>
+        <li>
+            <p>Polish the Dungeon Master:</p>
+            <ul>
+                <li><p>Make wall highlighting work.</p></li>
+                <li><p>Add trap placement for all other traps now + checks to make sure you can even place it (i.e. some traps only go on walls, others only on the floor).</p></li>
+                <li><p>Instead of highlighting floor, have transparent trap showing what the trap would look like before placement.</p></li>
+                <li><p>Miscellaneous DM polishes.</p></li>
+            </ul>            
+        </li>
+        <li>
+            <p>Miscellaneous bug fixes</p>
+        </li>
+    </ul>
+
+    <h2>What goals were you able to accomplish?</h2>
+    <ul>
+        <li>
+            <p>I was able to complete the following DM polishes:</p>
+            <ul>
+                <li><p>Wall highlighting is now working.</p></li>
+                <li><p>Trap placement for other traps is in.</p></li>
+                <li><p>Transparent traps are in.</p></li>
+                <li><p>Add DM speed boost (can be slow when navigating big mazes).</p></li>
+                <li><p>Scroll wheel to select traps.</p></li>
+                <li><p>DM UI enhancements (showing which traps are in cooldown, showing number of traps placed out of total number of traps).</p></li>
+            </ul>            
+        </li>
+        <li>
+            <p>I was able to complete the following miscellaneous bug fixes:</p>
+            <ul>
+                <li><p>Fix respawn and maze generation timestamps being broken on Windows machines (use long long instead of long).</p></li>
+                <li><p>Fix bug where when DM disconnects and reconnects, the DM’s camera is not being set to the Dungeon Master camera (apparently some delay can happen where the GamePhase changes, but the SessionInfo does not have all the info ready which is a pre-condition to the camera being checked if it needs to change to the DM camera. To fix this, I just stored a field called phase_change that gets set whenever the phase changes, and then when the SessionInfo gets populated in another cycle, check if the camera should be switched to DM and set phase_changes back to false).</p></li>
+                <li><p>Fix bug where when player dies AND game ends, the screen does not switch to the results screen (originally it got stuck in the respawn screen, minor if statement conditional fix).</p></li>
+            </ul>            
+        </li>
+    </ul>
+
+    <h2>If the week went differently than you had planned, what were the reasons?</h2>
+    <ul>
+        <li>
+            <p>This week went mostly how I expected besides dealing with bugs and performance issues as they came up. </p>
+        </li>
+    </ul>
+
+    <h2>What are your specific goals for the next week?</h2>
+    <ul>
+        <li>
+            <p>Continue polishing the Dungeon Master:</p>
+            <ul>
+                <li><p>Make traps transparent before placement.</p></li>
+                <li><p>Add trap cooldown countdown timer instead of just showing the words “IN COOLDOWN”.</p></li>
+                <li><p>Add a balance feature where when the DM places a trap, there is a certain chance of this spawning an item in the map for players.</p></li>
+            </ul>            
+        </li>
+        <li>
+            <p>Continue tackling miscellaneous bug fixes</p>
+        </li>
+    </ul>
+
+
+
+    <h2>What did you learn this week, if anything (and did you expect to learn it?)</h2>
+    <ul>
+        <li>
+            <p>Mostly C++ syntax and best practices, which I expect to learn. Iterating through a map while removing items can be weird, but thankfully C++ iterators make it easy.</p>
+        </li>
+    </ul>
+
+
+
+    <h2>What is your individual morale (which might be different from the overall group morale)?</h2>
+    <ul>
+        <li>
+            <p>My individual morale is great! Especially when we got to do a group playtest in the lab and everything was looking great (besides minor bugs). I am really excited about our final polished game.</p>
+        </li>
+    </ul>
+</body>
+
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torchlight Games</title>
+    <link rel="stylesheet" href="../individualreport.css">
+
+<body>
+    <h1> Anthony's Week 8 Individual Report </h1>
+
+    <h2>What were your concrete goals for the week?</h2>
+    <ul>
+        <li><p>Load in the wall textures that Coco has made. Will probably need to mess with the texture coordinates of the wall model for the texture to look correct.</p></li>
+        <li><p>Load in the 3 different textured player models that Coco has created.</p></li>
+        <li><p>Load in the Sun God model to be used as the source of fireballs.</p></li>
+        <li><p>Add a blinding light at the end of the maze to signify the ending.</p></li>
+        <li><p>Add shadow maps to not have lights go through walls.</p></li>
+    </ul>
+
+    <h2>What goals were you able to accomplish?</h2>
+    <ul>
+        <li><p>I was able to load in the wall textures Coco made. They look awesome! I spent some time playing around with the lighting and we settled on a turquoise blue-ish color. I also loaded in the pillar texture she made which is placed between walls around the maze.</p></li>
+        <li><p>I made an FPS counter that gets rendered to the top left of the window. This became more important as all the point lights and other additions meant the game was not always responsive and buttery smooth anymore.</p></li>
+        <li><p>I loaded in the Sun God model and modified the fireball trap to shoot from the sun god’s beak. I also changed the trap to only shoot at the player if they are within line of sight of the sun gods (within a cone coming out of the sun god’s beak). This means that the player can try to sneak around the sun god to avoid getting hit. I also worked with Tyler to squash some bugs in getting the projectiles to behave correctly.</p></li>
+        <li><p>I moved our rendering pipeline to use deferred shading (almost). This was motivated by the poor performance from the addition of the torch lights. In the previous version, for every mesh being rendered we had to send lighting information to the GPU. Even with a hardcoded number of 16 light sources this was a bottleneck and FPS would hover between 20-40 on various machines. Instead deferred shading will loop through every object and gather geometry data. Then, we loop through all the pixels on the screen and shade each one accordingly. Another 125 group mentioned how they had success with it and recommended us to try it out. I have an initial implementation that only renders walls and the frame rate is much higher (140fps on my machine) even with large mazes that don’t have any of the optimizations that we previously had (ex: not rendering far away objects). I still need to add back rendering for all the other non-wall/floor objects and fix the in-game UI which broke.</p></li>
+</ul>
+    </ul>
+
+    <h2>If the week went differently than you had planned, what were the reasons?</h2>
+    <ul>
+        <li><p>I spent some more time than anticipated on fine tuning the sun god fireballs shooting but it was nice to see the polished outcome.</p></li>
+        <li><p>I spoke with David and he said he would handle loading in player models.</p></li>
+        <li><p>I wasn’t planning on moving to deferred shading. It was something we had brought up earlier in the quarter but didn’t seriously consider it since the original rendering was working fine. However, we decided it would be worthwhile to give it a look to improve the responsiveness of the game.</p></li>
+    </ul>
+    
+
+    <h2>What are your specific goals for the next week?</h2>
+    <ul>
+        <li><p>Fix in-game UI and render all objects back in with deferred shading.</p></li>
+        <li><p>Load in textures/models that Coco makes (floors/ceilings/lava cracks/etc).</p></li>
+        <li><p>Investigate shadow maps for players and walls (to prevent lights bleeding through walls).</p></li>
+        <li><p>Remove textures from tops of walls so the DM doesn’t see them.</p></li>
+        <li><p>Help add a DM action to cut lights in a part of the maze.</p></li>
+        <li><p>Help with mirror item to block lightning bolts.</p></li>
+    </ul>
+    
+
+
+
+    <h2>What did you learn this week, if anything (and did you expect to learn it?)</h2>
+    <ul>
+        <li>
+            <p>I learned how to use Blender’s UV editor to apply textures to our wall objects.</p>
+        </li>
+        <li>
+            <p>Learned about deferred shading</p>
+        </li>
+    </ul>
+
+
+
+    <h2>What is your individual morale (which might be different from the overall group morale)?</h2>
+    <ul>
+        <li>
+            <p>My morale is pretty good. I feel a bit better about the game now that we have some textures in. I’m also relieved that it seems like deferred shading is bringing performance back to over 60fps.</p>
+        </li>
+    </ul>
+</body>
+
+</html>
