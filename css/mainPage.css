@@ -20,7 +20,7 @@ body {
   margin: 0;
   padding: 0;
   display: flex;
-  background: radial-gradient(#9b1a0b, #2d0000);
+  background-color: black;
   background-attachment: fixed;
   background-position: center;
 }

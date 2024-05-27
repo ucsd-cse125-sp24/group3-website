@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torchlight Games</title>
+    <link rel="stylesheet" href="../individualreport.css">
+
+    <script>
+        var playing = false;
+        document.addEventListener("DOMContentLoaded", () => {
+            let btn = document.getElementById('light-switch');
+            btn.addEventListener('click', () => {
+                if (playing) {
+                    return;
+                }
+                playing = true;
+
+                let switch_sound = new Audio('./assets/tyler/switch.mp3');
+                switch_sound.play();
+                btn.insertAdjacentHTML("afterend", `
+                    <style>
+                        * {
+                            background-color: black;
+                        }
+                `);
+
+                setTimeout(() => {
+                    let audio = new Audio('./assets/tyler/dancing_queen.mp3');
+                    audio.volume = 0.4;
+                    audio.play();
+                    let body = document.getElementsByTagName('body')[0];
+                    body.insertAdjacentHTML("afterbegin", `
+                        <style>
+                            #disco-container {
+                                position: sticky;
+                                height: 0px;
+                                overflow: visible;
+                                top: 0;
+                            }
+
+                            #disco {
+                                position: relative;
+                                right: -70vw;
+                            }
+                        </style>
+                        <div id="disco-container">
+                            <img id="disco" src="./assets/tyler/disco.gif"></img>
+                        </div>
+                    `);
+                }, 1500);
+
+            });
+        });
+    </script>
+<body>
+    <style>
+        * {
+            color: white;
+        }
+        p {
+            line-height: 2;
+        }
+    </style>
+
+    <h1> Tyler's Week 8 Individual Report</h1>
+
+    <img id="light-switch" src="./assets/tyler/switch.png"></img>
+
+    <h2>What were your concrete goals for the week?</h2>
+    <p>My concrete goals for the week were to</p>
+    <ul>
+        <li>Finish the directional audio system</li>
+        <li>Move around elsewhere as needed</li>
+    </ul>
+
+    <h2>What goals were you able to accomplish?</h2>
+
+    <p>I was able to finish the directional audio system relatively quickly, and then stayed true to my word
+        and hopped around all over the codebase. I was mainly motivated by things we learned during our first
+        playtest, and also some things that had been bothering me for a bit.
+    </p>
+
+    <h3>Directional Audio</h3>
+
+    <p> The first thing I did was continue my work from the previous week and finalize the directional
+        audio system. SFML took care of all of the specific math for directional audio, and made it really
+        easy to think of terms of positions and attenuations and other attributes of the sound effects.
+    </p> 
+    
+    <p> The way it works is that the server maintains a table of all active sound effects
+        with their position, volume, attenuation, and minimum distance values. Upon creation the server
+        sends a PLAY sound command to each client who is close enough to hear that sound. Then each tick
+        the server decrements the time_remaining value of each sound effect. Once the sound effect is
+        done playing, the server sends a DO_DELETE command to the clients so that the clients can clean up
+        the sound effect (which is important because SFML limits you to 255 active sound effects).
+    </p>
+
+    <p>
+        This works well for shorter, more dynamic sound effects (slime jumping, player footsteps, crush trap, etc...) but
+        breaks down for more "static" sound effects that are always playing, which in this case is the torch
+        crackling sound effect. To solve this, I ended up piggy backing on Anthony's light source event packet
+        which tells the players the 16 closest light sources for rendering, and also making the client reserve
+        16 sound effects which are always actively playing the torch sound effect on a loop, but have their
+        positions updated as the player moves around and the set of 16 closest light sources changes.
+    </p>
+
+    <p>
+        This ended up working very well, and I'm very happy with how it turned out.
+    </p>
+
+    <h3>Refactor Room Design and Procedural Generation</h3>
+
+    <p>
+        By this point we were ready to do our first playtest. Wednesday night we spent 2ish hours
+        on a Discord call getting all 4 of our outstanding branches merged in so we could playtest
+        the following morning at our meeting. This merge actually ended up being much more difficult
+        than anticipated, not because of confusing merge conflicts, but just because of things that
+        broke in the system when integrating the dungeon master logic for the first time, but we were
+        able to figure it out in one sitting.
+    </p>
+
+    <p>
+        The biggest immediate thing I realized from the playtest was that the current maze design
+        was not the best. There were certain room types that were too complicated for players to
+        navigate, which became a big problem if there was one specific route they had to go through
+        to find the orb or exit. In addition, even before the playtest I had known there were various problems
+        in the procedural algorithm itself, the chief of these being that the algorithm
+        didn't distinguish between the weight of a 10x10, 20x20, or 40x40 room tiles,
+        so each of these counted equally towards the room quota despite the fact that 40x40 rooms are
+        16x the size of a 10x10.
+    </p>
+    <p>
+        
+    </p>
+
+    <h3>Various Bug Fixes and Enhancements</h3>
+
+    <p>As we went through the playtest our Github issue tracker slowly got longer and longer, so I decided
+        to start tackling the various smaller issues that we had discovered previously and during the playtest.
+        The biggest fixes were:
+    </p>
+
+    <ol>
+        <li>I made it so enemies and some vision-based traps can't see invisible players</li>
+        <li>I nerfed the homing fireballs so they have a time limit on how long the projectiles home.</li>
+        <li>I fixed a bug where dead player's velocities stayed the same after death, which caused some strange behavior with enemies and rendering.</li>
+    </ol>
+
+    <h3>Refactor Networking</h3>
+
+    <p>
+        Another problem that we ran into during the playtest was that David's laptop lagged immensely upon
+        joining the server, and stayed laggy throughout the entire duration of the game. This wasn't even
+        normal lag you'd expect from a game, it was completely-unplayable single-digit FPS. I didn't really know
+        what was going wrong at the time, especially because this happened two games in a row, but after
+        letting it sit for some days I ended up realizing the problems.
+    </p>
+
+    <p>
+        David was the last person to join in both of the games he lagged out in, and because the server
+        started the game immediately as the lobby was full, his game was stuck doing the initial game load
+        while the game had already started, building up a queue of packets that his system was never able
+        to catch up on.
+    </p>
+    <p>
+        Obviously this was a problem: the fact that the game wasn't waiting for players to fully load in the
+        initial state before starting, but even so his laptop should have eventually been able to catch up.
+        It would be very bad if it were ever possible for someone's computer to get impossibly behind on packets
+        such that it could never catch up, so something was definitely sussy in the networking code.
+    </p>
+
+    <h3>Helping Out Around the Block</h3>
+    <h4>Gil & Lobby UI</h4>
+    <h4>Anthony & The Sun God</h4>
+    <h4>Ted & HUD UI</h4>
+    <h3>Full Screen & Title Screen Improvements</h3>
+
+    <h2>If the week went differently than you had planned, what were the reasons?</h2>
+    <p>
+        The week went about as I had planned, but I didn't really plan too much because I knew
+        that I would need to move around based on our experience in the playtest.
+    </p>
+
+    <h2>What are your specific goals for the next week?</h2>
+    <ul>
+        <li>
+        </li>
+    </ul>
+
+    <h2>What did you learn this week, if anything (and did you expect to learn it?)</h2>
+    <p>
+        I (not surprisingly) learned a lot of different things
+    </p>
+    <ul>
+        <li>How the opengl depth buffer works</li>
+        <li></li>
+    </ul>
+
+
+
+    <h2>What is your individual morale (which might be different from the overall group morale)?</h2>
+    <ul>
+    </ul>
+
+    <h2>Weird windows performance issue</h2>
+</body>
+
+</html>
