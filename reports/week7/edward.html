@@ -1,67 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Torchlight Games</title>
     <link rel="stylesheet" href="../individualreport.css">
-</head>
+
 <body>
-    <h1>Edward's Week 7 Individual Report</h1>
+    <h1> Edward's Week 7 Individual Report </h1>
 
     <h2>What were your concrete goals for the week?</h2>
-
-    <p>
-        My main focus was getting the almighty Dungeon Master (DM) initially set up. This entailed having a top-down view of the maze, ability to zoom in/out, WASD movement, having one player be initialized to the DM on connection, and the ability to place traps around the maze (along with all other changes necessary to realize having a Dungeon Master). 
-    </p>
-
-    <h2>What goals were you able to accomplish?</h2>
-
-    <p>
-        As of around 2:20 PM on 5/15, I have been able to accomplish everything except the DM being able to place traps around the maze. It is possible that by the time this report is being read, I have already finished this feature but forgot to update my report / didn’t have time to update it. Hopefully it is the latter.
-    </p>
-
-    <h2>If the week went differently than you had planned, what were the reasons?</h2>
-
-    <p>
-        This week didn’t go differently than how I envisioned it. Just the normal software development cycle of pull & push to my branch with new features. 
-    </p>
-
-    <h2>What are your specific goals for next week?</h2>
-
     <ul>
         <li>
-            <p>
-                If I haven’t finished trap placement for the Dungeon Master, then adding trap placement for the DM
-
-            </p>
+            <p>Finish trap placement and various other additions to the DM</p>
         </li>
         <li>
-            <p>
-                Implement Directional Audio, or sounds effects that respect the 3D space (if the sound if further away from the player, it should reflect that instead of sounding the same to all players)
-
-            </p>
-        </li>
-        <li>
-            <p>
-                Adding more powers for the DM (like throwing a thunderbolt)
-
-            </p>
+            <p>Get some directional audio working</p>
         </li>
     </ul>
 
+    <h2>What goals were you able to accomplish?</h2>
+    <ul>
+        <li>
+            <p>Thankfully I was able to hit both of the above. </p>
+        </li>
+        <li>
+            <p>For the Dungeon Master I was able to: </p>
+            <ul>
+                <li>
+                    <p>add floor and wall highlighting when wanting to place a trap (the calculation for wall highlight needs to be re-worked a little)</p>
+                </li>
+                <li>
+                    <p>Set a trap expiration timer on traps placed by the DM</p>
+                </li>
+                <li>
+                    <p>Add a trap selection hotbar for the DM</p>
+                </li>
+                <li>
+                    <p>Cap the number of traps the DM can have placed at any given time</p>
+                </li>
+                <li>
+                    <p>Have a cooldown for each placed trap so the DM can’t spam trap placements</p>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <p>For Directional Audio I was able to write some code to get an audio that would play louder as I approach it in the 3D world and get quieter as I move away. The only downside is that this audio must be mono-channel to be spatialized, but I’m sure it’ll be ok for our needs.</p>
+        </li>
+    </ul>
+
+    <h2>If the week went differently than you had planned, what were the reasons?</h2>
+    <ul>
+        <li>
+            <p>Thankfully the week went about as I planned. At first I was worried I might get stuck with some insane bug for whatever reason, but I’m glad that didn’t happen.</p>
+        </li>
+    </ul>
+
+    <h2>What are your specific goals for the next week?</h2>
+    <ul>
+        <li>
+            <p>Polish the Dungeon Master:</p>
+            <ul>
+                <li>
+                    <p>Fix wall highlight</p>
+                </li>
+                <li>
+                    <p>Add trap placement for all other traps now + checks to make sure you can even place it (i.e. some traps only go on walls, others only on the floor) (right now I have everything working for one trap, but everything is in place such that adding new traps is very straightforward)</p>
+                </li>
+                <li>
+                    <p>Help out with directional audio server events to client</p>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <p>Miscellaneous:</p>
+            <ul>
+                <li>
+                    <p>Optimize sending mouse xpos and ypos events when hovering (right now if you want to place a trap, mouse movement floods server with packets)</p>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+
+
     <h2>What did you learn this week, if anything (and did you expect to learn it?)</h2>
+    <ul>
+        <li>
+            <p>I learned about SFML’s support for 3D audio, which I expected to learn. </p>
+        </li>
+    </ul>
 
-    <p>
-        I had to mess around with a little OpenGL and glm to get the Dungeon Master view appropriately set up. However, thanks to the excellent camera infrastructure code written by Anthony and David, it was pretty straightforward to pick up. Other than that, just general learning of other parts of the codebase I hadn’t really touched to integrate the features I am coding.
-    </p>
 
-    <h2>What is your individual morale (which might be different from the overall
-        group morale)?
-    </h2>
 
-    <p>
-        Individual morale is very high since I can tell we are really close to having a playable MVP. Once the DM has some powers, an MVP level DM should be done. Other aspects of the game are looking fantastic. 
-    </p>
+    <h2>What is your individual morale (which might be different from the overall group morale)?</h2>
+    <ul>
+        <li>
+            <p>I was able to check off a lot of features we needed, so I am pretty happy. My morale is looking and feeling pretty good.</p>
+        </li>
+    </ul>
 </body>
+
 </html>
