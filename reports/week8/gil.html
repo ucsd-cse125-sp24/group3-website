@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torchlight Games</title>
+    <link rel="stylesheet" href="../individualreport.css">
+</head>
+<body>
+    <h1>Gil's Week 8 Individual Report</h1>
+
+    <h2>What were your concerte goals for the week?</h2>
+
+    <p>From last week's report, my goals were:</p>
+
+    <ul>
+        <li>
+            <p>Gameplay</p>
+            <ul>
+                <li>
+                    <p>UI</p>
+                    <ul>
+                        <li>
+                            <p>
+                                Create a UI flowchart (i.e., transition diagram between
+                                <code>GUIState</code>s) and add buttons to move between
+                                <code>GUIState</code>s where necessary
+                            </p>
+                            <ul>
+                                <li>
+                                    <p>
+                                        This is to fix some issues right now where, for
+                                        instance, you can't go back to the main menu
+                                        once you click "Start Game" (you're stuck in
+                                        the lobby page from that point onward)
+                                    </p>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <p>
+                                Create UI mockup for the game HUD UI (right now some
+                                of the text I added is cluttered and I'm not sure it
+                                communicates the <code>MatchPhase</code> state and
+                                objectives well to the player)
+                            </p>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <p>Add server reset once a game match ends</p>
+                    <ul>
+                        <li>
+                            <p>
+                                Once a game match ends, the server should "reset" with
+                                a new game match. Clients should be able to exit the
+                                game that ended and re-enter the lobby of the original
+                                server to queue up for the next match.
+                            </p>
+                            <ul>
+                                <li>
+                                    <p>
+                                        I'm not sure exactly how to do this - I'm assuming
+                                        there might be networking-related code that might
+                                        have to be affected here, perhaps to disconnect
+                                        the players or something like this. I'm not familiar
+                                        with our game's networking code setup (this was
+                                        more Tyler's and Edward's territory) so I'll
+                                        likely need their help if this comes up.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p>
+                                        It might also make sense that the server shouldn't
+                                        kick out the players that are already connected,
+                                        and just reset the <code>ServerGameState</code>;
+                                        though the clients must also know to reset their
+                                        <code>SharedGameState</code> copies, and the
+                                        players' <code>EntityID</code>s must be reset
+                                        as well. I don't think this is very straightforward,
+                                        but hopefully I'm wrong.
+                                    </p>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <p>Music</p>
+            <ul>
+                <li>
+                    <p>
+                        Come up with a leitmotif for the dungeon
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        Come up with a leitmotif for Zeus
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        Compose the main menu theme
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        Compose the Maze Exploration theme
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        Finish the Relay Race theme
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        Compose victory themes for both player parties
+                    </p>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+    <h2>What goals were you able to accomplish?</h2>
+
+    <h3>Gameplay</h3>
+
+    <p>
+        The goals I listed last week were significantly different than what my work
+        for the week ended up looking like. After discussing these goals with Tyler
+        and Anthony, we came to the conclusion that missing gui buttons for backtracking
+        and the server reset are more nice-to-haves or won't-haves as we can easily
+        reset the server and restart the clients for multiple playthroughs.
+    </p>
+    <p>
+        Hence, I ended up working on something different - our lobby system. Last
+        week, it was fairly bare-bones as the server just waited for the right number
+        of players to enter the lobby to start the game (which caused some race condition
+        bugs and didn't allow for player customization). The lobby system I implemented
+        now allows clients to see the current state of the lobby (how many players there
+        are and what role they want to play as (Player or DM)). It also adds a ready
+        system that we discussed last Tuesday I believe in which the game only starts
+        when all of the players are ready, there are enough players to fill the lobby,
+        and one of the players clicked a "Start Game" button.
+    </p>
+
+    <h4>Some screenshots from the current lobby system:</h4>
+
+    <figure>
+        <picture>
+            <img src="assets/gil/lobby_player_not_ready.png" width="800px">
+        </picture>
+        <figcaption>2 Player lobby when player joins it.</figcaption>
+    </figure>
+    <figure>
+        <picture>
+            <img src="assets/gil/lobby_player_selected_role.png" width="800px">
+        </picture>
+        <figcaption>Player selected a role (radio buttons)</figcaption>
+    </figure>
+    <figure>
+        <picture>
+            <img src="assets/gil/lobby_player_ready.png" width="800px">
+        </picture>
+        <figcaption>Player clicked "ready." Other players in the lobby can see that and their desired role. (radio buttons disabled)</figcaption>
+    </figure>
+
+    <p>
+        Implementing this was more complex then it looked, largely due to my having to
+        learn a lot about other parts of the code base (specifically, the client GUI
+        library that Tyler made and sending events to the server + handling those events).
+    </p>
+
+    <p>
+        I changed the <code>Lobby</code> struct that was used by the server to keep
+        track of the current lobby state (and which was being sent to the client) to
+        store the new <code>LobbyPlayer</code> states (i.e., whether players are ready,
+        what is their desired role, are they connected, etc.). We also decided to do
+        away with custom player names, replacing them with a player number (which is
+        communicated to the players in the lobby screen as seen in the above screenshots).
+    </p>
+
+    <p>
+        There was also a bug that took a while to figure out since the lobby wasn't being
+        correctly updated (each player seemed to only get an accurate representation of
+        the lobby when they first connected, but no additional updates were received).
+        This was occuring because delta updates weren't being sent when no objects were
+        updated (an optimization that certainly makes sense while the game is running,
+        but which meant that, as no game objects were being updated in the
+        <code>GamePhase::LOBBY</code> game phase, the lobby wasn't being sent to the clients).
+        This luckily had a simple fix - I just added a check that forced delta updates
+        to be sent if the game phase was <code>GamePhase::LOBBY</code>.
+    </p>
+
+    <p>
+        I built on an existing <code>LobbyActionEvent</code> to send lobby-related
+        events to the server when the client clicked the "Ready" button (to update the
+        server's <code>Lobby</code> and thus inform the other clients that this client
+        was ready (since the <code>Lobby</code> struct is broadcast to all clients
+        every tick as part of the <code>SharedGameState</code>)) and when the client
+        clicked "Start Game" so that the server would change phase from <code>GamePhase::LOBBY</code>
+        to <code>GamePhase::GAME</code> if the lobby was full and all players were ready.
+    </p>
+
+    <p>
+        To create the player status table in the lobby GUI (you can see two aligned 
+        rows in the above screenshots), I added new <code>Empty</code> widgets to
+        ensure that the columns of the rows were aligned regardless of their content.
+        This is an issue that Tyler brought up when I discussed with him regarding how
+        to best implement a table with the GUI library (I originally thought of making
+        a dedicated <code>Table</code> widget).
+    </p>
+
+    <p>
+        I also wanted to make a dedicated <code>RadioButtons</code> widget but seeing
+        as this is the only place we'll likely need radio buttons, simplified by
+        storing the desired player role selection radio button state as client variables.
+    </p>
+
+    <h3>Music</h3>
+
+    <p>
+        I was able to make significant progress towards my music goals for our game.
+        I didn't meet all the goals I set for myself unfortunately, but I now have
+        a list of leitmotifs and a few more tracks ready (and a bunch of drafts).
+    </p>
+
+    <p>
+        Regarding the music in the game, there is a fairly long list of tracks to be
+        written; I've changed my mind from last week and I think composing these in
+        time is (hopefully) possible.
+    </p>
+
+    <p>
+        Here is a list of needed tracks / musical sound effects: (though I have made
+        a lot of progress; a lot of time went towards figuring out leitmotifs and now
+        I'll have more time to complete these tracks, ideally most of this should be
+        done by next week or I'll narrow the scope However)
+    </p>
+
+    <ul>
+        <li>
+            <p>
+                Menu theme
+            </p>
+        </li>
+        <li>
+            <p>
+                Start Game Theme (Players) -  <code>Done</code>
+            </p>
+        </li>
+        <li>
+            <p>
+                Start Game Theme (Dungeon Master) - <code>Done</code>
+            </p>
+        </li>
+        <li>
+            <p>
+                Maze Exploration Theme (Players) - <code>First Draft</code>
+            </p>
+        </li>
+        <li>
+            <p>
+                Maze Exploration Theme (Dungeon Master)
+            </p>
+        </li>
+        <li>
+            <p>
+                Relay Race Theme (Players) - <code>Unfinished Draft</code>
+            </p>
+        </li>
+        <li>
+            <p>
+                Relay Race Theme (Dungeon Master)
+            </p>
+        </li>
+        <li>
+            <p>
+                Victory Theme (Players)
+            </p>
+        </li>
+        <li>
+            <p>
+               Victory Theme (Dungeon Master) 
+            </p>
+        </li>
+        <li>
+            <p>
+                Defeat Theme (Players)
+            </p>
+        </li>
+        <li>
+            <p>
+                Defeat Theme (Dungeon Master)
+            </p>
+        </li>
+        <li>
+            <p>Sound effects:</p>
+            <ul>
+                <li>
+                    <p>
+                        Orb pickup
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        Orb drop
+                    </p>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+    <h4>Leitmotifs</h4>
+
+    <p>Here is a list of current leitmotifs:</p>
+
+    <ul>
+        <li>
+            <p>
+                Players
+            </p>
+            <ul>
+                <li>
+                    <p>
+                        Heroic Charge
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        Heroic Determination
+                    </p>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <p>
+                Dungeon
+            </p>
+        </li>
+        <li>
+            <p>
+                Orb
+            </p>
+        </li>
+        <li>
+            <p>
+                Zeus / Dungeon Master
+            </p>
+            <ul>
+                <li>
+                    <p>
+                        Wrath of Zeus
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        Lightning Bolts
+                    </p>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+    <p>
+        The players currently have two leitmotifs - a "Heroic Charge" leitmotif and a
+        "Heroic Determination" leitmotif (I'm great with naming things, as you can 
+        see).
+    </p>
+
+    <p>The Heroic Charge leitmotif is the same as the one I showed last week: </p>
+
+    <figure>
+        <picture>
+            <img src="../week7/gil-assets/hero-leitmotif.png" width="500px">
+        </picture>
+        <figcaption>The Heroic Charge leitmotif.</figcaption>
+    </figure>
+
+    <audio src="assets/gil/players-heroic-charge-leitmotif.wav" controls></audio>
+
+    <p>This leitmotif is used as previously shown in the player's start game theme.</p>
+
+    <p>The Heroic Determination leitmotif is a bit longer and more melodic:</p>
+
+    <figure>
+        <picture>
+            <img src="../week8/assets/gil/heroic-determination-leitmotif-score.png" width="800px">
+        </picture>
+        <figcaption>The Heroic Determination leitmotif.</figcaption>
+    </figure>
+
+    <audio src="assets/gil/players-heroic-determination-leitmotif.wav" controls></audio>
+
+    <p>
+        The dungeon's leitmotif is a bit more mysterious, and tries to "open" to
+        represent the wonder and scale of the dungeon (more tinkering may be needed
+        here though to allow for more harmonic variation)
+    </p>
+
+    <figure>
+        <picture>
+            <img src="../week8/assets/gil/dungeon-leitmotif-score.png" width="800px">
+        </picture>
+        <figcaption>The Dungeon leitmotif.</figcaption>
+    </figure>
+
+    <audio src="assets/gil/dungeon-leitmotif.wav" controls></audio>
+
+    <p>
+        The orb leitmotif is more harmonically based (I tried tinkering with more
+        fast harmonic changes to simulate the magical nature of the orb as well as
+        its constantly changing surface (i.e., if it glows, or if like other fantasy
+        orbs it shows passing visions of distant places or times))
+    </p>
+
+    <figure>
+        <picture>
+            <img src="../week8/assets/gil/orb-leitmotif-score.png" width="800px">
+        </picture>
+        <figcaption>The Orb leitmotif.</figcaption>
+    </figure>
+
+    <p>The orb leitmotif:</p>
+
+    <audio src="assets/gil/orb-leitmotif-raw.wav" controls></audio>
+
+    <p>
+        The orb leitmotif with some additional instruments in an attempt to create a
+        "magical" texture:
+    </p>
+
+    <audio src="assets/gil/orb-leitmotif.wav" controls></audio>
+
+    <p>
+        I have two leitmotif for the dungeon master / Zeus: one for his wrath (per
+        the new game name) and one that reflects his lightning bolts. During our
+        playtesting, the dungeon master role illicts some playful maniacal laughter
+        (probably once the Dungeon Master throws down too many lightning bolts), and
+        I've incorporated repeated notes into the orchestration of this motif in an
+        attempt to convey that.
+    </p>
+
+    <p>First, the "Wrath of Zeus" Dungeon Master leitmotif:</p>
+
+    <figure>
+        <picture>
+            <img src="../week8/assets/gil/zeus-wrath-leitmotif-score.png" width="800px">
+        </picture>
+        <figcaption>The Zeus' Wrath leitmotif.</figcaption>
+    </figure>
+
+    <audio src="assets/gil/zeus-wrath-leitmotif.wav" controls></audio>
+
+    <p>
+        I've incorporated this into the start game theme for the Dungeon Master:
+    </p>
+
+    <audio src="assets/gil/Wrath_of_Zeus_-_Start_Game_Theme_Dungeon_Master.mp3" controls></audio>
+
+
+    <p>The Lightning bolt / laughter Dungeon Master leitmotif:</p>
+
+    <p>
+        I've taken a more baroque / Bach-ian approach here; I'm thinking, with the
+        right orchestration, this could be fairly epic as the different instruments
+        play counterpoint melodies.
+    </p>
+
+    <figure>
+        <picture>
+            <img src="../week8/assets/gil/zeus-lightning-bolt-theme.png" width="800px">
+        </picture>
+        <figcaption>The Lightning bolt / laughter leitmotif.</figcaption>
+    </figure>
+
+    <p>
+        Exploring this leitmotif a bit further yields the following (unfinished draft,
+        but you can hear the leitmotif at the start):
+    </p>
+
+    <audio src="assets/gil/dungeon-master-lightning-bolt-theme.wav" controls></audio>
+
+    <p>
+        I have also written a first draft for the player's Maze Exploration phase -
+        I have incorporated the dungeon leitmotif into this and it's a 38 second loop.
+        Currently though, it sounds a bit too sugary (likely due to my instrumentation),
+        but we're probably going to have to "playtest" the music to see whether or not it
+        fits our game's mood.
+    </p>
+
+    <audio src="assets/gil/Wrath_of_Zeus_-_Maze_Exploration_Players_Theme.mp3" controls></audio>
+
+    <h2>If the week went differently than you had planned, what were the reasons?</h2>
+
+    <p>
+        As explained above, my gameplay-related goals changed to implement our new
+        lobby system as my original goals were more nice-to-haves / wont-haves.
+    </p>
+    
+    <p>
+        However, I also had a very weird bug on my two Windows machines, in which
+        Visual Studio couldn't build our project as it wasn't finding the boost library.
+        This is somewhat bizarre and to my knowledge only happened on my machine. I 
+        have found how to get around it by not building the debugger in our Cmake files,
+        but since this is an error only I have, I'm very wary of continuing development
+        on my home machines. I have since come to the labs far more often and worked on
+        the lab computers (which don't have this problem) and used my time at home to
+        do design / architecture work towards my implementations however, so I have found
+        a way to get around this issue.
+    </p>
+
+    <h2>What are your specific goals for next week?</h2>
+
+    <p>
+        My goals for next week are as follows:
+    </p>
+
+    <ul>
+        <li>
+            <p>Gameplay</p>
+            <ul>
+                <li>
+                    <p>
+                        Integrate the lobby system into our <code>dev</code> branch (hopefully
+                        tomorrow, Tuesday May 27th, 2024) and fix any remaining issues.
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        Add GUI HUD touchups (the current match phase instructions for
+                        players aren't conveyed all too well with the current GUI).
+                        I have discussed this with Tyler and we think a good approach
+                        would be to show instructions on the player's screen for a few
+                        seconds at the start of each <code>MatchPhase</code>.
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        Help where I can - there are some bugs we encounter in playtesting
+                        or otherwise and a list of them is growing in our GitHub issues,
+                        so if I finish both of the previous goals I will try to clear
+                        these as much as possible.
+                    </p>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <p>Music</p>
+            <ul>
+                <li>
+                    <p>
+                        Compose the tracks / sound effects listed in the above music section.
+                    </p>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+    <h2>What did you learn this week, if anything (and did you expect to learn it?)</h2>
+
+    <p>
+        I learned more about our implementation of client-server event passing and
+        handling as well as Tyler's GUI library.
+    </p>
+
+    <h2>What is your individual morale (which might be different from the overall group morale)?</h2>
+
+    <p>
+        Excited - we've done some more playtests this week and our MVP was fun to play!
+        I'm also excited to finish composing our game's score to the best of my ability!
+    </p>
+
+</body>
+</html>
