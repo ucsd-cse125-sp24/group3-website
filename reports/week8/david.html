@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torchlight Games</title>
+    <link rel="stylesheet" href="../individualreport.css">
+
+<body>
+    <h1> David's Week 8 Individual Report </h1>
+
+    <h2>What were your concrete goals for the week?</h2>
+    <ul>
+        <li>
+            <p>My primary goal for this week was to extend the implementation of the animation manager to support multiple concurrent animations/animated models at the same time. Before, the animation manager could only support changing animations for all models, so if one player jumped then all players would enter the “jump” animation.</p>
+        </li>
+        <li>
+            <p>Beyond that, there were some other features that I aimed to implement:</p>
+            <ul>
+                <li><p>Manage several different animations at the same time.</p></li>
+                <li><p>Store an association between animations and object types & actions.</p></li>
+                <li><p>Ability to blend animations between one another for more seamless transitions.</p></li>
+                <li><p>Interpolate between animation keyframes to create smoother rendering.</p></li>
+            </ul>            
+        </li>
+    </ul>
+
+    <h2>What goals were you able to accomplish?</h2>
+    <ul>
+        <li><p>I was able to extend the animation manager and have it play different animations at different times for unique objects, so all players can have unique animations playing concurrently with one another.</p></li>
+        <li><p>I was also able to load multiple different animations into the manager, and it is able to switch between animations depending on the input animation state and object type.</p></li>
+        <li><p>I also attempted to change up the animation system in order to utilize a state machine, which would allow for smoother transitions between animations and allow for a better feel as opposed to using several conditionals on the server side to determine what state the player was currently in.</p></li>
+    </ul>
+    
+
+    <h2>If the week went differently than you had planned, what were the reasons?</h2>
+    <ul>
+        <li>
+            <p>There were some issues with getting Mixamo animations rigged up with Coco’s models. I tried multiple ways to get it work over the course of the week, but every time I attempted to re-upload the model and download the animations, there would be a rendering issue where the skeleton was not properly rigged and animating inside the game, despite looking fine on Blender. For some reason it just started to work all of a sudden even though I didn’t change anything significant, but since it works I didn’t bother looking into it too much..</p>
+        </li>
+    </ul>
+
+    <h2>What are your specific goals for the next week?</h2>
+    <ul>
+        <li>
+            <p>My main goal is to test the animations on the lab computers with multiple concurrent players and see if they are all working and animating correctly. If it is able to work, then I will move on to adding some more nice-to-have features for animations, such as adding transitions between states and blending animations together; otherwise, I will spend the week debugging and testing the system to make sure it all comes together for the demo.</p>
+        </li>
+    </ul>
+
+
+
+    <h2>What did you learn this week, if anything (and did you expect to learn it?)</h2>
+    <ul>
+        <li>
+            <p>I learned how to use arctan as a way to compute absolute rotations for model transformations which was unexpected but quite useful.</p>
+        </li>
+    </ul>
+
+
+
+    <h2>What is your individual morale (which might be different from the overall group morale)?</h2>
+    <ul>
+        <li>
+            <p>Surprisingly the animation system is working at a base level, so I am very satisfied with it. Based on the playtest that we did last week, I think our group is in a really good place, and I’m looking forward to the demo!</p>
+        </li>
+    </ul>
+</body>
+
+</html>
