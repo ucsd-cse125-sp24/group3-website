@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torchlight Games</title>
+    <link rel="stylesheet" href="../individualreport.css">
+</head>
+<body>
+    <h1>Gil's Week 9 Individual Report</h1>
+
+    <h2>What were your concrete goals for the week?</h2>
+
+    <p>From last week's report, my goals were:</p>
+
+    <ul>
+        <li>
+            <p>
+                Gameplay
+            </p>
+            <ul>
+                <li>
+                    <p>
+                        Integrate the lobby system into our <code>dev</code> branch
+                        (hopefully tomorrow, Tuesday May 27th, 2024) and fix any
+                        remaining issues.
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        Add GUI HUD touchups (the current match phase instructions
+                        for players aren't conveyed all too well with the current
+                        GUI). I have discussed this with Tyler and we think a good
+                        approach would be to show instructions on the player's screen
+                        for a few seconds at the start of each 
+                        <code>MatchPhase</code>.
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        Help where I can - there are some bugs we encountered in
+                        playtesting or otherwise and a list of them is growing in our
+                        GitHub issues, so if I finish both of the previous goals I
+                        will try to clear these as much as possible.
+                    </p>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <p>
+                Music
+            </p>
+            <ul>
+                <li>
+                    <p>
+                        Compose the tracks / sound effects listed in the above
+                        music section.
+                    </p>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+    <h2>What goals were you able to accomplish?</h2>
+
+    <h3>Gameplay</h3>
+
+    <p>
+        My gameplay goals somewhat changed this week from what I wrote in my previous
+        report - in our Wednesday meeting, we assigned remaining tasks and I chose to
+        implement the mirror item (Ted was and is working on improving the GUI, and 
+        he's doing a wonderful job! The current GUI looks phenomenal!).
+    </p>
+
+    <p>
+        I worked with Tyler on Tuesday to integrate the lobby system I had
+        implemented into <code>dev</code>. This was a bit painful as we discovered a
+        few crazy bugs (I had assumed that <code>boost::optional::get()</code>
+        would throw an exception if the optional did not have a value like
+        <code>std::optional</code> would which caused some issues, and we discovered
+        some potential race conditions which we tentatively solved by adding a
+        delay). Specifically, the race condition issue had to do with the server
+        choosing a DM right before the game started (sending a
+        <code>ServerAssignEID</code> packet to the client whose player has been
+        chosen as the DM). We tentatively fixed this by adding a delay between
+        sending this packet and the server starting the game (hopefully this bug
+        will be more naturally fixed by the start game animations added by Tyler
+        which act as cutscenes that play after the players click "Start Game" and
+        before the game actually begins).
+    </p>
+
+    <p>
+        I also implemented the mirror item - this is the player's countermeasure
+        against the Dungeon Master's all-powerful lightning bolts. The idea is simple
+        (and rooted in well-understood physics): the player picks up a small handheld
+        mirror, caching it in their inventory for whenever they need protection from
+        a well-aimed burst of static electricity. When the Dungeon Master throws down
+        a lightning bolt at the direction of our player, there is a short delay where
+        the player is notified of the lightning bolt (the target <code>GridCell</code>
+        is covered with a yellow square, though this might later be changed to some
+        particle effects) and, with quick enough reflexes, can pull out their mirror
+        and hold it above their head. When the lightning bolt comes down and hits the
+        mirror, it reflects back to the Dungeon Master, paralyzing them for a few
+        seconds. The player's mirror breaks in the process, but at least the player
+        has managed to avoid being roasted.
+    </p>
+
+    <p>
+        The logic for this item is implemented (though the relevant animations are
+        not). It will be interesting to see how this affects our playtests once the
+        mirror item branch is integrated into <code>dev</code>.
+    </p>
+
+    <p>
+        Here are some screenshots for when the player successfully uses a mirror to
+        reflect a lightning bolt:
+    </p>
+
+    <figure>
+        <picture>
+            <img src="assets/gil/dm parlayzed.png" width="800px">
+        </picture>
+        <figcaption>The DM is paralyzed (can rotate the camera but nothing else) when a lightning bolt is reflected.</figcaption>
+    </figure>
+    <figure>
+        <picture>
+            <img src="assets/gil/player used mirror.png" width="800px">
+        </picture>
+        <figcaption>The player is notified that they successfully used the mirror to reflect a lightning bolt.</figcaption>
+    </figure>
+
+    <h3>Music</h3>
+
+    <p>
+        This week I also made significant progress regarding the music themes needed
+        for our game - I have finished improving the Maze Exploration theme for the
+        Players from last week (fixed the instrumentation issue), wrote a Maze
+        Exploration theme for the Dungeon Master, wrote a victory theme for the
+        Players, and finished (though there might be some need for polish) the
+        Relay Race theme for the Players (which interestingly came out almost exactly
+        5 minutes long which is the current length of the <code>RelayRace</code>
+        match phase!).
+    </p>
+    <p>
+        Here's the current status:
+    </p>
+
+    <ul>
+        <li>
+            <p>
+                Menu theme
+            </p>
+        </li>
+        <li>
+            <p>
+               Start Game Theme (Players) - <code>Done</code> 
+            </p>
+        </li>
+        <li>
+            <p>
+                Start Game Theme (Dungeon Master) - <code>Done</code>
+            </p>
+        </li>
+        <li>
+            <p>
+                Maze Exploration Theme (Players) - <code>Done</code>
+            </p>
+        </li>
+        <li>
+            <p>
+                Maze Exploration Theme (Dungeon Master) - <code>Done</code>
+            </p>
+        </li>
+        <li>
+            <p>
+                Relay Race Theme (Players) - <code>Done (might need some polish)</code>
+            </p>
+        </li>
+        <li>
+            <p>
+                Relay Race Theme (Dungeon Master)
+            </p>
+        </li>
+        <li>
+            <p>
+                Victory Theme (Players) - <code>Done</code>
+            </p>
+        </li>
+        <li>
+            <p>
+                Victory Theme (Dungeon Master)
+            </p>
+        </li>
+        <li>
+            <p>
+                Defeat Theme (Players)
+            </p>
+        </li>
+        <li>
+            <p>
+                Defeat Theme (Dungeon Master)
+            </p>
+        </li>
+        <li>
+            <p>Sound effects:</p>
+            <ul>
+                <li>
+                    <p>
+                        Orb pickup
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        Orb drop
+                    </p>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+    <p>
+        This means that there are only two fairly large themes to compose (the
+        Menu theme and the Dungeon Master's Relay Race theme); the rest are fairly
+        short (the victory / defeat themes and the Orb sound effects).
+    </p>
+
+    <p>
+        I will now go over my progress since last week in more detail:
+    </p>
+
+    <h4>Maze Exploration Theme (Players)</h4>
+
+    <p>
+        This is the theme I wrote last week which sounded a bit too "sugary"
+        originally due to the piano + celeste playing the melody and the use of the
+        glockenspiel in the short dominant chord near the start of the theme (at the
+        end of the first phrase):
+    </p>
+
+    <audio src="assets/gil/Wrath of Zeus - Maze Exploration (Players) Theme.mp3" controls></audio>
+
+    <p>
+        I tried switched the instrumentation to be more woodwind heavy to replace the
+        piano; this worked to some degree (I also boosted the brass sections which
+        gave more of a "gust of wind" effect)
+    </p>
+
+    <audio src="assets/gil/Wrath of Zeus - Maze Exploration (Players) Theme v2.mp3" controls></audio>
+
+    <p>
+        Then I saw that the string VSTs I was using weren't the new-and-improved VSTs
+        that came with Musescore 4 - once I upgraded to the new versions, it made
+        sense to give the melody to the violins. Adding some counterpoint here and
+        there, we arrive at the current version of this theme:
+    </p>
+
+    <p>
+        The "tension" in the music is generated by the constant 8th notes played by
+        the cellos and the bassoons, as well as the off-beat notes played by the
+        contrabasses, tuba, and timpani (a combination I'm not sure would work with
+        a real orchestra but which seems to work fine here).
+    </p>
+
+    <audio src="assets/gil/Wrath of Zeus - Maze Exploration Theme (Players) v4.mp3" controls></audio>
+
+    <h4></h4>
+
+</body>
+</html>
