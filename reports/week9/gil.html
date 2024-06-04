@@ -263,7 +263,158 @@
 
     <audio src="assets/gil/Wrath of Zeus - Maze Exploration Theme (Players) v4.mp3" controls></audio>
 
-    <h4></h4>
+    <h4>Maze Exploration Theme (Dungeon Master)</h4>
+
+    <p>
+        This might be the theme I'm so far most proud of writing - I think it's
+        (hopefully) harmonically interesting (as it was interesting to write). The 
+        main melody is a variation of the Wrath leitmotif. I first sketched out the 
+        score on the piano and then arranged what I wrote for orchestra. Here is my 
+        original score sketch for piano:
+    </p>
+
+    <figure>
+        <picture>
+            <img src="assets/gil/dm_maze_exploration_theme_sketch.jpg" width="800px">
+        </picture>
+        <figcaption>A lot of crossing out (what happens when you don't work with an eraser)</figcaption>
+    </figure>
+
+    <p>
+        The cello plays the left hand here and the large chords (from which the top
+        notes are the melody) are orchestrated into the brass and woodwind sections.
+        The brass section actually plays this an octave lower as it's a bit outside
+        of its range, which is why I added the woodwinds (which play at the right
+        octave and so with both together you get the texture of the brass section and
+        the right octave from the woodwinds).
+    </p>
+
+    <p>
+        Adding the choir helped solidify the sort of "laughing" idea (even though
+        this isn't based on the "laughter" motif interestingly enough) as the
+        Dungeon Master cackles while throwing lightning bolts at the players.
+    </p>
+
+    <audio src="assets/gil/Wrath of Zeus - Maze Exploration (Dungeon Master) Theme v3.mp3" controls></audio>
+
+    <h4>Victory Theme (Players)</h4>
+
+    <p>
+        The victory theme for the players is based on the Heroic Determination
+        leitmotif. Adding the bells to double part of the trumpet melody at the end
+        hopefully gives an added sense of the victory euphoria. It begins almost
+        slightly melancholy, in a sense making reference to the players' hardship in
+        being able to claim victory against the Dungeon Master.
+    </p>
+
+    <audio src="assets/gil/Wrath of Zeus - Victory Theme (Players).flac" controls></audio>
+
+    <h4>Relay Race Theme (Players)</h4>
+
+    <p>
+        For this part, ideally I needed to write a ~ 5 minute piece (since the
+        <code>RelayRace</code> match phase lasts at most that long due to the timer
+        length). I have been composing / improvising for many years (almost as far
+        back as when I started learning to play the piano almost 12 years ago), and
+        as a result I have a lot of themes / improvisations / unfinished pieces that
+        I've made over time.
+    </p>
+
+    <p>
+        For the relay race, I found such a piece that I thought would work well. I
+        had originally "written" it back in 2015 when I was 14 years old. Well, I say
+        "written" - back then, I would connect my MX61 synthesizer keyboard to my
+        laptop and, using Audacity, record and improvise an instrument's part. Then,
+        I'd start it from the beginning and record another instrument's part (sort of
+        like a very basic DAW). This is how I originally "wrote" this piece.
+    </p>
+
+    <p>
+        Here is the original piece I wrote back in 2015 (the relay race part starts
+        at 2:07):
+    </p>
+
+    <audio src="assets/gil/relay_race_original_form.mp3" controls></audio>
+
+    <p>
+        As a result, the first step was to transcribe the piece from my recording of
+        it. I made a draft in Musescore for this, documenting the different parts of
+        the instruments. Then, I made a separate Musescore score to arrange my
+        transcription to an orchestral arrangement (and I added / modified some parts
+        as I saw fit).
+    </p>
+
+    <p>
+        Here is the current state of the player's Relay Race theme:
+    </p>
+
+    <audio src="assets/gil/Wrath of Zeus - Relay Race Theme (Players) B minor first draft.mp3" controls></audio>
+
+    <h2>If the week went differently than you had planned, what were the reasons?</h2>
+
+    <p>
+        The major change this week was that I swapped the work on refining the GUI with
+        implementing the mirror object.
+    </p>
+
+    <h2>What are your specific goals for next week?</h2>
+
+    <p>
+        My goals for next week are as follows:
+    </p>
+
+    <ul>
+        <li>
+            <p>Gameplay</p>
+            <ul>
+                <li>
+                    <p>
+                        Finish integrating the mirror object into the <code>dev</code>
+                        branch (hopefully I'll be done with this today).
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        Incorporate my music into the game (need to specify in the
+                        client to play the DM music for the DM and the Players'
+                        music for everyone else, and also to change music when the
+                        <code>MatchPhase</code> changes from 
+                        <code>MazeExploration</code> to <code>RelayRace</code>).
+                    </p>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <p>Music</p>
+            <ul>
+                <li>
+                    <p>
+                        Finish writing the themes I specified above and polish wherever
+                        necessary.
+                    </p>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+    <h2>What did you learn this week, if anything (and did you expect to learn it?)</h2>
+
+    <p>
+        I learned a bit more regarding how to add a server-side timer (to implement
+        DM paralysis and Player lightning invulnerability for the Mirror object to
+        work) - I based this largely on how potions are implemented (Ted helped me
+        out here as he wrote the original potion server-side code).
+    </p>
+
+    <h2>What is your individual morale (which might be different from the overall group morale)?</h2>
+
+    <p>
+        Really excited for tomorrow's dry run, to see our game on the big screen as 
+        well as hopefully hear the music I've composed in the auditorium as well.
+        I'm looking forward to adding more polish to the game and completing the
+        game soundtrack (soon available on a Spotify near you (for legal reasons,
+        this is a joke))
+    </p>
 
 </body>
 </html>
