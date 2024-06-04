@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torchlight Games</title>
+    <link rel="stylesheet" href="../individualreport.css">
+
+<body>
+    <h1> David's Week 9 Individual Report </h1>
+
+    <h2>What were your concrete goals for the week?</h2>
+    <ul>
+        <li>My main goal this week was to test the animations on the lab computers with multiple concurrent players and see if they are all working and animating correctly. If it is able to work, then I will move on to adding some more nice-to-have features for animations, such as adding transitions between states and blending animations together; otherwise, I will spend the week debugging and testing the system to make sure it all comes together for the demo.</li>
+        <li>Another goal was to get textures properly rendered onto the animated models. Currently, the player models are just all a single color, and I wanted them to use Coco’s textures to match the overall look of the maze.</li>
+    </ul>
+
+    <h2>What goals were you able to accomplish?</h2>
+    <ul>
+        <li>I tested the animations on the lab computers last Tuesday and they worked well. Players were able to see other players moving around with the animations, and the DM view worked as well. I expected there to be some performance issues, since the animation system is recomputing transformation matrices at every single frame, but surprisingly the game ran pretty smoothly with no major hiccups.</li>
+        <li>I was also able to get the textures rendered onto the models, and they work properly when combined with the animations. I tested the textures and animations on two of the three player models, and they both worked great.</li>
+        <li>I also made some very minor fixes to the rendering logic. There was a previous issue with a model rotation function that I wrote for the player models where other models (namely the Sungod model) was not being rotated as expected. However, after Anthony pushed a fix resolving this issue, it caused a problem with how the player models were rotated, as they now had issues. I ended up refactoring the function to take in a flag, denoting which computation to use (between players and other models). I also made some changes to the positioning of the player models, as they were rendered above the ground rather than on top of it.</li>
+    </ul>
+
+    <h2>If the week went differently than you had planned, what were the reasons?</h2>
+    <ul>
+        <li>There were a decent amount of changes that happened in the past week with many branches that were added to dev, which I needed to merge into the animation feature branch. One of them was Anthony’s new lighting and deferred shading logic. Because he did an overhaul of the lighting logic, there was an overlap between our fragment and vertex shader code, which I refactored to suit the deferred shading. Overall, this did not take a significant amount of time to change, but was unexpected and did end up delaying my progress a bit.</li>
+        <li>There was an issue with the way that Coco’s textures were being rendered on the model that I had some trouble fixing. The textures worked fine on blender, but for some reason when I imported them into the game it looked as though the textures were mapped incorrectly onto the player models, with colors and designs out of place on the meshes. I did some digging online to see if there were any similar issues that people had before, but did not encounter much luck. By chance, I found a Stack Overflow post that talked about Assimp Importer flags, and when I went into our model loader there was a flag called aiProcess_flipUVs. After turning it off and rerunning the code, I realized that this was the main issue with the model; specifically for player models, it seemed that the UV texture coordinates were reversed.</li>
+    </ul>
+
+    <h2>What are your specific goals for the next week?</h2>
+    <ul>
+        <li>Since this is our last week, my main goal is to just get as much into the game as I can, starting off with particle systems. I plan to work on getting the torches and fireball particles animated with fire effects.</li>
+        <li>I also want to make sure that all of the other models are able to be loaded into the game (especially for the traps), and test the game’s functionality and performance with multiple animated models in the game.</li>
+    </ul>
+
+
+
+    <h2>What did you learn this week, if anything (and did you expect to learn it?)</h2>
+    <ul>
+        <li>I learned a lot about how blender works and how meshes are mapped to texture images, and how these textures are referenced by each vertex.</li>
+    </ul>
+
+
+
+    <h2>What is your individual morale (which might be different from the overall group morale)?</h2>
+    <ul>
+        <li>Even though I know there is going to be a good amount of crunch this week, I am very happy with the current state of the game and looking forward to the demo!</li>
+    </ul>
+</body>
+
+</html>

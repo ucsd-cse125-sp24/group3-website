@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torchlight Games</title>
+    <link rel="stylesheet" href="../individualreport.css">
+
+<body>
+    <h1> Edward's Week 9 Individual Report </h1>
+
+    <h2>What were your concrete goals for the week?</h2>
+    <ul>
+        <li><p>Cell Type Updates - on item spawn/pickup and trap placement/delete</p></li>
+        <li><p>Item spawn with certain probability when DM placed a trap</p></li>
+        <li><p>Change showed ArrowTrap and SunGod trap orientation with right-click </p></li>
+        <li><p>Add visuals for cooldown time in hotbar (change pixel art)</p></li>
+        <li><p>Remove needing to press P to place a Trap</p></li>
+    </ul>
+
+    <h2>What goals were you able to accomplish?</h2>
+    <ul>
+        <li><p>All of the above.</p></li>
+    </ul>
+
+    <h2>If the week went differently than you had planned, what were the reasons?</h2>
+    <ul>
+        <li>There was a small issue where for some reason the DM would crash on reconnect. I was able to fix it by making sure to update the appropriate Session information after the DM player is assigned. Before there was no issue because the DM would be assigned as the first player on connect. However, now that the DM is actually being assigned AFTER everyone is ready to play, the appropriate Session information stored on connect isn’t updated. This means if the DM leaves & reconnects the stale stored Session information will assume it as a regular player and certain fields which shouldn’t be nullptr are nullptr and the game crashes. Thankfully it didn’t take me that long to fix.</li>
+    </ul>
+
+    <h2>What are your specific goals for the next week?</h2>
+    <ul>
+        <li>Finalize the game and get ready to be a part of the greatest demo of all time.</li>
+    </ul>
+
+
+
+    <h2>What did you learn this week, if anything (and did you expect to learn it?)</h2>
+    <ul>
+        <li>I actually learned how to make little png pixel art icons. I was experimenting with ways to better indicate to the DM a trap is in cooldown, so I got curious and opened the png (that Ted made) which represented a box in the hotbar. My thought was if I could change the border color, that would be great. Turns out I could change the PNGs pixel colors directly in Visual Studio, and so I made one with a red outline to indicate a trap is in cooldown which worked great. Then I discussed with Ted and we agreed it would look cooler if the red outline could slowly vanish around the box like a timer, which Ted handled. It was very cool to know how to make the pixel art for the game, which I didn’t expect to interact with at all.</li>
+    </ul>
+
+
+
+    <h2>What is your individual morale (which might be different from the overall group morale)?</h2>
+    <ul>
+        <li>Very, very happy with the look and feel of the game. Couldn’t have asked to be in a better group!</li>
+    </ul>
+</body>
+
+</html>

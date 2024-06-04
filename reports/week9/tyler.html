@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torchlight Games</title>
+    <link rel="stylesheet" href="../individualreport.css">
+
+<body>
+    <h1> Tyler's Week 9 Individual Report </h1>
+
+    <h2>What were your concrete goals for the week?</h2>
+    <ul>
+        <li>
+            Clean up the informational UI on the game HUD, and add in a compass to point in the direction of the orb
+            instead of displaying the distance.
+        </li>
+        <li>
+            Potentially implement an item which reflects Zeus's lightning back at him (possibly a mirror?) if noone else does.
+        </li>
+        <li>
+            Do a lot of playtests, and maybe even pull in some people from outside of the group and get their reactions.
+        </li>
+    </ul>
+
+    <h2>What goals were you able to accomplish?</h2>
+    <p>I didn't end up doing any of these above goals really. Ted handled the UI cleanup very well, and Gil implemented
+        the mirror item idea (which ended up being super well done and I think will be very fun). 
+        Also, we did some playtests, but they werent the focal part of the week.
+    </p>
+    <p>
+        Instead, I did some other tasks that came up
+    </p>
+
+    <h3>Minimap Exploration</h3>
+    <p>
+        The first thing I did was explore the idea of a minimap. 
+        They ended up looking like this:
+    </p>
+        
+    <video controls width="800">
+        <source src="./assets/minimap-test.mp4">
+    </video>
+
+    <p>
+        After getting an initial implementation working, however, 
+        we decided that it wouldn't be a good feature to add. The reasons were
+    </p>
+
+    <ul>
+        <li>It was very distracting for the player, and generally unfun to look at. While playing, immediately I didn't really like 
+            it because I was constantly looking at it and not the cool 3d world. But you would be constantly punished for not
+            looking at it because it just gave so much more information.
+        </li>
+        <li>In that same vein of it not being fun to look at the minimap, 
+            it would taken a lot of artistic effort to make it up the standard with the rest of the UI / textures / models.
+        </li>
+    </ul>
+
+    <p>I also played with the idea of having to press tab to see a map, but that just makes it so players are constantly
+        toggling tab instead of glancing at the top right of the screen.
+    </p>
+
+    <p>Ultimately it seemed like it lessened immersion, distracted from the direction of the rest of the game, and was generally
+        unfun.
+    </p>
+
+    <h3>Various Cleanups</h3>
+    <p>I noticed some bugs in the procedural generation algorithm where it wasn't correctly following the ratio of room types.
+        So for example, I had told it to generate 7 easy rooms for every 5 medium for every 3 hard for every 1 loot room, but 
+        the algorithm could end up not following this ratio because if a room wasn't able to be fit into the maze then it would still
+        go to the next room type that it thought it had to place.
+    </p>
+    <p>I adjusted the procedural generation algorithm to place more easy rooms because they tend to be more often hallways, which
+        make the mazes more interesting because there aren't a bunch of wide open spaces right next to each other as often.
+    </p>
+    <p>I also finally fixed diagonal movement so you don't move faster.</p>    
+
+    <h3>Intro Cutscene</h3>
+
+    <p>
+        The last thing I did and am still working on was making an intro cutscene. Gil made some really nice start game
+        sound effects, and we had been throwing around the idea of an intro scene for weeks now, so I finally decided to 
+        tackle it.
+    </p>
+
+    <p>Currently it is mostly working, but the player POV of the cutscene is currently all black because of a rendering
+        bug I have to solve. Here are all of the  things I still need to do:
+    </p>
+    <ul>
+        <li>Fix black screen in player pov</li>
+        <li>Load in different player models for different characters</li>
+        <li>Small tunings once everything else is in place</li>
+    </ul>
+
+    <p>
+        Here is the intro cutscene for Zeus currently:
+    </p>
+
+    <video controls width="800">
+        <source src="./assets/zeus-cutscene-animations.mp4">
+    </video>
+
+    <h3>Demo Machine Testing</h3>
+
+    <p>Anthony, Gil, and I were able to test our code on the demo machines. Everything worked initially, but our tick rate
+        issues that we had been seeing resurface were still an issue and didn't magically resolve themselves like during our
+        last playtest.
+    </p>
+    <p>
+        We first ended up fixing a lingering O(n) operation in our update loop because even though it was only sending delta
+        packets, we were still converting every object in the game to its Shared representation every tick. So we just made
+        it do the translation only to the objects that were marked as updated.
+    </p>
+    <p>
+        However, we still were running into some strange problems with the tick rate. After tracking them down we realized
+        that for some reason, non-deterministically every now and then it takes a significant longer amount of time
+        to send the update packets to all of the clients, despite there being no real differences or marker that would
+        explain why certain tick's updates would take longer. (They always are the same amount of packets with roughly the
+        same amount of objects updated). And the order of magnitude is rather large. (8,10ms -> 40,50ms+) and we even
+        ended up seeing some huge 250ms hitches, which were really bad.
+    </p>
+    <p>
+        We don't know why we were seeing this. It feels like we solved the issue within our code, but then just the OS
+        or something is hitching every so often. There doesn't seem to be any reason why certain ticks would take
+        significantly more time to do the socket send operation from what we can see.
+    </p>
+    <p>
+        We tried a lot of things to fix this relating to the networking. We re-enlargened our objects-per-update limit
+        so now all of our partial updates only take one packet to send per host. We also disabled Nagle's algorithm on
+        the server side (I didn't really expect that to help, but it just seemed like a good idea from what I read).
+        There are probably some other changes we did that I can't remember right now.
+    </p>
+    <p>
+        The biggest problem is that it seems to be very nondeterminstic. Some times it happens and sometimes it doesn't
+        at all. Even after loading in the exact same maze, some run throughs of the program it seems to be ok, and
+        then other times loading into the same maze it isn't Also there seems to be stretches where it happens and stretches
+        where it doesn't within the same game. We're kind of lost. The only thing I can think of is if another
+        group was remoting into the machines at the same time and the resources were being shared.
+    </p>
+    <p>
+        We're probably going to need help solving this if it continues, because right now sometimes it just hitches for 200+ms
+        every now and then, which is not pleasant.
+    </p>
+
+    <h2>If the week went differently than you had planned, what were the reasons?</h2>
+    <ul>
+        <li>I think I'm at the point where things are happening faster than we can plan on a week-by-week basis, so
+            I think its pretty normal.</li>
+    </ul>
+
+    <h2>What are your specific goals for the next week?</h2>
+    <ul>
+        <li>Fix the hitching in the tick rate</li>
+        <li>Debug why the player cutscene is black</li>
+    </ul>
+
+    <h2>What did you learn this week, if anything (and did you expect to learn it?)</h2>
+    <ul>
+        <li>I learned what Nagle's algorithm is</li>
+    </ul>
+
+    <h2>What is your individual morale (which might be different from the overall group morale)?</h2>
+    <p>
+        If you asked me this morning I had really high morale, but after suffering through the tick rate fiasco
+            I'm really getting nervous. I hope we can solve it and our game isn't hitching during the demo.
+    </p>
+    <p>
+        But realistically I do still have very high morale, I'm just still annoyed because I'm writing 
+        this right after debugging the tick rate stuff for 3 straight hours, the last 2 of which felt like 
+        we were getting nowhere because even though we fixed the O(n) iteration we were still having problems.
+    </p>
+</body>
+
+</html>
