@@ -252,6 +252,10 @@
         </p>
 
         <p>
+            (<strong>David</strong>) I primarily worked on a Macbook with Apple silicon, using VSCode and CMake. I had similar issues that Ted described above, and I had to force cmake to use gcc instead of Clang using the commands above. There were also some issues with how libraries interacted with the Apple silicon that I had to find workarounds for, such as using certain MacOS flags that were not available on Apple silicon.
+        </p>
+
+        <p>
             (<strong>Gil</strong>) I worked on a Windows 11 desktop and a Windows 10
             laptop, using the same setup as Edward and Ted: Visual Studio + CMake.
             I mostly worked on my desktop as building on my laptop took ages. At some
@@ -259,6 +263,27 @@
             continued working mostly with the lab computers, which ran Windows 11 and
             with which I used the same Visual Studio + CMake setup.
         </p>
+
+        <p>
+            (<strong>Anthony</strong>) I worked on Linux using a distribution called
+            NixOS. The great thing about using NixOS was the painless setup for the
+            project. At the top level of our project we had a <a href="https://github.com/ucsd-cse125-sp24/group3/blob/main/shell.nix"><code>shell.nix</code></a>
+            file which defined all the system dependencies needed to build the project.
+            Think of it like a Python virtual environment or an NPM <code>package.json</code>
+            for our project.
+        </p>
+        <p>
+            From any machine, I could just run the <code>nix-shell</code> command and
+            be launched into a shell environment with everything set up. This was helpful
+            for me as I was swapping between multiple computers.
+        </p>
+        <p>
+            I’m not sure if I would recommend other groups to use Nix for their projects but it is useful if you want to have a consistent development environment between everyone’s machines (especially since you can install the Nix package manager on macOS, any Linux distribution and WSL). There is just some overhead in getting the Nix shell setup initially.
+        </p>
+        <p>
+            For my text editor, I used Neovim mostly but VSCode occasionally. With regards to our project being cross-platform, I would highly recommend it for future groups. We initially were thinking of having everyone develop on Windows with Visual Studio since it would “just work”. Unfortunately for me, I don’t have a Windows machine and this would mean that I would have to be in the lab to do any work. I feel like this would have hindered my productivity and I’m glad that I had the ability to work anywhere at any time.  
+        </p>
+
 
         <h3>
             What group mechanics decisions worked out well, and which ones (if any)
@@ -366,6 +391,12 @@
             was some crazy syntax I was unfamiliar with that cemented for me how different
             C++ is from C) 
         </p>
+        <p>
+            (<strong>Anthony</strong>) Lighting turned out to be quite the pain. The lighting calculations themselves were not too bad but having them scale with larger and larger mazes was a challenge. One challenge at first was choosing the point lights to use for rendering lighting effects. The shaders can only hold a constant number of light sources which meant that we had to prioritize rendering lighting from the N closest light sources. This took about a week of my time to iron out. Originally I was doing this sorting client side on every tick and tried playing around with how often the light sources were sorted. This didn’t prove to work well and the client’s frame rate tanked.
+        </p>
+        <p>
+            Instead, the sorting was moved to the server and each client received the N closest light sources to them. Once this was done, we ran into more issues with performance on the client side. As we kept adding new models with many new vertices, it became clear that the lighting calculations were going to become a bottleneck since they are done for every fragment on every mesh. To alleviate this, we moved our rendering pipeline to use a technique called deferred shading. In a nutshell, we perform our lighting calculations for every pixel the user can see instead of lighting calculations for every fragment of every mesh. While this was done pretty last minute, I think it was worth it as it gave us some leeway with performance as we kept adding more to be rendered.
+        </p>
 
         <h3>
             Which aspects of the project are you particularly proud of? Why?
@@ -411,6 +442,13 @@
         </p>
         <p>
             (<strong>David</strong>) I am super proud of everyone and I think that our final product turned out great! I think that everyone contributed a critical part to the game: Coco’s models and textures, Anthony’s work on the lighting and model importing, Ted’s work on the UI and game features, Gil’s original score, Tyler’s networking code, and Edward’s DM logic. For me, I think I was most proud of the animation logic, mainly because (for the most part) it didn’t completely crash the game.
+        </p>
+        
+        <p>
+            (<strong>Anthony</strong>) I can’t say enough great things about our group and the work they put in this quarter. I was especially impressed by the fantastic models and textures that Coco made. By the end of the quarter basically everything in the game was a custom model/texture that she made which really made the game feel unique. I was also really proud of David’s work on the animation manager and getting the camera movement set up. The animations really take the game to the next level and showcase the great player and fire models that Coco made. The work Edward did with the Zeus trap placement was amazing and helped add a whole new level of interactivity to the game. The work Ted and Gil did to get the backbone of the server’s gameplay logic setup was also awesome. It proved resilient enough to serve us well all the way through the quarter.
+        </p>
+        <p>
+            Ted’s work on the physics engine was also much appreciated. I want to extend a huge shout out to Gil for composing an original score which made the game extra special and epic on the demo stage. Additionally, the game wouldn’t be the same without Tyler’s contributions. His countless hours spent on getting the UI in a good state proved to be extremely useful as it gave our game a really polished look at the end. Finally, one more thing I’d like to highlight is the maze generation. Gil pioneered the feature where you could design a maze using plain ASCII and the server would parse it and generate a corresponding world you could walk around in. Tyler also elevated this to the next level by taking these ASCII maze rooms and automating the process of combining them to give us procedurally generated mazes. Having this ASCII representation of the world was great to work with as I could easily fine tune the world I wanted for testing to exactly how I wanted. I also liked how once we figured out how to place an object in one cell of the grid, it was repeatable to any other grid of the maze. 
         </p>
 
         <h3>
