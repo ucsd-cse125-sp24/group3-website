@@ -114,4 +114,10 @@ code {
     color: #188038;
     font-family: 'Courier New', Courier, monospace;
     font-weight: bold;
- }
+}
+
+pre {
+    color: #4c9242;
+    font-family: 'Courier New', Courier, monospace;
+    background: #1e1e1e;
+}
