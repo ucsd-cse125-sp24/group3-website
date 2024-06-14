@@ -1,0 +1,117 @@
+@font-face {
+    font-family: 'Lato';
+    src: url('Lato-Regular.ttf') format('truetype');
+}
+
+* {
+    font-family: Lato;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: grid;
+    grid-template-rows: 5vh 90vh 5vh;
+}
+
+header, main, footer {
+    padding-left: 2rem;
+    padding-right: 2rem;
+    /* border: 1px solid red; */
+}
+
+footer {
+    padding-top: 1rem;
+}
+
+main {
+    overflow-y: auto;
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+h3 {
+    max-width: 100ch;
+    font-size: 1.5rem;
+}
+
+p {
+    max-width: 100ch;
+    font-size: 1.2rem;
+}
+
+nav {
+    width: 100%;
+    text-align: center;
+}
+
+nav a {
+    font-weight: 500;
+    text-decoration: none;
+    color: #000000;
+    margin: 0 1.3rem;
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+    position: relative;
+    display: inline-block;
+}
+
+nav a:before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: #000000;
+    top: 95%;
+    animation: out 0.2s cubic-bezier(1, 0, 0.58, 0.97) 1 both;
+}
+
+nav a:hover {
+    color: #000000;
+    text-decoration: none;
+}
+
+nav a:hover:before {
+    animation: in 0.2s cubic-bezier(1, 0, 0.58, 0.97) 1 both;
+}
+
+@keyframes in {
+    0% {
+        width: 0;
+        left: 0;
+        right: auto;
+    }
+
+    100% {
+        left: 0;
+        right: auto;
+        width: 100%;
+    }
+}
+
+@keyframes out {
+    0% {
+        width: 100%;
+        left: auto;
+        right: 0;
+    }
+
+    100% {
+        width: 0;
+        left: auto;
+        right: 0;
+    }
+}
+
+code {
+    color: #188038;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+ }

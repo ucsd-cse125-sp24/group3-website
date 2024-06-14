@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torchlight Games</title>
+    <link rel="stylesheet" href="css/finalReportPage.css">
+</head>
+<body>
+    <header>
+        <h1>Final Report</h1>
+    </header>
+    <main>
+        <h2>Project Review</h2>
+        
+        <h3>
+            Game concept: To what extent did your game concept change from initial
+            concept to what you implemented? If it did change, how did it change,
+            and why?
+        </h3>
+
+        <p>
+            Before we completed our project specification document, we went through
+            many possible game concepts: initially, we were thinking of making an RTS
+            game, and then had everyone come up with possible concepts. There were
+            many: in addition to RTS, we had ideas for an Airship + Dragon Battle
+            Game, a Spaceship Battle Game (co-op), a Tower Defense game, a Night
+            Survival game, a Maze Game, a Roguelike Dungeon Crawler, and even a
+            Deckbuilder game.
+        </p>
+        <p>
+            Our initial concept was, to some degree, a hybrid of many of these ideas:
+            the game would be set in a maze from which players needed to escape by
+            working together (combining elements of the Maze Game idea and the co-op
+            nature of the Spaceship Battle Game idea), the Dungeon Master's (Zeus)
+            top-view mirrored RTS and Tower Defense gameplay (due to placing traps
+            to stop the players from reaching the Orb and the exit), and the asymmetric
+            gameplay concept mirrored the 3 Airships vs. 1 Dragon idea from the
+            Airship + Dragon Battle Game.
+        </p>
+        <p>
+            Our implemented game essentially polished the idea detailed in our project
+            spec - we split the game into two phases (the Maze Exploration and the
+            Relay Race phases) and brought the idea of needing a key to leave the maze
+            (which was originally discussed for the Maze Game idea) back in by adding
+            the Orb as a requirement for player escape and victory (in the Project
+            Spec, the players just needed to find the exit within a time limit to win).
+        </p>
+        <p>
+            The introduction of the Orb cemented the cooperative nature of the game
+            - the players would now have to work together to bring the Orb to the
+            exit, and it is much more obvious for the players to work cooperatively
+            in this setting as it creates a sort of relay race (hence the name of the
+            second phase being "Relay Race" which occurs once the players find the Orb
+            or three player deaths have occurred (this second condition incentivizes
+            the players to try to find the Orb as quickly as possible as otherwise
+            the timer may start early before they find the Orb, lowering their chances
+            of success)).
+        </p>
+        <p>
+            This molding of our ideas allowed us to create something special and unique,
+            and we're very happy with how the game turned out!
+        </p>
+
+        <h3>
+            Design: How does your final project design compare to the initial design,
+            and what are the reasons for the differences, if any?
+        </h3>
+
+        <p>
+            Besides the obvious changes to the name and overall theming (our game
+            was originally called "Arcana" and our theming later settled on Greek
+            mythology), gameplay-wise we had two big changes compared to the initial
+            design.
+        </p>
+        <p>
+            First, we had originally planned for the game to have two phases where
+            the first phase was the maze escape and then the second phase was a boss
+            fight where Zeus controlled a boss. However, I think even at the time we
+            were concerned that we might not have time to Implement the second phase,
+            and we were correct on that, but even so the idea of having multiple phases
+            was carried over when we added the Orb game mechanic (<strong>Tyler</strong>).
+        </p>
+        <p>
+            The second big change came from the scope of our physics engine. In our
+            original brainstorm for traps in the maze, we had a number of traps designed
+            around physics and movement, such as a pitfall trap. However, we never
+            really considered implementing these beyond the initial brainstorm because
+            we decided to not use a physics library and instead use our own very simple
+            physics engine, which had a number of limitations but ended up being a
+            lot easier to set up and work with. Without a major refactor, it isn't
+            really possible to introduce verticality into the maze, which means that
+            a lot of the parkour-based trap ideas we had wouldn't really work.
+        </p>
+
+        <h3>
+            Schedule: How does your final schedule compare with your projected schedule,
+            and what are the reasons for the differences, if any? (You should be able
+            to glean this from your status reports.)
+        </h3>
+
+        <p>
+            We created the following projected schedule in our Project Spec:
+        </p>
+
+        <picture>
+            <img src="assets/images/projected_schedule.png">
+        </picture>
+
+        <p>
+            As you can see, it is a week-based set of goals in multiple categories.
+        </p>
+        <p>
+            By Week 3, we had expected that basic player movement + basic enemy AI
+            would be implemented, but this had to be postponed due to our game state
+            redesign (using two classes to hold the game state: <code>ServerGameState</code>
+            for the server which contained everything, including shared data, and a second
+            <code>SharedGameState</code> which was readonly, generated every timestep
+            by the server (with delta updates after the first timestep) so that the
+            clients were only sent necessary game state information).
+        </p>
+        <p>
+            We originally also planned to finish the MVP by Week 5, but as that
+            deadline approached we saw that it was untenable, so we pushed the MVP
+            deadline further down the line and made a Mini-Milestone 2 set of goals
+            (the first Mini-Milestone being the client-server integration) to
+            complete by Week 5; we ended up completing the MVP by Week 8.
+        </p>
+        <p>
+            Mini-Milestone 2 built on top of the client-server integration and added
+            the following requirements:
+        </p>
+        <ul>
+            <li>
+                <p>
+                    Have a simple room environment working with proper collision
+                    detection (i.e., players correctly collided with walls)
+                </p>
+            </li>
+            <li>
+                <p>
+                    Multiplayer (i.e., players can connect to the same same server
+                    and see each other's avatars move correctly in game)
+                </p>
+            </li>
+            <li>
+                <p>
+                    Player movement
+                </p>
+            </li>
+            <li>
+                <p>
+                    Server only starting the game once enough people joined the 
+                    server (this was later replaced with a lobby system as part of
+                    the finished game)
+                </p>
+            </li>
+        </ul>
+
+        <h2>
+            General Questions
+        </h2>
+
+        <h3>
+            Describe your development environment. What tools did you use? What was
+            your build workflow? If you supported multiple platforms (e.g., MacOS
+            and / or Linux), how did you support making your project work well on
+            all platforms? Do you have any tips or suggestions for future groups
+            for their development environment?
+        </h3>
+
+        <p>
+            (<strong>Tyler</strong>) We were able to support cross-platform development
+            accross Windows, Mac, and Linux by only using cross-platform libraries
+            (e.g., OpenGL for graphics, boost asio for networking), and by using CMake
+            for our build system. Visual Studio (The Windows IDE, not VSCode) actually
+            has built-in CMake integration so it wasn't too difficult to get it up and
+            running once we had a working <code>CMakeLists.txt</code>.
+        </p>
+        <p>
+            Getting CMake to work in Linux / Mac command lines is pretty much the 
+            norm in C++ from what I understand, unlessyou use some different build system
+            which almost certainly will have less overall support for the various
+            libraries out there. We ended up using different compilers on Windows
+            (MSVC) and Linux / Mac (G++) because it seemed like a pain to get G++
+            on Windows, but we never ran into any huge inconsistencies across these
+            compilers. I think the only issues we had in this space were minorly
+            annoying inconsistencies with system macros - for instance, I tried making
+            an enum value called <code>DELETE</code> which was fine on G++ but not
+            on MSVC because some Windows header defined a macro called <code>DELETE</code>
+            which led to a naming collision.
+        </p>
+        <p>
+            We were able to catch all of these small inconsistencies with an automated
+            GitHub action runner which compiled all of our executables on Windows and
+            Linux, and just by doing code review and having people working on different
+            operating systems try out each PR.
+        </p>
+        <p>
+            For future groups, If you want to do C++ and also want your code base to
+            be cross-platform, I would definitely recommend CMake and not Visual
+            Studio solutions, but with the caveat that it still sucks and you will
+            have to fight it a lot. When fighting these battles, I would recommend
+            scavenging online for CMake snippets, or to even check out past groups'
+            repositories since you are definitely not the first group to try and
+            include whatever library in your C++ program using CMake.
+        </p>
+        <p>
+            Regarding my development environment, I worked on a laptop running Ubuntu
+            and used VSCode as my editor with CMake in the commannd line. To build,
+            all I had to do was run <code>cmake ..</code> to generate the CMake cache
+            and then <code>make -j8 client server</code> to compile the client and
+            server executables. Every now and then I had to swithc between Debug and
+            Release mode to run GDB, and to do this I had to regenerate the CMake
+            cache with <code>cmake -DCMAKE_BUILD_TYPE=Debug/Release</code>, but those
+            were really the only commands I had to run. I believe this build process
+            was almost identical to Mac, but I think there were some other changes
+            that David and Ted had to do to make it fully in sync with the Linux / Windows
+            builds.
+        </p>
+        <p>
+            (<strong>Edward</strong>) I worked on a Windows laptop and my dev
+            environment was basically just Visual Studio + CMake. I could run, build,
+            debug, all in Visual Studio. Building the executable was just clicking
+            the green arrow in Visual Studio. Our game is cross-platform (mostly,
+            not sure about Mac) and I think it mainly came down to the libraries we chose
+            to use. From the start, we made some effort to find good ones that were
+            cross-platform.
+        </p>
+        <p>
+            For future groups: If your game is in C++, for Windows users Visual Studio 
+            is enough. You don't need to do anything extra to get a C++ project with
+            CMake running.
+        </p>
+        <p>
+            (<strong>Ted</strong>) I worked both on a Windows desktop and a MacBook
+            laptop. My Windows desktop setup was the same as Edward's, a combination
+            of Visual Studio + CMake. On the other hand, I used VSCode + CMake on
+            my MacBook, but I needed to make an important change so that the project
+            would compile correctly. Otherwise, it would simply crash. The reason was
+            that Apple laptops would normally use clang to compile C++ instead of gcc,
+            which all the other operating systems use, and so David and I had to
+            download gcc with homebrew and force CMake to use the homebrew gcc instead
+            of clang. The command to do this was the following:
+        </p>
+        <p>Apple Intel: <code>cmake -DCMAKE_CXX_COMPILER=/usr/local/bin/g++</code></p>
+        <p>Apple silicon: <code>cmake -DCMAKE_CXX_COMPILER=/opt/homebrew/bin/g++</code></p>
+
+        <p>
+            The command differs for Apple Intel vs. Silicon because homebrew's defeault
+            directory is different.
+        </p>
+
+        <p>
+            (<strong>Gil</strong>) I worked on a Windows 11 desktop and a Windows 10
+            laptop, using the same setup as Edward and Ted: Visual Studio + CMake.
+            I mostly worked on my desktop as building on my laptop took ages. At some
+            point, I ran into an environment issue with my personal computers and so
+            continued working mostly with the lab computers, which ran Windows 11 and
+            with which I used the same Visual Studio + CMake setup.
+        </p>
+
+        <h3>
+            What group mechanics decisions worked out well, and which ones (if any)
+            did not? Why?
+        </h3>
+
+        <p>
+            (<strong>Ted</strong>) I think one of the best group mechanics was our
+            consistent meetings, discussions, and an open Discord channel for our
+            group. Building a game within 10 weeks led to fast-paced and consistent
+            changes in our code base, which led to discovery of new code every time
+            one tried to implement something new.
+        </p>
+        <p>
+            Having meetings to get everyone up to speed on the progress of the game
+            greatly improved the understanding of the development process of the game
+            for everyone. Also, in the meetings, we would usually decide where to go
+            for the upcoming week from the current state. The open discord channel
+            helped us communicate for quick questions and getting general help. Having
+            this media allowed us to help each other for parts they have previously
+            worked on or know about.
+        </p>
+        <p>
+            (<strong>Gil</strong>) Early on in the course, we used a democratic
+            process to decide on the game idea / concept after having every group
+            member come up with a game idea for consideration. After voting on the game
+            concepts, we could track which game ideas were the most popular and helped
+            us both make a game that everyone wanted to make and also to try to,
+            where possible, take elements we liked from game ideas we didn't pick and
+            added them in ways that made sense into our game concept.
+        </p>
+        <p>
+            For instance, the overhead view of Zeus + the asymmetric nature of the game
+            comes in a sense from the RTS / Airship / Tower Defense ideas, the cooperative
+            gameplay of the 3 players from the Spaceship game idea, etc. This also
+            engaged everyone in the team as opposed to potentially just having one
+            or a few people come up with a game idea and everyone else just accepting
+            that that's the game idea they'll create - in this way, I think everyone
+            became excited to work on the game and to make soemthing they'll want to
+            play. Of course, this isn't the only strategy here (others can work), but
+            this worked for us.
+        </p>
+        <p>
+            One thing that I'm not sure was super useful for our group but may come
+            in handy is a Knowledge Base document that we created early on. The idea
+            was this: since everyone has different levels of experience in different
+            aspects of the project and with C++ and so on, people could give links
+            to resources for relevant topics that can help others get up to speed. We
+            also used this somewhat so that when a particular tricky error came up and
+            someone figured out how to fix it, they provided a description of the error
+            and the fix on the Knowledge Base document.
+        </p>
+
+        <h3>
+            Which aspects of the implementation were more difficult than you expected,
+            and which were easier? Why?
+        </h3>
+
+        <p>
+            (<strong>Gil</strong>) The design for the game state representation was
+            much more involved / took much more time perhaps than what I was expecting,
+            though I was fairly daunted by what the "best" approach to take was. I
+            went through multiple iterations of the design, trying to keep it as simple
+            as possible, and discussed with the team multiple times to iron out exactly
+            how we should go about doing it. For instance, we looked at whether to 
+            use ECS or object-oriented and later regarding how to send to the client
+            only game state data it needs (as some of the data is purely used by the
+            server for computing the game state of the next timestep and so isn't needed
+            for representing the game state to the user).
+        </p>
+        <p>
+            Implementing the lobby system was also more complex as I had to touch a
+            lot of code and it was difficult to plan too much ahead of time; I also
+            needed help from Tyler regarding the networking side of it and how to
+            work with the GUI library to display the lobby table.
+        </p>
+        <p>
+            Improving the collision detection code to be <code>O(n)</code> was also
+            very involved but it was a bit more straightforward after I added the
+            <code>GridCell</code> abstraction since we decided to use an ASCII text
+            file representation of the maze, as then we could simply loop over each
+            moving object, detect the <code>GridCell</code>s it covered, and only loop
+            through other objects that also occupied those <code>GridCell</code>s to
+            detect collisions. Of course, more work needed to be done to ensure that at
+            any given moment we know what <code>GridCell</code>s objects covered and so
+            on, so more state had to be saved and object movement required additional
+            complexity.
+        </p>
+        <p>
+            (<strong>Tyler</strong>) UI was definitely soemthing I didn't expect to be
+            as difficult. Originally, we were planning on using a UI library, but then found
+            that none of them seemed particularly convenient to work with, specifically
+            with regards to rendering in a glfw winow with OpenGL.
+        </p>
+        <p>
+            Instead, I decided to implement a fully custom UI library that wrapped around
+            all of the OpenGL calls to render text and images. This ended up being the
+            backbone of all of our UI code, and I have to appluad Ted and Gil for using
+            it because it was a LOT harder to make a good interface for the UI code,
+            and I went through multiple iterations before finally landing on the one
+            we ended up using, which was still very annoying to work with.
+            (<strong>Gil's editor's note:</strong> I must say, the UI library was super
+            impressive and we could make it work to create all of the game UI and
+            lobby system player table - I don't remember it being too annoying to use but there
+            was some crazy syntax I was unfamiliar with that cemented for me how different
+            C++ is from C) 
+        </p>
+
+        <h3>
+            Which aspects of the project are you particularly proud of? Why?
+        </h3>
+
+        <p>
+            (<strong>Gil</strong>) I'm so proud of everyone's work over the course of 
+            past 10 weeks: the incredible graphics work by Anthony and David, Coco's
+            models and textures, the GUI library Tyler built, the beautiful UI Ted
+            made, the Zeus gameplay Edward implemented, the directional audio
+            sound effects, it's all excellent!! And that's without going into the
+            design and sophistication that went into the foundations for the networking
+            / graphics / server gamestate logic / etc. I think the aspect I'm most
+            proud of that I've worked on is the soundtrack, simply because I didn't
+            think that I'd be able to write a relatively large amount of music in
+            relatively little time, and I think I've succeeded in making it complement the
+            game. I also was working on getting some screenshots from the game and the
+            demo and I was super impressed with how the game ended up looking - some
+            of the screenshots in my opinion look amazing and have Lord of the Rings /
+            World of Warcraft vibes.
+        </p>
+        <p>
+            (<strong>Edward</strong>) I'm extremely proud of the work everybody has
+            done! The game turned out so well it's honestly hard for me to say which
+            aspect I am <em>particularly</em> proud of. One thing I am proud of that
+            I worked on is the trap placement for Zeus. It took a while to iron out,
+            but this feature is pretty cool and really makes the Zeus pov fun to
+            play. One thing about our game that I'm proud of that I didn't necessarily
+            work on would have to be the graphics, models, and animations. This area
+            is what really brings the game to life and I feel like our visuals are pretty
+            awesome, so shoutout to Coco, David, and Anthony.
+        </p>
+        <p>
+            (<strong>Coco</strong>) I am super duper proud of everyone! (The best game studio for 10 weeks:))
+            shout out to Anthony who implemented normal maps and improved the graphics engine; 
+            shout out to David who brought the models, animations to game (the fire was really creative); shout out to Edward who worked on “Dungeon master”, which brings much more fun to the game; shout out to Gil who made the awesome soundtrack (really what a choir and nice arrange I am happy to see more); shout out to Ted who made the beautiful UI, nice pixel art!; shout out to Tyler who worked on the maze, traps and intro scene, and of course the progress reports lol. I am proud of the models and textures, which I couldn’t believe I did all that within such a short period of time.
+        </p>
+        <p>
+            (<strong>Tyler</strong>) I think other people have touched on a lot of the implementation stuff they were super proud of already, so I’ll try and add something new. I’m super proud of how well as a group we all worked together and how well all of our ideas meshed to create one cohesive product. Tracing all of the aspects of the overall game idea, it’s actually crazy how many different pieces of it came from different people. I might be getting this wrong because it’s been a while, but I believe Edward came up with the original maze idea, Anthony came up with the survival/”horror” aspect of the gameplay, Gil came up with the original concept of the “Dungeon Master” (which ended up being Zeus), I came up with the idea for promoting cooperation between the players (which ended up turning into the orb relay race), and Coco really helped bring this all to life by going all out on the Greek theming. (There was definitely stuff I didn’t mention that other people contributed too, but I can’t remember it all!) Also, in a similar vein I’m incredibly proud of how well the work was distributed amongst everyone on the team. I think this is the first ever group project I’ve done where everyone in the group put in 110%, and I think it really shows in the final product.
+        </p>
+        <p>
+            (<strong>Ted</strong>) I agree with everyone everyone said :)
+        </p>
+        <p>
+            (<strong>David</strong>) I am super proud of everyone and I think that our final product turned out great! I think that everyone contributed a critical part to the game: Coco’s models and textures, Anthony’s work on the lighting and model importing, Ted’s work on the UI and game features, Gil’s original score, Tyler’s networking code, and Edward’s DM logic. For me, I think I was most proud of the animation logic, mainly because (for the most part) it didn’t completely crash the game.
+        </p>
+
+        <h3>
+            What was the most difficult software problem you faced, and how did
+            you overcome it (if you did)?
+        </h3>
+
+        <p>
+            (<strong>Gil</strong>) I can recall 3 insane bugs that came up over the course
+            of the project and one weird software environment error that only seemed to
+            afflict my laptop and desktop:
+        </p>
+        <p>
+            <em>Insane Bug #1:</em> As part of the collision detection optimization
+            code, I added a <code>moveObject()</code> method to the <code>ObjectManager</code>
+            which would update the <code>ObjectManager</code>'s record of the object's
+            occupied <code>GridCell</code>s. I originally set this method to return
+            a <code>bool</code> since, if the argument <code>Object *</code> were
+            <code>nullptr</code>, then the object couldn't be moved and would likely
+            reflect an error. However, I promptly forgot about this later and used the
+            method as if it returned <code>void</code>. 
+        </p>
+        <p>
+            Unfortunately, I had as a result forgotten to returned <code>true</code>
+            at the end of the method, so in case the <code>Object *</code> wasn't
+            <code>nullptr</code>, the method simply didn't return anythng. I would
+            have thought (silly me) that code like this would not compile, but apparently
+            it did and caused crazy undefined behavior that corrupted the operation
+            of a for loop at the end of the method. Thankfully, Tyler and Anthony
+            found and fixed this bug, but perhaps not without much undue pain that
+            I am very sorry to have caused them.
+        </p>
+        <p>
+            On the bright side, it did bring us this legendary commit:
+        </p>
+        
+        <picture>
+            <img src="assets/images/funnycommit.png" width="800px">
+        </picture>
+
+        <p>
+            <em>Insane Bug #2:</em> We had really weird behavior when we tried running
+            the server + 4 clients setup on the demo machines. We had 5 machines, so one
+            was running the server and the four others each ran a client. When we did
+            this, the server would constantly miss ticks and cause the game performance
+            to feel very sluggish. Tyler, Anthony, and I narrowed the part that took too
+            long in the server to be the code that sent packets accross the network.
+            However, as soon as Tyler ran a client and server on the same machine and
+            connected that client to the server, suddenly the server didn't miss any
+            more ticks! By giving the machine that ran the server <strong>more work</strong>,
+            it somehow <strong>performed faster</strong>.
+        </p>
+        <p>
+            We still have no idea why this happened - the current guess is that there's
+            some weird behavior with how the OS handles networking calls or something
+            like this. My guess is that perhaps as soon as a client is run on the same
+            machine as the server and the client connects to the server, the OS may
+            observe that one of the sent packets loops back to itself, so perhaps
+            some sort of optimization kicks in which ends up causing all of the
+            server's outgoing packets to be sent faster, but who knows.
+        </p>
+        <p>
+            <em>Insane Bug #3:</em> This is a fairly minor bug that still baffles me.
+            In the evening before the demo, there was an issue with the ceiling spike
+            traps where ceiling spike traps that were spawned as part of the maze
+            would work fine (and kill any player who trespassed under them for too
+            long), but ceiling spike traps placed by Zeus wouldn't kill the players,
+            only trap them.
+        </p>
+        <p>
+            We tried examining the code for the placement of both, but it was exactly
+            the same. The issue seemed to occur since the ceiling traps placed by Zeus
+            didn't detectthe collision with the players, or if they did, that they
+            came to a halt and were programmed not to deal any damage to the players
+            if their velocity was 0 (since simply colliding with a ceiling trap that
+            already fell shouldn't do any damage to the player). Incredibly, the
+            problem was fixed by simpling changing a constant of how high off the
+            ground the traps were spawned at (I believe from 3.0 meters to 2.9 or
+            something like this) which somehow magically fixed the problem. Our main
+            issue - and what made this so confusing, and still confusing as we really side-stepped
+            the issue more than fixing it directly - was why it was working for traps
+            that were part of the maze but not for those spawned by Zeus.
+        </p>
+        <p>
+            <em>Bonus: Boost + Visual Studio Tomfoolery:</em> An odd bug that only
+            happened to me and no one else happened when I tried upgrading my version
+            of Boost from 1.82 to 1.85, as the new version supported serialization for
+            <code>std::optional</code>. For whatever reason, this broke Visual Studio's
+            / CMake's ability to build the project as it was searching for a version
+            of Boost that didn't exist (labeled as compiled with a future version of
+            MSVC that doesn't (at the time of writing) exist yet - time traveller 
+            shenanigans?). The problem persisted through reinstalling Visual Studio,
+            re-cloning the repository, etc. and was somehow fixed when I removed the
+            CMake target to build our game state debugger.
+        </p>
+        <p>
+            I was (and is) still really suspicious of why this happened, especially as
+            it didn't occur on the lab machines or on anyone else's machine. I thought
+            it was because I upgraded my version of Visual Studio to the newest version,
+            but Tyler tried to do this on his desktop as well (also running Windows 11)
+            and it worked for him. Thankfull,y I could continue working on the lab
+            computers (and on my desktop as well after the debugger target was removed),
+            but I still have no idea why it broke.
+        </p>
+        <p>
+            (<strong>Tyler</strong>) This is kind of dumb, but one of the most annoying
+            things I did was getting fonts and images to render to the screen for the
+            UI code. I had to have David and Anthony help me at various points since
+            for the majority of the testing the fonts and iamges just didn't seem
+            to render at all. This ultimately ended up being a random gl setting
+            (<code>GL_CULL_FACES</code> I think?) that we had turned on for the normal
+            rendering of the world, but then weren't turning off for the UI. This
+            was repeated again for the image loading, and it ended up being because
+            we weren't correctly applying the transformation matrices to the images,
+            so they weren't rendering in the right position... And I couldn't figure
+            out how to actually get the linear algebra to work so I just manually did
+            the math myself, converting from pixels to the relative coordinate space
+            that OpenGL works in... The general process for fixing these was a lot of 
+            reading tutorial programs and documentation examples and trying to compare
+            what was different from our setup.
+        </p>
+        <p>
+            A good strategy was to start with the known working code and then one change at a time convert it to our codebase and see what change would make it turn wrong. But while those were difficult, they were mainly annoying.
+        </p>
+        <p>
+            For the most technically difficult, I think that would have to go to the procedural generation. I wanted to have a good balance between the complexity of the algorithm and the uniqueness of the generated mazes. I had to strategically make a number of simplifying rules to the room design so that the procedural algorithm would be simple but still generate mazes that felt complex to the players. Some of these rules included making sure that each room was fully connected, and only allowing entryways into rooms on the center coordinates, so that all of the entryways would line up. Once I had decided on the general approach, it was still difficult to implement, but not impossible, as I was able to turn it into a complex graph problem which I knew how to generally approach.
+        </p>
+        <p>
+            (<strong>David</strong>) One thing that I had a lot of trouble with was getting Mixamo animations properly rendered in the game. I used Coco’s models as the base and rigged the animations onto it, but there were a lot of issues that arose from these exported animations, especially since the animation meshes had no texture data. I had to do a lot of playing around with Blender to get the animated meshes textured and properly working on the client side. The main thing that was so difficult with this was that I had no idea whether the issue was with Assimp + our implementation of animations, or whether it was an issue with Mixamo/Blender and filetype of the model and animation data. There were so many different potential problem areas that it took a long time for me to identify what worked right. Through a lot of research and testing, I was finally able to get all three models animated and textured properly.
+        </p>
+
+    </main>
+    <footer>
+        <nav>
+            <a href="index.html">Main</a>
+            <a href="spec.pdf">Project Spec</a>
+            <a class="play" href="download.html">Download</a>
+            <a href="aboutUs.html">About Us</a>
+            <a href="https://github.com/ucsd-cse125-sp24/group3">Github</a>
+            <a href="soundtrack.html">Soundtrack</a>
+          </nav>
+    </footer>
+</body>
+</html>
