@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Torchlight Games</title>
+  <link rel="stylesheet" href="reports/individualreport.css">
+
+<body>
+    <img id="light-switch" style="visibility: visible !important;" src="./reports/week8/assets/tyler/switch.png">
+
+    <h1 style="font-size: 8rem;">Group 3 Hall of Fame</h1>
+
+    <p style="font-size: 2rem;"><strong>(Tyler)</strong> Or alternatively, I should probably be more careful in my commit messages.</p>
+
+    <img src="./assets/another_thing/alien.gif"></img>
+
+    <div style="flex-direction: column; display: flex;">
+        <img src="./assets/another_thing/group3.jpg">
+        <img src="./assets/another_thing/commit_neg5.png">
+        <img src="./assets/another_thing/commit_neg4.png">
+        <img src="./assets/another_thing/commit_neg3.png">
+        <img src="./assets/another_thing/orb.png">
+        <img src="./assets/another_thing/commit_neg2.png">
+        <img src="./assets/another_thing/commit_neg1.png">
+        <img src="./assets/another_thing/commit_01.png">
+        <img src="./assets/another_thing/commit_02.png">
+        <img src="./assets/another_thing/commit_03.png">
+        <img src="./assets/another_thing/commit_04.png">
+        <img src="./assets/another_thing/commit_05.png">
+        <img src="./assets/another_thing/commit_06.png">
+        <img src="./assets/another_thing/commit_07.png">
+        <img src="./assets/another_thing/commit_08.png">
+        <img src="./assets/another_thing/commit_09.png">
+        <img src="./assets/another_thing/commit_10.png">
+        <img src="./assets/another_thing/commit_11.png">
+        <img src="./assets/another_thing/commit_12.png">
+        <img src="./assets/another_thing/commit_13.png">
+        <img src="./assets/another_thing/dark.png">
+        <img src="./assets/another_thing/commit_14.png">
+        <img src="./assets/another_thing/commit_15.png">
+        <img src="./assets/another_thing/commit_16.png">
+        <img src="./assets/another_thing/commit_17.png">
+        <img src="./assets/another_thing/commit_18.png">
+        <img src="./assets/another_thing/commit_19.png">
+        <img src="./assets/another_thing/commit_20.png">
+        <img src="./assets/another_thing/commit_21.png">
+        <img src="./assets/another_thing/commit_22.png">
+        <img src="./assets/another_thing/models.png">
+        <img src="./assets/another_thing/commit_23.png">
+        <img src="./assets/another_thing/commit_24.png">
+        <img src="./assets/another_thing/commit_25.png">
+        <img src="./assets/another_thing/commit_26.png">
+        <img src="./assets/another_thing/commit_27.png">
+        <img src="./assets/another_thing/commit_28.png">
+        <img src="./assets/another_thing/commit_29.png">
+        <img src="./assets/another_thing/commit_30.png">
+        <img src="./assets/another_thing/commit_31.png">
+        <img src="./assets/another_thing/commit_32.png">
+        <img src="./assets/another_thing/yoshi.png">
+        <img src="./assets/another_thing/commit_33.png">
+        <img src="./assets/another_thing/commit_34.png">
+        <img src="./assets/another_thing/commit_35.png">
+        <img src="./assets/another_thing/commit_36.png">
+        <img src="./assets/another_thing/commit_37.png">
+        <img src="./assets/another_thing/commit_38.png">
+        <img src="./assets/another_thing/commit_39.png">
+        <img src="./assets/another_thing/commit_40.png">
+        <img src="./assets/another_thing/commit_41.png">
+        <img src="./assets/another_thing/commit_42.png">
+        <img src="./assets/another_thing/commit_43.png">
+        <img src="./assets/another_thing/commit_44.png">
+        <img src="./assets/another_thing/commit_45.png">
+        <img src="./assets/another_thing/concept.png">
+        <img src="./assets/another_thing/commit_46.png">
+        <img src="./assets/another_thing/commit_47.png">
+        <img src="./assets/another_thing/commit_48.png">
+        <img src="./assets/another_thing/origin.png">
+    </div>
+
+    <h2 style="font-size: 8rem">My honest reaction to finishing CSE 125 and graduating from UCSD</h2>
+
+    <div style="flex-direction: column; display: flex;">
+        <img src="./assets/images/two-sides.webp" width="600" height="600">
+
+        <div style="display: flex; flex-direction: row; justify-content: space-between; width: 600px">
+            <button class="tyler" id="btn" style="width: 160px;" >Left Side</button>
+            <button class="tyler" id="no-btn" style="width: 160px;">Right Side</button>
+        </div>
+    </div>
+
+    <p style="font-size: 2rem;">I COMPLETELY BROKE THESE BUTTONS AND CANT FIGURE OUT WHY! Oh well at least they have sound effects</p>
+
+    <img width="400px" height="400px" src="./assets/images/pikachu.gif">
+
+    <style>
+        * {
+            color: white;
+        }
+
+        img {
+            visibility: hidden;
+        }
+
+        p {
+            line-height: 2;
+        }
+        table {
+            text-align: center; 
+            border-collapse: collapse; 
+            border: 1px solid white;
+        } 
+        table * {
+            border: 1px solid white;
+            padding: 1em;
+        }
+    </style>
+
+    <script>
+        var playing = false;
+        let audio = new Audio('./reports/week8/assets/tyler/dancing_queen.mp3');
+        audio.volume = 0.5;
+        document.addEventListener("DOMContentLoaded", () => {
+            let btn = document.getElementById('light-switch');
+            btn.addEventListener('click', () => {
+                if (playing) {
+                    return;
+                }
+                playing = true;
+
+                let switch_sound = new Audio('./reports/week8/assets/tyler/switch.mp3');
+                switch_sound.play();
+                btn.insertAdjacentHTML("afterend", `
+                    <style>
+                        * {
+                            background-color: black;
+                        }
+                        img {
+                            visibility: visible !important;
+                        }
+                        h1 {
+                            color: #101872;
+                        }
+                        h2 {
+                            color: #4e1897;
+                        }
+                        h3 {
+                            color: #8742b0;
+                        }
+                        h4 {
+                            color: #be3fd0;
+                        }
+                `);
+
+                setTimeout(() => {
+                    audio.play();
+                    let body = document.getElementsByTagName('body')[0];
+                    body.insertAdjacentHTML("afterbegin", `
+                        <style>
+                            #disco-container {
+                                position: sticky;
+                                height: 0px;
+                                overflow: visible;
+                                top: 0;
+                            }
+
+                            #disco {
+                                position: relative;
+                                right: -70vw;
+                                z-index: -1;
+                            }
+                        </style>
+                        <div id="disco-container">
+                            <img id="disco" src="./reports/week8/assets/tyler/disco.gif"></img>
+                        </div>
+                    `);
+                }, 1500);
+
+            });
+        });
+    </script>
+
+    <script>
+        // why are you looking at this? dont look at this. this ruins the magic with how awful
+        // this is all put together. sorry Professor Powell...
+
+        var counter = 0;
+        var can_no = true;
+        var can_gr = true;
+        document.addEventListener("DOMContentLoaded", () => {
+            let btn = document.getElementById('btn');
+            btn.addEventListener("click", () => {
+                btn.insertAdjacentHTML("afterend", `
+                    <img class="yipee" style="left: ${Math.random() * 50}vw" id="yippee-${counter}"src="./reports/week6/assets/yipee-${counter % 20}.gif"></img> 
+                `);
+                setTimeout(() => {
+                    let sound = new Audio('./reports/week6/assets/yippee.mp3');
+                    sound.play();
+                }, 300);
+                const curr_val = counter;
+                setTimeout(() => {
+                    document.getElementById(`yippee-${curr_val}`).remove();
+                }, 2200);
+                counter++;
+            });
+
+            var no_counter = 0;
+            var sound_playing = false;
+            let no_btn = document.getElementById('no-btn');
+            no_btn.addEventListener("click", () => {
+                let curr_counter = no_counter;
+                no_counter++;
+
+                let img = "./assets/images/no.gif";
+                let rand1 = Math.random();
+                if (rand1 <= 0.33) {
+                    img = "./assets/images/cry.gif";
+                } else if (rand1 <= 0.66) {
+                    img = "./assets/images/sad.gif";
+                }
+
+                let anim = "shake-no";
+                let rand = Math.random();
+                if (rand <= 0.33) {
+                    anim = "fall-no";
+                } else if (rand <= 0.66) {
+                    anim = "spin-no";
+                }
+
+                no_btn.insertAdjacentHTML("afterend", `
+                    <img class="no ${anim}" src="${img}" id="no-${curr_counter}" style="left: ${Math.random() * 85}vw;"></img> 
+                `);
+
+                if (!sound_playing) {
+                    let sound = new Audio('./assets/sounds/cry.mp3');
+                    sound.play();
+                    sound_playing = true;
+                    setTimeout(() => {
+                        sound_playing = false;
+                    }, 10000)
+                }
+
+                setTimeout(() => {
+                    document.getElementById(`no-${curr_counter}`).remove();
+                }, 2200);
+            });
+        });
+    </script>
+
+    <style>
+        .yipee {
+            position: absolute;
+            top: 20vh;
+            animation-name: move;
+            animation-duration: 2.2s;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: 1;
+        }
+
+        .no {
+            position: absolute;
+            top: 20vh;
+        }
+
+        .shake-no {
+            animation-name: shake;
+            animation-duration: 0.5s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+
+        .fall-no {
+            animation-name: fall;
+            animation-duration: 1.5s;
+            animation-timing-function: ease-in;
+            animation-iteration-count: 1;
+        }
+
+        .spin-no {
+            animation-name: spin;
+            animation-duration: 0.5s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+
+        .btn-container {
+            display: flex;
+            align-items: right;
+            justify-content: right;
+            margin-bottom: 10vh;
+
+            position: sticky;
+            min-height: 3em;
+            top: 1em;
+            padding-right: 1em;
+        }
+
+        button.tyler {
+            font-size: 30pt;
+            text-align: center;
+        }
+
+        @keyframes move {
+            from {
+                transform: translateX(0);
+            } 
+            to {
+                transform: translateX(30vw);
+            }
+        }
+
+        @keyframes fall {
+            from {
+                transform: translateY(-30vh);
+            } 
+            to {
+                transform: translateY(130vh);
+            } 
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(359deg);
+            }
+        }
+
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+    </style>
+</body>
+
+</html>

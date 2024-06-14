@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torchlight Games</title>
+    <link rel="stylesheet" href="css/finalReportPage.css">
+</head>
+<body>
+    <header>
+        <h1>Final Report</h1>
+    </header>
+    <main>
+        <h2>Project Review</h2>
+        
+        <h3>
+            Game concept: To what extent did your game concept change from initial
+            concept to what you implemented? If it did change, how did it change,
+            and why?
+        </h3>
+
+        <p>
+            Before we completed our project specification document, we went through
+            many possible game concepts: initially, we were thinking of making an RTS
+            game, and then had everyone come up with possible concepts. There were
+            many: in addition to RTS, we had ideas for an Airship + Dragon Battle
+            Game, a Spaceship Battle Game (co-op), a Tower Defense game, a Night
+            Survival game, a Maze Game, a Roguelike Dungeon Crawler, and even a
+            Deckbuilder game.
+        </p>
+        <p>
+            Our initial concept was, to some degree, a hybrid of many of these ideas:
+            the game would be set in a maze from which players needed to escape by
+            working together (combining elements of the Maze Game idea and the co-op
+            nature of the Spaceship Battle Game idea), the Dungeon Master's (Zeus)
+            top-view mirrored RTS and Tower Defense gameplay (due to placing traps
+            to stop the players from reaching the Orb and the exit), and the asymmetric
+            gameplay concept mirrored the 3 Airships vs. 1 Dragon idea from the
+            Airship + Dragon Battle Game.
+        </p>
+        <p>
+            Our implemented game essentially polished the idea detailed in our project
+            spec - we split the game into two phases (the Maze Exploration and the
+            Relay Race phases) and brought the idea of needing a key to leave the maze
+            (which was originally discussed for the Maze Game idea) back in by adding
+            the Orb as a requirement for player escape and victory (in the Project
+            Spec, the players just needed to find the exit within a time limit to win).
+        </p>
+        <p>
+            The introduction of the Orb cemented the cooperative nature of the game
+            - the players would now have to work together to bring the Orb to the
+            exit, and it is much more obvious for the players to work cooperatively
+            in this setting as it creates a sort of relay race (hence the name of the
+            second phase being "Relay Race" which occurs once the players find the Orb
+            or three player deaths have occurred (this second condition incentivizes
+            the players to try to find the Orb as quickly as possible as otherwise
+            the timer may start early before they find the Orb, lowering their chances
+            of success)).
+        </p>
+        <p>
+            This molding of our ideas allowed us to create something special and unique,
+            and we're very happy with how the game turned out!
+        </p>
+
+        <h3>
+            Design: How does your final project design compare to the initial design,
+            and what are the reasons for the differences, if any?
+        </h3>
+
+        <p>
+            Besides the obvious changes to the name and overall theming (our game
+            was originally called "Arcana" and our theming later settled on Greek
+            mythology), gameplay-wise we had two big changes compared to the initial
+            design.
+        </p>
+        <p>
+            First, we had originally planned for the game to have two phases where
+            the first phase was the maze escape and then the second phase was a boss
+            fight where Zeus controlled a boss. However, I think even at the time we
+            were concerned that we might not have time to Implement the second phase,
+            and we were correct on that, but even so the idea of having multiple phases
+            was carried over when we added the Orb game mechanic (<strong>Tyler</strong>).
+        </p>
+        <p>
+            The second big change came from the scope of our physics engine. In our
+            original brainstorm for traps in the maze, we had a number of traps designed
+            around physics and movement, such as a pitfall trap. However, we never
+            really considered implementing these beyond the initial brainstorm because
+            we decided to not use a physics library and instead use our own very simple
+            physics engine, which had a number of limitations but ended up being a
+            lot easier to set up and work with. Without a major refactor, it isn't
+            really possible to introduce verticality into the maze, which means that
+            a lot of the parkour-based trap ideas we had wouldn't really work.
+        </p>
+
+        <h3>
+            Schedule: How does your final schedule compare with your projected schedule,
+            and what are the reasons for the differences, if any? (You should be able
+            to glean this from your status reports.)
+        </h3>
+
+        <p>
+            We created the following projected schedule in our Project Spec:
+        </p>
+
+        <picture>
+            <img src="assets/images/projected_schedule.png">
+        </picture>
+
+        <p>
+            As you can see, it is a week-based set of goals in multiple categories.
+        </p>
+        <p>
+            By Week 3, we had expected that basic player movement + basic enemy AI
+            would be implemented, but this had to be postponed due to our game state
+            redesign (using two classes to hold the game state: <code>ServerGameState</code>
+            for the server which contained everything, including shared data, and a second
+            <code>SharedGameState</code> which was readonly, generated every timestep
+            by the server (with delta updates after the first timestep) so that the
+            clients were only sent necessary game state information).
+        </p>
+        <p>
+            We originally also planned to finish the MVP by Week 5, but as that
+            deadline approached we saw that it was untenable, so we pushed the MVP
+            deadline further down the line and made a Mini-Milestone 2 set of goals
+            (the first Mini-Milestone being the client-server integration) to
+            complete by Week 5; we ended up completing the MVP by Week 8.
+        </p>
+        <p>
+            Mini-Milestone 2 built on top of the client-server integration and added
+            the following requirements:
+        </p>
+        <ul>
+            <li>
+                <p>
+                    Have a simple room environment working with proper collision
+                    detection (i.e., players correctly collided with walls)
+                </p>
+            </li>
+            <li>
+                <p>
+                    Multiplayer (i.e., players can connect to the same same server
+                    and see each other's avatars move correctly in game)
+                </p>
+            </li>
+            <li>
+                <p>
+                    Player movement
+                </p>
+            </li>
+            <li>
+                <p>
+                    Server only starting the game once enough people joined the 
+                    server (this was later replaced with a lobby system as part of
+                    the finished game)
+                </p>
+            </li>
+        </ul>
+
+        <h2>
+            General Questions
+        </h2>
+
+        <h3>
+            Describe your development environment. What tools did you use? What was
+            your build workflow? If you supported multiple platforms (e.g., MacOS
+            and / or Linux), how did you support making your project work well on
+            all platforms? Do you have any tips or suggestions for future groups
+            for their development environment?
+        </h3>
+
+        <p>
+            (<strong>Tyler</strong>) We were able to support cross-platform development
+            accross Windows, Mac, and Linux by only using cross-platform libraries
+            (e.g., OpenGL for graphics, boost asio for networking), and by using CMake
+            for our build system. Visual Studio (The Windows IDE, not VSCode) actually
+            has built-in CMake integration so it wasn't too difficult to get it up and
+            running once we had a working <code>CMakeLists.txt</code>.
+        </p>
+        <p>
+            Getting CMake to work in Linux / Mac command lines is pretty much the 
+            norm in C++ from what I understand, unless you use some different build system
+            which almost certainly will have less overall support for the various
+            libraries out there. We ended up using different compilers on Windows
+            (MSVC) and Linux / Mac (G++) because it seemed like a pain to get G++
+            on Windows, but we never ran into any huge inconsistencies across these
+            compilers. I think the only issues we had in this space were minorly
+            annoying inconsistencies with system macros - for instance, I tried making
+            an enum value called <code>DELETE</code> which was fine on G++ but not
+            on MSVC because some Windows header defined a macro called <code>DELETE</code>
+            which led to a naming collision.
+        </p>
+        <p>
+            We were able to catch all of these small inconsistencies with an automated
+            GitHub action runner which compiled all of our executables on Windows and
+            Linux, and just by doing code review and having people working on different
+            operating systems try out each PR.
+        </p>
+        <p>
+            For future groups, If you want to do C++ and also want your code base to
+            be cross-platform, I would definitely recommend CMake and not Visual
+            Studio solutions, but with the caveat that it still sucks and you will
+            have to fight it a lot. When fighting these battles, I would recommend
+            scavenging online for CMake snippets, or to even check out past groups'
+            repositories since you are definitely not the first group to try and
+            include whatever library in your C++ program using CMake.
+        </p>
+        <p>
+            Regarding my development environment, I worked on a laptop running Ubuntu
+            and used VSCode as my editor with CMake in the commannd line. To build,
+            all I had to do was run <code>cmake ..</code> to generate the CMake cache
+            and then <code>make -j8 client server</code> to compile the client and
+            server executables. Every now and then I had to swithc between Debug and
+            Release mode to run GDB, and to do this I had to regenerate the CMake
+            cache with <code>cmake -DCMAKE_BUILD_TYPE=Debug/Release</code>, but those
+            were really the only commands I had to run. I believe this build process
+            was almost identical to Mac, but I think there were some other changes
+            that David and Ted had to do to make it fully in sync with the Linux / Windows
+            builds.
+        </p>
+        <p>
+            (<strong>Edward</strong>) I worked on a Windows laptop and my dev
+            environment was basically just Visual Studio + CMake. I could run, build,
+            debug, all in Visual Studio. Building the executable was just clicking
+            the green arrow in Visual Studio. Our game is cross-platform (mostly,
+            not sure about Mac) and I think it mainly came down to the libraries we chose
+            to use. From the start, we made some effort to find good ones that were
+            cross-platform.
+        </p>
+        <p>
+            For future groups: If your game is in C++, for Windows users Visual Studio 
+            is enough. You don't need to do anything extra to get a C++ project with
+            CMake running.
+        </p>
+        <p>
+            (<strong>Ted</strong>) I worked both on a Windows desktop and a MacBook
+            laptop. My Windows desktop setup was the same as Edward's, a combination
+            of Visual Studio + CMake. On the other hand, I used VSCode + CMake on
+            my MacBook, but I needed to make an important change so that the project
+            would compile correctly. Otherwise, it would simply crash. The reason was
+            that Apple laptops would normally use clang to compile C++ instead of gcc,
+            which all the other operating systems use, and so David and I had to
+            download gcc with homebrew and force CMake to use the homebrew gcc instead
+            of clang. The command to do this was the following:
+        </p>
+        <p>Apple Intel: <code>cmake -DCMAKE_CXX_COMPILER=/usr/local/bin/g++</code></p>
+        <p>Apple silicon: <code>cmake -DCMAKE_CXX_COMPILER=/opt/homebrew/bin/g++</code></p>
+
+        <p>
+            The command differs for Apple Intel vs. Silicon because homebrew's defeault
+            directory is different.
+        </p>
+
+        <p>
+            (<strong>David</strong>) I primarily worked on a Macbook with Apple silicon, using VSCode and CMake. I had similar issues that Ted described above, and I had to force cmake to use gcc instead of Clang using the commands above. There were also some issues with how libraries interacted with the Apple silicon that I had to find workarounds for, such as using certain MacOS flags that were not available on Apple silicon.
+        </p>
+
+        <p>
+            (<strong>Gil</strong>) I worked on a Windows 11 desktop and a Windows 10
+            laptop, using the same setup as Edward and Ted: Visual Studio + CMake.
+            I mostly worked on my desktop as building on my laptop took ages. At some
+            point, I ran into an environment issue with my personal computers and so
+            continued working mostly with the lab computers, which ran Windows 11 and
+            with which I used the same Visual Studio + CMake setup.
+        </p>
+
+        <p>
+            (<strong>Anthony</strong>) I worked on Linux using a distribution called
+            NixOS. The great thing about using NixOS was the painless setup for the
+            project. At the top level of our project we had a <a href="https://github.com/ucsd-cse125-sp24/group3/blob/main/shell.nix"><code>shell.nix</code></a>
+            file which defined all the system dependencies needed to build the project.
+            Think of it like a Python virtual environment or an NPM <code>package.json</code>
+            for our project.
+        </p>
+        <p>
+            From any machine, I could just run the <code>nix-shell</code> command and
+            be launched into a shell environment with everything set up. This was helpful
+            for me as I was swapping between multiple computers.
+        </p>
+        <p>
+            I’m not sure if I would recommend other groups to use Nix for their projects but it is useful if you want to have a consistent development environment between everyone’s machines (especially since you can install the Nix package manager on macOS, any Linux distribution and WSL). There is just some overhead in getting the Nix shell setup initially.
+        </p>
+        <p>
+            For my text editor, I used Neovim mostly but VSCode occasionally. With regards to our project being cross-platform, I would highly recommend it for future groups. We initially were thinking of having everyone develop on Windows with Visual Studio since it would “just work”. Unfortunately for me, I don’t have a Windows machine and this would mean that I would have to be in the lab to do any work. I feel like this would have hindered my productivity and I’m glad that I had the ability to work anywhere at any time.  
+        </p>
+
+
+        <h3>
+            What group mechanics decisions worked out well, and which ones (if any)
+            did not? Why?
+        </h3>
+
+        <p>
+            (<strong>Ted</strong>) I think one of the best group mechanics was our
+            consistent meetings, discussions, and an open Discord channel for our
+            group. Building a game within 10 weeks led to fast-paced and consistent
+            changes in our code base, which led to discovery of new code every time
+            one tried to implement something new.
+        </p>
+        <p>
+            Having meetings to get everyone up to speed on the progress of the game
+            greatly improved the understanding of the development process of the game
+            for everyone. Also, in the meetings, we would usually decide where to go
+            for the upcoming week from the current state. The open discord channel
+            helped us communicate for quick questions and getting general help. Having
+            this media allowed us to help each other for parts they have previously
+            worked on or know about.
+        </p>
+        <p>
+            (<strong>Gil</strong>) Early on in the course, we used a democratic
+            process to decide on the game idea / concept after having every group
+            member come up with a game idea for consideration. After voting on the game
+            concepts, we could track which game ideas were the most popular and helped
+            us both make a game that everyone wanted to make and also to try to,
+            where possible, take elements we liked from game ideas we didn't pick and
+            added them in ways that made sense into our game concept.
+        </p>
+        <p>
+            For instance, the overhead view of Zeus + the asymmetric nature of the game
+            comes in a sense from the RTS / Airship / Tower Defense ideas, the cooperative
+            gameplay of the 3 players from the Spaceship game idea, etc. This also
+            engaged everyone in the team as opposed to potentially just having one
+            or a few people come up with a game idea and everyone else just accepting
+            that that's the game idea they'll create - in this way, I think everyone
+            became excited to work on the game and to make soemthing they'll want to
+            play. Of course, this isn't the only strategy here (others can work), but
+            this worked for us.
+        </p>
+        <p>
+            One thing that I'm not sure was super useful for our group but may come
+            in handy is a Knowledge Base document that we created early on. The idea
+            was this: since everyone has different levels of experience in different
+            aspects of the project and with C++ and so on, people could give links
+            to resources for relevant topics that can help others get up to speed. We
+            also used this somewhat so that when a particular tricky error came up and
+            someone figured out how to fix it, they provided a description of the error
+            and the fix on the Knowledge Base document.
+        </p>
+
+        <h3>
+            Which aspects of the implementation were more difficult than you expected,
+            and which were easier? Why?
+        </h3>
+
+        <p>
+            (<strong>Gil</strong>) The design for the game state representation was
+            much more involved / took much more time perhaps than what I was expecting,
+            though I was fairly daunted by what the "best" approach to take was. I
+            went through multiple iterations of the design, trying to keep it as simple
+            as possible, and discussed with the team multiple times to iron out exactly
+            how we should go about doing it. For instance, we looked at whether to 
+            use ECS or object-oriented and later regarding how to send to the client
+            only game state data it needs (as some of the data is purely used by the
+            server for computing the game state of the next timestep and so isn't needed
+            for representing the game state to the user).
+        </p>
+        <p>
+            Implementing the lobby system was also more complex as I had to touch a
+            lot of code and it was difficult to plan too much ahead of time; I also
+            needed help from Tyler regarding the networking side of it and how to
+            work with the GUI library to display the lobby table.
+        </p>
+        <p>
+            Improving the collision detection code to be <code>O(n)</code> was also
+            very involved but it was a bit more straightforward after I added the
+            <code>GridCell</code> abstraction since we decided to use an ASCII text
+            file representation of the maze, as then we could simply loop over each
+            moving object, detect the <code>GridCell</code>s it covered, and only loop
+            through other objects that also occupied those <code>GridCell</code>s to
+            detect collisions. Of course, more work needed to be done to ensure that at
+            any given moment we know what <code>GridCell</code>s objects covered and so
+            on, so more state had to be saved and object movement required additional
+            complexity.
+        </p>
+        <p>
+            (<strong>Tyler</strong>) UI was definitely soemthing I didn't expect to be
+            as difficult. Originally, we were planning on using a UI library, but then found
+            that none of them seemed particularly convenient to work with, specifically
+            with regards to rendering in a glfw winow with OpenGL.
+        </p>
+        <p>
+            Instead, I decided to implement a fully custom UI library that wrapped around
+            all of the OpenGL calls to render text and images. This ended up being the
+            backbone of all of our UI code, and I have to appluad Ted and Gil for using
+            it because it was a LOT harder to make a good interface for the UI code,
+            and I went through multiple iterations before finally landing on the one
+            we ended up using, which was still very annoying to work with.
+            (<strong>Gil's editor's note:</strong> I must say, the UI library was super
+            impressive and we could make it work to create all of the game UI and
+            lobby system player table - I don't remember it being too annoying to use but there
+            was some crazy syntax I was unfamiliar with that cemented for me how different
+            C++ is from C) 
+        </p>
+        <p>
+            (<strong>Anthony</strong>) Lighting turned out to be quite the pain. The lighting calculations themselves were not too bad but having them scale with larger and larger mazes was a challenge. One challenge at first was choosing the point lights to use for rendering lighting effects. The shaders can only hold a constant number of light sources which meant that we had to prioritize rendering lighting from the N closest light sources. This took about a week of my time to iron out. Originally I was doing this sorting client side on every tick and tried playing around with how often the light sources were sorted. This didn’t prove to work well and the client’s frame rate tanked.
+        </p>
+        <p>
+            Instead, the sorting was moved to the server and each client received the N closest light sources to them. Once this was done, we ran into more issues with performance on the client side. As we kept adding new models with many new vertices, it became clear that the lighting calculations were going to become a bottleneck since they are done for every fragment on every mesh. To alleviate this, we moved our rendering pipeline to use a technique called deferred shading. In a nutshell, we perform our lighting calculations for every pixel the user can see instead of lighting calculations for every fragment of every mesh. While this was done pretty last minute, I think it was worth it as it gave us some leeway with performance as we kept adding more to be rendered.
+        </p>
+
+        <h3>
+            Which aspects of the project are you particularly proud of? Why?
+        </h3>
+
+        <p>
+            (<strong>Gil</strong>) I'm so proud of everyone's work over the course of 
+            past 10 weeks: the incredible graphics work by Anthony and David, Coco's
+            models and textures, the GUI library Tyler built, the beautiful UI Ted
+            made, the Zeus gameplay Edward implemented, the directional audio
+            sound effects, it's all excellent!! And that's without going into the
+            design and sophistication that went into the foundations for the networking
+            / graphics / server gamestate logic / etc. I think the aspect I'm most
+            proud of that I've worked on is the soundtrack, simply because I didn't
+            think that I'd be able to write a relatively large amount of music in
+            relatively little time, and I think I've succeeded in making it complement the
+            game. I also was working on getting some screenshots from the game and the
+            demo and I was super impressed with how the game ended up looking - some
+            of the screenshots in my opinion look amazing and have Lord of the Rings /
+            World of Warcraft vibes.
+        </p>
+        <p>
+            (<strong>Edward</strong>) I'm extremely proud of the work everybody has
+            done! The game turned out so well it's honestly hard for me to say which
+            aspect I am <em>particularly</em> proud of. One thing I am proud of that
+            I worked on is the trap placement for Zeus. It took a while to iron out,
+            but this feature is pretty cool and really makes the Zeus pov fun to
+            play. One thing about our game that I'm proud of that I didn't necessarily
+            work on would have to be the graphics, models, and animations. This area
+            is what really brings the game to life and I feel like our visuals are pretty
+            awesome, so shoutout to Coco, David, and Anthony.
+        </p>
+        <p>
+            (<strong>Coco</strong>) I am super duper proud of everyone! (The best game studio for 10 weeks:))
+            shout out to Anthony who implemented normal maps and improved the graphics engine; 
+            shout out to David who brought the models, animations to game (the fire was really creative); shout out to Edward who worked on “Dungeon master”, which brings much more fun to the game; shout out to Gil who made the awesome soundtrack (really what a choir and nice arrange I am happy to see more); shout out to Ted who made the beautiful UI, nice pixel art!; shout out to Tyler who worked on the maze, traps and intro scene, and of course the progress reports lol. I am proud of the models and textures, which I couldn’t believe I did all that within such a short period of time.
+        </p>
+        <p>
+            (<strong>Tyler</strong>) I think other people have touched on a lot of the implementation stuff they were super proud of already, so I’ll try and add something new. I’m super proud of how well as a group we all worked together and how well all of our ideas meshed to create one cohesive product. Tracing all of the aspects of the overall game idea, it’s actually crazy how many different pieces of it came from different people. I might be getting this wrong because it’s been a while, but I believe Edward came up with the original maze idea, Anthony came up with the survival/”horror” aspect of the gameplay, Gil came up with the original concept of the “Dungeon Master” (which ended up being Zeus), I came up with the idea for promoting cooperation between the players (which ended up turning into the orb relay race), and Coco really helped bring this all to life by going all out on the Greek theming. (There was definitely stuff I didn’t mention that other people contributed too, but I can’t remember it all!) Also, in a similar vein I’m incredibly proud of how well the work was distributed amongst everyone on the team. I think this is the first ever group project I’ve done where everyone in the group put in 110%, and I think it really shows in the final product.
+        </p>
+        <p>
+            (<strong>Ted</strong>) I agree with everyone everyone said :)
+        </p>
+        <p>
+            (<strong>David</strong>) I am super proud of everyone and I think that our final product turned out great! I think that everyone contributed a critical part to the game: Coco’s models and textures, Anthony’s work on the lighting and model importing, Ted’s work on the UI and game features, Gil’s original score, Tyler’s networking code, and Edward’s DM logic. For me, I think I was most proud of the animation logic, mainly because (for the most part) it didn’t completely crash the game.
+        </p>
+        
+        <p>
+            (<strong>Anthony</strong>) I can’t say enough great things about our group and the work they put in this quarter. I was especially impressed by the fantastic models and textures that Coco made. By the end of the quarter basically everything in the game was a custom model/texture that she made which really made the game feel unique. I was also really proud of David’s work on the animation manager and getting the camera movement set up. The animations really take the game to the next level and showcase the great player and fire models that Coco made. The work Edward did with the Zeus trap placement was amazing and helped add a whole new level of interactivity to the game. The work Ted and Gil did to get the backbone of the server’s gameplay logic setup was also awesome. It proved resilient enough to serve us well all the way through the quarter.
+        </p>
+        <p>
+            Ted’s work on the physics engine was also much appreciated. I want to extend a huge shout out to Gil for composing an original score which made the game extra special and epic on the demo stage. Additionally, the game wouldn’t be the same without Tyler’s contributions. His countless hours spent on getting the UI in a good state proved to be extremely useful as it gave our game a really polished look at the end. Finally, one more thing I’d like to highlight is the maze generation. Gil pioneered the feature where you could design a maze using plain ASCII and the server would parse it and generate a corresponding world you could walk around in. Tyler also elevated this to the next level by taking these ASCII maze rooms and automating the process of combining them to give us procedurally generated mazes. Having this ASCII representation of the world was great to work with as I could easily fine tune the world I wanted for testing to exactly how I wanted. I also liked how once we figured out how to place an object in one cell of the grid, it was repeatable to any other grid of the maze. 
+        </p>
+
+        <h3>
+            What was the most difficult software problem you faced, and how did
+            you overcome it (if you did)?
+        </h3>
+
+        <p>
+            (<strong>Gil</strong>) I can recall 3 insane bugs that came up over the course
+            of the project and one weird software environment error that only seemed to
+            afflict my laptop and desktop:
+        </p>
+        <p>
+            <em>Insane Bug #1:</em> As part of the collision detection optimization
+            code, I added a <code>moveObject()</code> method to the <code>ObjectManager</code>
+            which would update the <code>ObjectManager</code>'s record of the object's
+            occupied <code>GridCell</code>s. I originally set this method to return
+            a <code>bool</code> since, if the argument <code>Object *</code> were
+            <code>nullptr</code>, then the object couldn't be moved and would likely
+            reflect an error. However, I promptly forgot about this later and used the
+            method as if it returned <code>void</code>. 
+        </p>
+        <p>
+            Unfortunately, I had as a result forgotten to returned <code>true</code>
+            at the end of the method, so in case the <code>Object *</code> wasn't
+            <code>nullptr</code>, the method simply didn't return anythng. I would
+            have thought (silly me) that code like this would not compile, but apparently
+            it did and caused crazy undefined behavior that corrupted the operation
+            of a for loop at the end of the method. Thankfully, Tyler and Anthony
+            found and fixed this bug, but perhaps not without much undue pain that
+            I am very sorry to have caused them.
+        </p>
+        <p>
+            On the bright side, it did bring us this legendary commit:
+        </p>
+        
+        <picture>
+            <img src="assets/images/funnycommit.png" width="800px">
+        </picture>
+
+        <p>
+            <em>Insane Bug #2:</em> We had really weird behavior when we tried running
+            the server + 4 clients setup on the demo machines. We had 5 machines, so one
+            was running the server and the four others each ran a client. When we did
+            this, the server would constantly miss ticks and cause the game performance
+            to feel very sluggish. Tyler, Anthony, and I narrowed the part that took too
+            long in the server to be the code that sent packets accross the network.
+            However, as soon as Tyler ran a client and server on the same machine and
+            connected that client to the server, suddenly the server didn't miss any
+            more ticks! By giving the machine that ran the server <strong>more work</strong>,
+            it somehow <strong>performed faster</strong>.
+        </p>
+        <p>
+            We still have no idea why this happened - the current guess is that there's
+            some weird behavior with how the OS handles networking calls or something
+            like this. My guess is that perhaps as soon as a client is run on the same
+            machine as the server and the client connects to the server, the OS may
+            observe that one of the sent packets loops back to itself, so perhaps
+            some sort of optimization kicks in which ends up causing all of the
+            server's outgoing packets to be sent faster, but who knows.
+        </p>
+        <p>
+            <em>Insane Bug #3:</em> This is a fairly minor bug that still baffles me.
+            In the evening before the demo, there was an issue with the ceiling spike
+            traps where ceiling spike traps that were spawned as part of the maze
+            would work fine (and kill any player who trespassed under them for too
+            long), but ceiling spike traps placed by Zeus wouldn't kill the players,
+            only trap them.
+        </p>
+        <p>
+            We tried examining the code for the placement of both, but it was exactly
+            the same. The issue seemed to occur since the ceiling traps placed by Zeus
+            didn't detectthe collision with the players, or if they did, that they
+            came to a halt and were programmed not to deal any damage to the players
+            if their velocity was 0 (since simply colliding with a ceiling trap that
+            already fell shouldn't do any damage to the player). Incredibly, the
+            problem was fixed by simpling changing a constant of how high off the
+            ground the traps were spawned at (I believe from 3.0 meters to 2.9 or
+            something like this) which somehow magically fixed the problem. Our main
+            issue - and what made this so confusing, and still confusing as we really side-stepped
+            the issue more than fixing it directly - was why it was working for traps
+            that were part of the maze but not for those spawned by Zeus.
+        </p>
+        <p>
+            <em>Bonus: Boost + Visual Studio Tomfoolery:</em> An odd bug that only
+            happened to me and no one else happened when I tried upgrading my version
+            of Boost from 1.82 to 1.85, as the new version supported serialization for
+            <code>std::optional</code>. For whatever reason, this broke Visual Studio's
+            / CMake's ability to build the project as it was searching for a version
+            of Boost that didn't exist (labeled as compiled with a future version of
+            MSVC that doesn't (at the time of writing) exist yet - time traveller 
+            shenanigans?). The problem persisted through reinstalling Visual Studio,
+            re-cloning the repository, etc. and was somehow fixed when I removed the
+            CMake target to build our game state debugger.
+        </p>
+        <p>
+            I was (and is) still really suspicious of why this happened, especially as
+            it didn't occur on the lab machines or on anyone else's machine. I thought
+            it was because I upgraded my version of Visual Studio to the newest version,
+            but Tyler tried to do this on his desktop as well (also running Windows 11)
+            and it worked for him. Thankfull,y I could continue working on the lab
+            computers (and on my desktop as well after the debugger target was removed),
+            but I still have no idea why it broke.
+        </p>
+        <p>
+            (<strong>Tyler</strong>) This is kind of dumb, but one of the most annoying
+            things I did was getting fonts and images to render to the screen for the
+            UI code. I had to have David and Anthony help me at various points since
+            for the majority of the testing the fonts and iamges just didn't seem
+            to render at all. This ultimately ended up being a random gl setting
+            (<code>GL_CULL_FACES</code> I think?) that we had turned on for the normal
+            rendering of the world, but then weren't turning off for the UI. This
+            was repeated again for the image loading, and it ended up being because
+            we weren't correctly applying the transformation matrices to the images,
+            so they weren't rendering in the right position... And I couldn't figure
+            out how to actually get the linear algebra to work so I just manually did
+            the math myself, converting from pixels to the relative coordinate space
+            that OpenGL works in... The general process for fixing these was a lot of 
+            reading tutorial programs and documentation examples and trying to compare
+            what was different from our setup.
+        </p>
+        <p>
+            A good strategy was to start with the known working code and then one change at a time convert it to our codebase and see what change would make it turn wrong. But while those were difficult, they were mainly annoying.
+        </p>
+        <p>
+            For the most technically difficult, I think that would have to go to the procedural generation. I wanted to have a good balance between the complexity of the algorithm and the uniqueness of the generated mazes. I had to strategically make a number of simplifying rules to the room design so that the procedural algorithm would be simple but still generate mazes that felt complex to the players. Some of these rules included making sure that each room was fully connected, and only allowing entryways into rooms on the center coordinates, so that all of the entryways would line up. Once I had decided on the general approach, it was still difficult to implement, but not impossible, as I was able to turn it into a complex graph problem which I knew how to generally approach.
+        </p>
+        <p>
+            (<strong>David</strong>) One thing that I had a lot of trouble with was getting Mixamo animations properly rendered in the game. I used Coco’s models as the base and rigged the animations onto it, but there were a lot of issues that arose from these exported animations, especially since the animation meshes had no texture data. I had to do a lot of playing around with Blender to get the animated meshes textured and properly working on the client side. The main thing that was so difficult with this was that I had no idea whether the issue was with Assimp + our implementation of animations, or whether it was an issue with Mixamo/Blender and filetype of the model and animation data. There were so many different potential problem areas that it took a long time for me to identify what worked right. Through a lot of research and testing, I was finally able to get all three models animated and textured properly.
+        </p>
+        <p>
+            (<strong>Anthony</strong>) +1 on the missing <code>return true</code> bug
+            Gil mentioned and +1 on the crazy networking issues when the client and server
+            were on different machines. My biggest hurdles were sorting lights by position
+            from the player (touched on a bit in a previous section) and getting normal
+            maps to work with our deferred rendering pipeline.
+        </p>
+
+        <h3>
+            In developing the media content for your project, you relied upon a number of tools ranging from the underlying graphics libraries to modeling software. And you likely did some troubleshooting to make it all work. So that students in future years can benefit from what you learned, please detail your tool chain for modeling, exporting, and loading meshes, textures, and animations. Be specific about the tools and versions, any non-obvious steps you had to take to make it work (e.g., exporting from the tool in a specific manner), and any features or operations you specifically had to avoid — in other words, imagine that you were tutoring someone on how to use the toolchain you used to make it all work. Also, for the tools you did use, what is your opinion of them? Would you use them again, or look elsewhere? Are there any tools that you used but, looking back, you would avoid?
+        </h3>
+
+        <p>
+            (<strong>Coco</strong>)
+        </p>
+        <p>
+            <strong>Modeling</strong>
+        </p>
+        <ol>
+            <li>
+                <p>
+                    Mainly used Nomad on ipad for all the basic modelings
+                </p>
+            </li>
+            <li>
+                <p>
+                    Export as obj to procreate for textures
+                </p>
+            </li>
+            <li>
+                <p>
+                    Import back to Nomad, bake the textures, apply roughness, metalness...
+                </p>
+            </li>
+            <li>
+                <p>
+                    Export as obj with textures to Blender for skeleton and animation
+                </p>
+            </li>
+            <li>
+                <p>
+                    Bake the animation, export as fbx.
+                </p>
+            </li>
+        </ol>
+
+        <p>
+            <strong>Textures</strong>
+        </p>
+        <p>
+            Procreate for all the textures; Adobe Photoshop and Substance 3D sampler for normal maps.
+        </p>
+        <p>
+            <strong>Effects</strong>
+        </p>
+        <p>
+            Blender for fire and fireball, but unfortunately there’s no way they can be exported fully into the game. If you want to implement some cool effects, either build models, or achieve through the particles. 
+        </p>
+
+        <p>
+            <em>P.S.</em> For the artists: if you are not too familiar with softwares on PC e.g. Blender, Maya, Zbrush.. I recommend using Nomad on tablets. It is much easier to learn & use and should be good enough! IT SAVES TIME. Also, many effects made using the built in tools in modeling softwares could only be exported fully into the existing game engines like Unity, Unreal. 
+        </p>
+
+        <p>
+            (<strong>Ted</strong>) For GUI, we have secretly made tons of png that act as both a static GUI or simple 2D animations. I have seen my teammate (Edward) create simple pixel art in Visual Studio!!!
+            I didn't even know that this was possible, but I would definitely
+            <strong>not</strong> recommend doing this if you want to create your own
+            pixel art. I used Aseprite from Steam (unfortunately not free), which can act as an image editor or a pixel art design platform. I was able to use a lot of png resources online and edit them to fit our game or draw simple icons on my own. 
+        </p>
+        <p>
+            <em>TLDR:</em> Aseprite is a great choice for pixel art.
+        </p>
+        <p>
+            (<strong>David</strong>) For model/texture loading, Anthony implemented a model loader using Assimp, a model importer library. We also used Assimp for importing animation data, based off of a LearnOpenGL article on implementing animation in OpenGL, and imported animations from Mixamo in the .fbx format. One thing about Mixamo animations is that it can be a bit tricky to get a model uploaded with the correct textures. My workaround for this was as follows:
+        </p>
+        <ol>
+            <li>
+                <p>
+                    Upload the model without textures (just the meshes) to Mixamo
+                </p>
+            </li>
+            <li>
+                <p>
+                    Download the rigged model (no animations) as a .fbx file
+                </p>
+            </li>
+            <li>
+                <p>
+                    In Blender, import both the rigged model and the textured model into the same project
+                </p>
+            </li>
+            <li>
+                <p>
+                    Copy the textures and normal data from the textured model to the rigged model
+                </p>
+            </li>
+            <li>
+                <p>
+                    Delete the textured model and export the newly textured + rigged model as .fbx
+                </p>
+                <ol>
+                    <li>
+                        <p>
+                            When exporting, <strong>make sure to set all texture paths
+                                to relative and export the .fbx file to the desired folder
+                                with all the textures.
+                            </strong>
+                            If you don't do this, it will cause filepath issues that will
+                            likely not work on other machines.
+                        </p>
+                    </li>
+                </ol>
+            </li>
+        </ol>
+
+        <p>
+            This isn't exactly the most elegant solution, but this is what worked for me.
+        </p>
+
+        <h3>
+            For those who used a networking library (e.g., RakNet or Boost), a physics library (e.g., Rapier or Bullet), an audio library (e.g., SFML or SoLoud), or a GUI library (e.g., imgui or nanovg), which libraries did you use and would you use them again if you were starting over knowing what you know now? Describe any lessons you learned using it (problems that you had to troubleshoot and how you addressed them) for future groups who may use it. If you did not use a library for any of those modules, judging from the experiences of the groups that did, would you have used it in retrospect?
+        </h3>
+
+        <p>
+            (<strong>Tyler</strong>)
+        </p>
+        <p>
+            <strong>Networking</strong>
+        </p>
+        <p>
+            We used Boost ASIO for networking in combination with Boost serialization. I think boost asio is a good library and definitely enabled our cross platform development since we didn’t use Windows sockets, but there are some caveats. First, a lot of the examples online show the asynchronous versions of the send / receive functions, when you really should just be using the synchronous (blocking) versions for 125. And second, boost is a large library and might add some significant overhead to your initial build if you do what we did and clone and build boost from source using CMake FetchContent every time you had to generate the CMakeCache.
+        </p>
+        <p>
+            We might have been able to speed this up by just including some library file in the repo that was already compiled, but then that might have made it more annoying to have different versions for different operating systems, so I think while the time taken was annoying it made it more generalizable to everyone’s different machines, and anyone’s future machines if someone wants to rebuild from source in the future! Also, if you end up just using ASIO you can actually include it without the rest of boost, which would be something to consider, but we ended up using a couple other boost library functions here and there, which were nice.
+        </p>
+        <p>
+            I think the short list was Boost ASIO, serialization, <code>boost::hash_combine</code>
+            to define hash functions for our own data types so we could put them in
+            an <code>std::unordered_map</code>, and probably some others.
+        </p>
+        <p>
+            <strong>Overall, I actually think I disagree with the sentiment that Boost ASIO is harder to get used to than something like WinSockets, provided that you stick with the synchronous versions of the functions.</strong>
+            It basically is almost the same interface as any other networking library you’ll find that provides an abstraction of sockets.
+        </p>
+        <p>
+            <strong>
+                But no matter what networking library you use, you should set up an abstraction in your code that lets you think in terms of actual data types / structs.
+            </strong>
+            In our code sending an event from client to server is as simple as creating an Event packet and populating it with the data you want, and passing it into our own SendPacket function. Boost serialization made this extremely easy since we could literally just throw entire hash maps in an event struct and let boost take care of serializing it. There definitely was extra overhead in packet size that this added, but in 125 that is not going to be your bottleneck.
+        </p>
+
+        <p>
+            <strong>Audio</strong>
+        </p>
+        <p>
+            SFML. SFML Audio actually was incredibly easy to use and set up. It made directional audio completely free since we just had to specify the position of the listener, the position of the sound effect, what direction was up, and certain qualities of each sound effect (attenuation, min distance, volume). I would definitely recommend any group to use SFML for audio since I can’t really imagine an easier to use API. The one limitation is that the directional audio only works on mono sound files, so if it were really important players could pinpoint exactly where a sound effect is in 3d space then it isn’t ideal, but I don’t think many 125 projects would require that level of precision.
+        </p>
+        <p>
+            <strong>Physics</strong>
+        </p>
+        <p>
+            None, we just made a super simple physics simulation where everything was represented by a simple AABB and had a position and velocity. It definitely limited the scope of certain things (complex parkour based traps and vertical environments were a no-go), but in the scope of a 10 week course we did not need to add any of those things for it to feel like a complete game. I think whether or not you would need to use a physics library depends on what is the drawing feature of our game, and for us it was not the physics so we were fine doing it ourselves.
+        </p>
+
+        <h3>
+            If you used an implementation language other than C++, describe the environments, libraries, and tools you used to support development in that language. What issues did you run into when developing in that language? Would you recommend groups use the language in the future? If so, how would you recommend groups best proceed to make it as straightforward as possible to use the language? And what should groups avoid?
+        </h3>
+
+        <p>
+            (<strong>Ted</strong>) If I remember correctly, Anthony wanted to use Rust in the beginning, but since there were no other huge supporters of Rust, we decided to proceed with C++. Other than the insane segfaults (mentioned by Gil) that took forever to find, I personally thought developing in C++ with CMake was doable, but I am not sure how others feel 😀.
+        </p>
+        <p>
+            (<strong>Tyler</strong>) There were a non-neglibible amount of things that we had to deal with that we would not have had to deal with in Rust (namely crazy undefined behavior, one funny memory leak, CMake, seg faults, std::optional auto casting to a bool, CMake, accidental switch statement fallthrough, missing switch statement cases and lack of true algebraic data types/enumerations, CMake, seg faults, CMake, undefined behavior, CMake, seg faults…), but overall I still think C++ was the right choice for our group because there was a lack of interest in people using a different language like Rust.
+        </p>
+        <p>
+            I think if people in the group are excited about learning a new language like Rust, then even if you don’t have too much experience you should go for it because it does provide a lot of benefits, but if people aren’t excited by the prospect then you shouldn’t do it. C++ is a good language and you will be able to do anything in it—many things probably easier than in Rust—but you just have to be careful to not shoot yourself in the foot (you will).
+        </p>
+        <p>
+            We did shoot ourselves in the foot. Many times. But clearly that didn’t impede our progress, and I can’t imagine our game being any better had we used a different language.
+        </p>
+        <p>
+            Also, one last thing: I am a little jealous of how easy it is to play Group 1’s game on the web, so if there are any web enthusiasts out there that definitely seems like a really cool avenue to explore, and you get the entire DOM for free so a lot of things (like UI) are really already solved for you.
+        </p>
+        <p>
+            (<strong>Anthony</strong>) Initially I wanted to use Rust because of the great things that previous groups had said about their experiences using it (plus it sounded like a fun undertaking). But once we started working on the game, my thoughts on Rust were mostly forgotten as I was focused on making the game in C++. Looking back, I’m glad we went with the decision we did. I would not have wanted to spend an entire quarter using a language that the group was not completely on board with. White there were many C++-isms that Tyler mentioned, I am extremely proud of the final product regardless of the language we used. It cemented the idea in me that languages are just tools and what matters is what you do with those tools.
+        </p>
+
+        <h3>How many lines of code did you write for your project? (Do not include code you did not write, such as library source.) Use any convenient mechanism for counting, but state how you counted.</h3>
+
+        <p>
+            All of our C++ code is contained in the <code>src</code> and <code>include</code>
+            directories in our repository. With the help of Stack Overflow, I (<strong>Gil</strong>)
+            wrote the following bash script to count the number of lines of code in
+            our <code>.hpp</code> and <code>.cpp</code> files:
+        </p>
+
+        <pre>
+#!/bin/bash
+
+
+#   This script attempts to count the number of lines of code that we wrote to create
+#   Wrath of Zeus.
+#   Only C++ code is counted by this script by summing up the number of lines of code
+#   in all of the files in the include/ and src/ directories.
+
+
+#   Number of lines of code seen so far
+lines=0
+lines_in_file=0
+
+
+#   Count lines of code in the include/ directory
+for file in $(find ./include -name '*.hpp'); do
+    echo "$file"
+    lines_in_file=`wc -l < $file`
+    echo "$lines_in_file"
+    lines=$((lines_in_file + lines))
+done
+
+
+#   Count lines of code in the src/ directory
+for file in $(find ./src -name '*.cpp'); do
+    echo "$file"
+    lines_in_file=`wc -l < $file`
+    echo "$lines_in_file"
+    lines=$((lines_in_file + lines))
+done
+
+
+echo "Lines: $lines"
+        </pre>
+        
+        <p>
+            After running this script, we see that we have <code>24,446</code> lines
+            of code in our code base!
+        </p>
+
+        <h3>
+            What lessons about group dynamics did you learn about working in such a large group over an extended period of time on a challenging project?
+        </h3>
+
+        <p>
+            (<strong>Tyler</strong>) I learned how important it is when you have a bottleneck to just sit down with 2-3 people and hack away at one computer screen with pair programming. I think the majority of our breakthroughs on lots of different features happened when multiple people were staring at the same computer screen for multiple hours trying to fiddle with things until they started magically working. (One night in particular I remember was the night before the demo when Anthony and David were hacking away at the normal maps from like 5pm to 1am on and off while the rest of us were grinding playtests). There really is no substitute for just sitting down in the lab with groupmates and getting work done.
+        </p>
+        <p>
+            (<strong>Gil</strong>) This experience reinforced for me that communication and a positive atmosphere (i.e., one in which psychological safety is guaranteed so that team members can always feel comfortable to voice their ideas / concerns without fear of ridicule or other negative response) is key for a successful project in order to avoid desyncing with the rest of the team (i.e., avoid the “wait, what’s everyone doing right now? What am I supposed to be doing?” moments) and to ensure that the group project is a group project by letting everyone contribute so that the group performs efficiently and effectively.
+        </p>
+
+        <h3>Looking back over the past 10 weeks, is there anything you would do differently, and what would you do again in the same situation?</h3>
+
+        <p>
+            (<strong>Edward</strong>) Section off more time out of my week to go to the lab. Some bugs could only be found when multiple clients were present. Also definitely buying a mouse. I was too lazy to buy one but it probably would’ve helped.
+        </p>
+        <p>
+            (<strong>Tyler</strong>) I think my only regret in the course was not getting to know people in other groups sooner. Around the final week and after the demo I felt like I was meeting so many new people and getting such good insight from talking to them about their group’s projects. Originally I didn’t really want to know how far other groups were because I was worried that it would stress me out, but I do feel like I would have gained a lot from talking to people in other groups more.
+        </p>
+        <p>
+            (<strong>Gil</strong>) I kind of wish I would’ve gone to the labs more often - I worked at home most of the time until my desktop + laptop setup ran into an environment issue that didn’t let me build the project (eventually sidestepped the issue thankfully) and I started going to the labs later on in the quarter. Working in the labs with the rest of my team really solidified the group experience and I recommend doing it (especially when the labs are fairly empty).
+        </p>
+        <p>
+            (<strong>Coco</strong>) Go to the lab more. I sometimes feel so tired and don't feel like going to school in the morning, but talking to other group members could definitely solidify some ideas and make the implementation/design easier and faster.
+        </p>
+        <p>
+            (<strong>David</strong>) I would have chosen to go to the lab more frequently and pace myself better in the middle weeks of the project. One thing I realized is that I put in lots of crunch effort towards the end of the project, which I think could have been largely mitigated by getting the work started and planned out earlier and incrementally developing throughout the 10 weeks.
+        </p>
+        <p>
+            (<strong>Ted</strong>) The only thing I would do differently is possibly spend more time planning and organizing the structure of our codebase throughout the quarter because the codebase was getting very big and messy in certain parts. Other than that, I think our group did a great job in planning ahead in terms of what we have to accomplish each week.
+        </p>
+
+        <h3>
+            Which courses at UCSD do you think best prepared you for CSE 125?
+        </h3>
+
+        <p>
+            (<strong>Tyler</strong>) CSE 120 and 123 for sure. 120 helped a lot with just understanding what is going on behind the scenes. 123 was essential for helping write the networking code in the game. Without 123 I would have spent 2-3x as long on the networking stuff probably. Also, CSE 134B was huge for making silly progress reports. Also, it’s not a CSE course, I think a huge part of my preparation came from being involved in extracurricular clubs, specifically Triton UAS. I think being involved with any software project team where multiple people are collaborating on the same codebase via git would have had a similar effect, but specifically with Triton UAS I had experience with C++ and CMake which was really helpful in getting our repo up and running in the early stages. Honestly, having people who are comfortable with CMake or whatever build system you are using is incredibly helpful, but I don’t think any courses really teach that.
+        </p>
+        <p>
+            (<strong>Gil</strong>) Powell’s CSE 110 helped me as it gave experience and perspective on working in a large group (the group projects then were in groups of 10) and CSE 120 was very helpful in conceptualizing and in debugging low-level issues.
+        </p>
+        <p>
+            (<strong>Edward</strong>) CSE 120, 123, 110 and 100. The OS and networks projects in 120 and 123 respectively both provide very useful knowledge on top of being challenging projects that demand lots of debugging. 110 is the first (and only) large group project course I took before 125 so that helped, and there were elements of good software engineering practices taught by Griswold that were useful (standups, brainstorming features, assigning issues, design patterns). Finally, 100 because you learn a bunch of complex data structures in C++ which is useful, especially if you choose to develop in C++.
+        </p>
+        <p>
+            (<strong>Coco</strong>) Powell’s CSE110, which I don’t want to admit but helped to some extent. Thanks for the web knowledge, group experience and git workflow. CSE167 teaches the basic stuff about computer graphics. The only VIS class I took is VIS 70N as GE, I didn’t get to take VIS 134 but I heard it teaches you modeling. 
+        </p>
+        <p>
+            (<strong>David</strong>) CSE 167 and CSE 169 were definitely the most important clases that I took since they taught me the basics of rendering and using OpenGL, which is what I primarily used for this project. CSE 120 was also very helpful in the sense that it prepared me for working with large-scale systems and understanding the various working parts and mechanisms behind the game.
+        </p>
+        <p>
+            (<strong>Ted</strong>) CSE110 for github project board and CSE100 for C++ with different data structures. Other than that, I think CSE125 itself is a constant learning process to learn and do something new!
+        </p>
+        <p>
+            (<strong>Anthony</strong>) CSE 167 and 120 were what I found the most helpful. Although I don’t remember much from 167, it was useful to have the terminology cached somewhere in my brain so that I’m not completely clueless reading graphics tutorials now. 120 was useful for getting in the mindset of debugging crazy issues you might come across. I’d like to echo Tyler’s sentiment about the importance of extracurricular activities. In our club, Triton UAS we are forced to live with a large code base for a long time and collaborate with many other people.
+        </p>
+        <p>
+            Most importantly, getting involved with a project like that has given me the confidence to take on any problem that comes my way. In the club there are many moments where we have no idea how to solve a problem but just have to give it our best and go head first. I feel like that kind of attitude helps with 125 as you’ll be encountering many things you’ve never dealt with before. Also, I can’t stress enough the debugging skills gained from the club helped out. In 125 there are many moments when something is going horribly wrong and you have no choice but to sit down and figure it out. Having that resilience is something I think that is really important and undervalued. Going through many similar situations in my student organization proved to be especially helpful.  
+        </p>
+
+        <h3>
+            What were the most valuable things that you learned in the class?
+        </h3>
+        
+        <p>
+            (<strong>Edward</strong>) Technical-wise, probably general C++ knowledge, interacting with various C++ libraries (Boost, SFML, GLFW, GLM), and gaining more experience using Visual Studio. Aside from technical skills, probably learning how to navigate a development style that is fast-paced with lots of frequent changes happening. 
+        </p>
+        <p>
+            (<strong>Tyler</strong>) The most valuable thing I learned was how to have trust in groupmates/colleagues to actually finish the work that they say they are going to do.
+        </p>
+        <p>
+            (<strong>Gil</strong>) I think I gained some insight when building a large scale project with multiple people: at the start of the course, our code base was nice and small, I could generally know everything that was going on in the code. Eventually, the scale of the code base grew to the point that I could only at best know the interfaces other people made and use them (e.g., whenever using the networking / GUI / graphics interfaces in our code base). That made injecting new code more difficult (or perhaps more “scary”) as knowing exactly where new code should be injected to add certain behaviors became less obvious. I had to study other code + speak with team members responsible for writing other code when I was unsure.
+        </p>
+        <p>
+            This was different from my expectation prior to taking the course since I thought by the end I would know exactly how everything in the code base works, but that quickly became untenable. Technical-wise, I learned a lot about how to work with C++ and a bit about how to work with Visual Studio and CMake to get things to work. Unrelated to the software development experience, but I also gained intuition in using and composing leitmotifs and writing for orchestra by writing the soundtrack for the game.
+        </p>
+        <p>
+            (<strong>David</strong>) I think that I improved upon my understanding of OpenGL and C++, and learned some interesting graphics and rendering techniques that have definitely made me want to learn more. I also think that this project was a really great experience working with other people and learning to communicate effectively with one another.
+        </p>
+        <p>
+            (<strong>Ted</strong>) How to work in a team to build a fast-paced project I have never would have completed alone. Obviously, a lot of CSE upper-division courses have group projects, but none of them have the scale of the game that we have built throughout the quarter. 
+        </p>
+
+        <h3>
+            Please post four final screenshots of your game on your group pages for posterity. I will display them on the group web page.
+        </h3>
+
+        <!-- Add screenshots here -->
+        <picture>
+            <img src="assets/screenshots/player_running.png" width="1000px">
+        </picture>
+        <picture>
+            <img src="assets/screenshots/really_close_to_exit.png" width="1000px">
+        </picture>
+        <picture>
+            <img src="assets/screenshots/player_dodging_traps.png" width="1000px">
+        </picture>
+        <picture>
+            <img src="assets/screenshots/lightning_close_player.png" width="1000px">
+        </picture>
+
+        <h2>Optional Course Feedback</h2>
+        
+        <h3>
+            For the pizza celebration after the demos, what do you think about doing it in the B220 lab? (I originally thought to avoid any more time in the lab :-) Some students pointed out that if we do it in the lab, then people can play each other's games. Other students said that they were exhausted and just sitting and having pizza was enough.
+        </h3>
+
+        <p>
+            (<strong>Gil</strong>) I agree with all of these sentiments - but I think having the pizza party in the B220 lab would be best since that place was the heart of development (just like it was awesome when there was dinner there the night before the demos :)). On the other hand, the room where we ate pizza had more space to sit down and eat with the entire group around a table which was nice as well. Hmm… well there is pizza either way
+        </p>
+        <p>
+            (<strong>Edward</strong>) I’m satisfied as long as there is food :). And playing each other's games would be cool too.
+        </p>
+        <p>
+            (<strong>Coco</strong>) I feel playing games while enjoying food is definitely cool^^, but it would be nicer if could set up some time after the final’s week(?) I believe there are students who want to play but they don’t have much time during week10 and final’s week:(
+        </p>
+        <p>
+            (<strong>Tyler</strong>) I think I would have preferred the pizza party in the lab because it would have motivated more people to start playing the games while we were all there, but I still had a lot of fun and some of us even went down into the lab afterwards to play the games. That was actually one of my favorite moments of the entire quarter. I had a group of 5 people (+1 spectator) all playing Wrath of Zeus for over an hour straight, and they were all having an incredibly good time. It was so cool! I could imagine if we had the pizza party in the lab there could have been even more people rotating around and playing each other’s games and watching and generally having a good time.
+        </p>
+        <p>
+            (<strong>David</strong>) I think it would’ve been fun to be able to play other people’s games!
+        </p>
+        <p>
+            (<strong>Anthony</strong>) +1 on doing it in the lab.
+        </p>
+
+        <h3>
+            What advice/tips/suggestions would you give students who will take the course next year?
+        </h3>
+
+        <p>
+            (<strong>Edward</strong>) Have Good Communication: I think our group did an excellent job of consistently communicating with each other to understand who was tackling what, what issues came up, get feedback on PRs, showoff new work/code, etc. It really helped us all be in sync and be efficient.
+        </p>
+        <p>
+            (<strong>Tyler</strong>) Make consistent progress throughout the entire quarter. It’s really easy to fall in a lull and let the days go by, because they will go by fast, but as long as you make consistent progress and talk with your teammates often you will be fine. Also reading past groups reports (like this one) helps a lot when deciding what tools and libraries to use specifically, but are definitely less useful if you are trying to compare your weekly progress since every group / game idea is going to work differently.
+        </p>
+        <p>
+            (<strong>David</strong>) Communication is definitely a key part of success, and especially talking about the things that you’re stuck on or having trouble with. Not only can you get another perspective on what might be causing the issue, but it also helps to align everyone’s expectations on the state of the project.
+        </p>
+        <p>
+            (<strong>Anthony</strong>) Make a game that you would have fun with playing and one that is fun to develop.
+        </p>
+
+        <h3>
+            Do you have any suggestions for improving the course?
+        </h3>
+
+        <p>(<strong>Tyler</strong>)</p>
+        <img width="500" height="500" src="./assets/images/shrug.gif">
+
+        <p>
+            <a style="font-size: 5rem;" href="./and_another_thing.html">And Another Thing...</a>
+        </p>
+
+    </main>
+    <footer>
+        <nav>
+            <a href="index.html">Main</a>
+            <a href="spec.pdf">Project Spec</a>
+            <a class="play" href="download.html">Download</a>
+            <a href="aboutUs.html">About Us</a>
+            <a href="https://github.com/ucsd-cse125-sp24/group3">Github</a>
+            <a href="soundtrack.html">Soundtrack</a>
+          </nav>
+    </footer>
+
+</body>
+</html>
